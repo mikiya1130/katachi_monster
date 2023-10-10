@@ -18,5 +18,5 @@ sudo usermod -aG docker ubuntu
 cd katachi_monster
 . generate_env.sh
 sudo apt install -y make
-make upb
+make upb-prod
 ```
