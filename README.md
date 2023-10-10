@@ -1,6 +1,16 @@
 ## 開発環境構築
 
-- `.env.template` を複製して `.env` を作成
-- `id` コマンドで `USERNAME`, `UID`, `GID` を調べ、`.env` を埋める
-- `make upb` でコンテナ立ち上げ
-- VSCode の PORTS で `3000` をポートフォワードする
+```sh
+. generate_env.sh
+make upb
+```
+
+VSCode の PORTS で `3000` をポートフォワード
+
+## EC2 コマンドメモ
+
+```sh
+. ec2_install_docker.sh
+git clone https://github.com/mikiya1130/katachi_monster.git
+cd katachi_monster
+```
