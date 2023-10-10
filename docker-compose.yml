@@ -12,4 +12,4 @@ services:
       - "3000:3000"
     volumes:
       - ./frontend:/app
-    command: yarn dev
+    command: bash -c "yarn && yarn dev"
