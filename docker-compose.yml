@@ -1,0 +1,15 @@
+version: "3"
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+      args:
+        - USERNAME=${USERNAME}
+        - USER_UID=${USER_UID}
+        - USER_GID=${USER_GID}
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+    command: yarn dev
