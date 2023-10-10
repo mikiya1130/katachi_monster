@@ -12,6 +12,7 @@ VSCode の PORTS で `3000` をポートフォワード
 ```sh
 git clone https://github.com/mikiya1130/katachi_monster.git
 cd katachi_monster
+. ec2_install_nginx.sh
 . ec2_install_docker.sh
 sudo usermod -aG docker ubuntu
 (exit & 再ログイン)
