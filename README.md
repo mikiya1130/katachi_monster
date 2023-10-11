@@ -28,4 +28,3 @@ make upb-prod
 - USERNAME=
 - SSH_PRIVATE_KEY=
 - PROJECT_DIRECTORY=
-
