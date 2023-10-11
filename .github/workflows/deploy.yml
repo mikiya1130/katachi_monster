@@ -15,11 +15,11 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: ${{ secrets.HOSTNAME }}
           name: id_rsa
-           config: |
-             Host server
-               HostName ${{ secrets.HOSTNAME }}
-               User ${{ secrets.USERNAME }}
-               IdentityFile ~/.ssh/id_rsa
+          config: |
+            Host server
+              HostName ${{ secrets.HOSTNAME }}
+              User ${{ secrets.USERNAME }}
+              IdentityFile ~/.ssh/id_rsa
       - name: SSH to Server and Deploy
         run: |
           ssh server '
