@@ -2,10 +2,10 @@ name: check format
 
 on:
   pull_request:
-    # branches:
-    #   - master
-    # paths:
-    #   - frontend/src/**
+    branches:
+      - master
+    paths:
+      - frontend/src/**
 
 jobs:
   ci:
