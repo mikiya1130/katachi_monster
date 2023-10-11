@@ -4,9 +4,7 @@
     "next/core-web-vitals",
     "prettier"
   ],
-  "plugins": [
-    "unused-imports"
-  ],
+  "plugins": ["unused-imports", "no-relative-import-paths"],
   "rules": {
     "@typescript-eslint/no-unused-vars": "off",
     "unused-imports/no-unused-imports": "error",
@@ -26,6 +24,13 @@
         "alphabetize": {
           "order": "asc"
         }
+      }
+    ],
+    "no-relative-import-paths/no-relative-import-paths": [
+      "error",
+      {
+        "rootDir": "src",
+        "prefix": "@"
       }
     ],
     "react/function-component-definition": [
