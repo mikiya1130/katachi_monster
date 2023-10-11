@@ -1,11 +1,9 @@
 import Button from "@mui/material/Button";
 
-const Home = () => {
+export default function Home() {
   return (
     <div>
       <Button variant="contained">Hello World</Button>
     </div>
   );
-};
-
-export default Home;
+}
