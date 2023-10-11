@@ -1,0 +1,26 @@
+name: deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: ${{ secrets.HOSTNAME }}
+      - name: SSH to Server and Deploy
+        run: |
+          ssh -o StrictHostKeyChecking=no -i private_key ${secrets.USERNAME}@${secrets.HOSTNAME} '
+            cd /home/${secrets.USERNAME}/<secrets.PROJECT_DIRECTORY> &&
+            git checkout master &&
+            git fetch --all &&
+            git reset --hard origin/master &&
+            git pull origin master &&
+            make upb-prod
+            '

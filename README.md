@@ -21,3 +21,11 @@ cd katachi_monster
 sudo apt install -y make
 make upb-prod
 ```
+
+## GitHub Actions Repository secrets メモ
+
+- HOSTNAME=
+- USERNAME=
+- SSH_PRIVATE_KEY=
+- PROJECT_DIRECTORY=
+
