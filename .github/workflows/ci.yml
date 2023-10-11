@@ -4,8 +4,8 @@ on:
   pull_request:
     branches:
       - master
-    paths:
-      - frontend/src/**
+    # paths:
+    #   - frontend/src/**
 
 jobs:
   ci:
