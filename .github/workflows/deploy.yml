@@ -17,7 +17,7 @@ jobs:
       - name: SSH to Server and Deploy
         run: |
           ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOSTNAME }} '
-            cd /home/${secrets.USERNAME}/<secrets.PROJECT_DIRECTORY> &&
+            cd /home/${{ secrets.USERNAME }}/${{ secrets.PROJECT_DIRECTORY }} &&
             git checkout master &&
             git fetch --all &&
             git reset --hard origin/master &&
