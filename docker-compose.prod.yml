@@ -1,4 +1,4 @@
 version: "3"
 services:
   frontend:
-    command: bash -c "yarn && yarn build && yarn start"
+    command: bash -c "yarn --production && yarn build && yarn start"
