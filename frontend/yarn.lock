@@ -235,6 +235,11 @@
   resolved "https://registry.yarnpkg.com/@floating-ui/utils/-/utils-0.1.6.tgz#22958c042e10b67463997bd6ea7115fe28cbcaf9"
   integrity sha512-OfX7E2oUDYxtBvsuS4e/jSn4Q9Qb6DzgeYtsAdkPZ47znpoNsMgZw0+tVijiv3uGNR6dgNlty6r9rzIzHjtd/A==
 
+"@fontsource/noto-sans-jp@^5.0.14":
+  version "5.0.14"
+  resolved "https://registry.yarnpkg.com/@fontsource/noto-sans-jp/-/noto-sans-jp-5.0.14.tgz#024a8340e33059feb7b55ad896b8f087e40b3c3e"
+  integrity sha512-DpulIct6ZXIcDDVzwNnyQ6LFLD+VmcDSCcUqXLdHET3umG7k4IKu1jiFQl8k4jjp+kzySUWhcM3oa86lSf7KXw==
+
 "@fontsource/roboto@^5.0.8":
   version "5.0.8"
   resolved "https://registry.yarnpkg.com/@fontsource/roboto/-/roboto-5.0.8.tgz#613b477a56f21b5705db1a67e995c033ef317f76"

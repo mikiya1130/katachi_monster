@@ -6,7 +6,14 @@ import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
   palette: {
-    mode: "dark",
+    mode: "light",
+    // mode: "dark",
+  },
+});
+
+export const titleFont = createTheme({
+  typography: {
+    fontFamily: ["Noto Sans JP", "sans-serif"].join(","),
   },
 });
 

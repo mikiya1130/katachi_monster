@@ -7,13 +7,15 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+import "@fontsource/noto-sans-jp/700.css";
 
-import theme from "@/app/theme";
+import { maxWidth, title } from "@/consts";
+import theme from "@/theme";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "カタチモンスター",
+  title: title,
   description: "",
 };
 
@@ -28,7 +30,7 @@ const RootLayout = ({ children }: Props) => {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Container
-            maxWidth="sm"
+            maxWidth={maxWidth}
             disableGutters
             sx={{ height: "100svh", overflow: "clip" }}
           >
