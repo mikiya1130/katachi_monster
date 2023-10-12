@@ -2,8 +2,8 @@ name: check format
 
 on:
   pull_request:
-    # branches:
-    #   - master
+    branches:
+      - master
     # paths:
     #   - frontend/src/**
 
