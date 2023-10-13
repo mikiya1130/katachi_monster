@@ -22,6 +22,9 @@ stop:
 ps:
 	docker compose ps
 
+logs:
+	docker compose logs
+
 front:
 	docker compose exec frontend bash
 

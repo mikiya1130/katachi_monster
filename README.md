@@ -7,24 +7,11 @@ make upb
 
 VSCode の PORTS で `3000` をポートフォワード
 
-## EC2(Ubuntu22.04) コマンドメモ
+## 本番環境構築
 
 ```sh
-git clone https://github.com/mikiya1130/katachi_monster.git
-cd katachi_monster
-. ec2_install_nginx.sh
-. ec2_install_docker.sh
-sudo usermod -aG docker ubuntu
-(exit & 再ログイン)
-cd katachi_monster
 . generate_env.sh
-sudo apt install -y make
 make upb-prod
 ```
 
-## GitHub Actions Repository secrets メモ
-
-- HOSTNAME=
-- USERNAME=
-- SSH_PRIVATE_KEY=
-- PROJECT_DIRECTORY=
+VSCode の PORTS で `3030` をポートフォワード
