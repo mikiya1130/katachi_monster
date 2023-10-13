@@ -42,10 +42,10 @@ jobs:
           node-version: 20
       - name: Cache node_modules
         uses: actions/cache@v3
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        id: yarn-cache
         with:
-          path: node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+          path: ./node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('./yarn.lock') }}
       - name: Install yarn
         run: yarn
       - name: Lint
