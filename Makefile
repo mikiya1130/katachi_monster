@@ -5,7 +5,7 @@ up:
 	docker compose up -d
 
 upb:
-	docker compose up -d --build
+	docker compose -f docker-compose.yml -f docker-compose.develop.yml up -d --build
 
 upb-prod:
 	docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
