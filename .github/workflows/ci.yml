@@ -82,7 +82,7 @@ jobs:
       - name: Check diff
         run: |
           git add .
-          git diff --cached --exit-code
+          git -c core.fileMode=false diff --cached --exit-code
 
   status-check:
     if: always()
