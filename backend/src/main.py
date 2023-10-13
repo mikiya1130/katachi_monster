@@ -1,9 +1,7 @@
+"""メインファイル"""
 from fastapi import FastAPI
-from fastapi.responses import PlainTextResponse
+
+from src.routers import test
 
 app = FastAPI()
-
-
-@app.get("/test")
-def main():
-    return {"data": "Hello World"}
+app.include_router(test.router)
