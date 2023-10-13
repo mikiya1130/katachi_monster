@@ -28,5 +28,17 @@ logs:
 front:
 	docker compose exec frontend bash
 
+front-lint:
+	docker compose exec frontend yarn lint
+
+front-format:
+	docker compose exec frontend yarn format
+
 back:
 	docker compose exec backend bash
+
+back-lint:
+	docker compose exec backend bash lint.sh
+
+back-format:
+	docker compose exec backend bash format.sh

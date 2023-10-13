@@ -1,2 +1,7 @@
+black
+isort
+mypy
+ruff
+
 fastapi
 uvicorn[standard]

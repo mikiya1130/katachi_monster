@@ -3,6 +3,7 @@ from fastapi.responses import PlainTextResponse
 
 app = FastAPI()
 
+
 @app.get("/test")
-def read_root():
+def main():
     return {"data": "Hello World"}

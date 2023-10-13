@@ -1,27 +1,39 @@
 {
-  // 保存時に行末のホワイトスペースを削除(markdown は除く)
-  "files.trimTrailingWhitespace": true,
-  "[markdown]": {
-    "files.trimTrailingWhitespace": false
-  },
-
-  // ファイルの最後に必ず1行だけ空行を残す
-  "files.insertFinalNewline": true,
-  "files.trimFinalNewlines": true,
-
-  // 保存時にフォーマットする
-  "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
-
-  // インデントタブはスペースx2
-  "editor.tabSize": 2,
-
-  // 改行コードを LF に統一
-  "files.eol": "\n",
-
-  // import 文の自動補完を絶対パスでおこなう
-  "typescript.preferences.importModuleSpecifier": "non-relative"
+    // 保存時に行末のホワイトスペースを削除(markdown は除く)
+    "files.trimTrailingWhitespace": true,
+    "[markdown]": {
+        "files.trimTrailingWhitespace": false
+    },
+    // ファイルの最後に必ず1行だけ空行を残す
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    // 改行コードを LF に統一
+    "files.eol": "\n",
+    // .js .ts .jsx .tsx 限定の設定
+    "[javascript][typescript][javascriptreact][typescriptreact]": {
+        // 保存時にフォーマットする
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": true
+        },
+        // インデントタブはスペースx2
+        "editor.tabSize": 2,
+        // import 文の自動補完を絶対パスでおこなう
+        "typescript.preferences.importModuleSpecifier": "non-relative"
+    },
+    // .py 限定の設定
+    "[python]": {
+        // インデントタブはスペースx4
+        "editor.tabSize": 4
+    },
+    // 非表示にするファイル
+    "files.exclude": {
+        "**/__pycache__": true
+    },
+    // 監視対象から外すファイル
+    "files.watcherExclude": {
+        "**/node_modules": true,
+        "**/__pycache__": true
+    }
 }
