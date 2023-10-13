@@ -6,14 +6,36 @@ on:
       - master
 
 jobs:
-  ci:
+  changes:
+    runs-on: ubuntu-latest
+    # Required permissions
+    permissions:
+      pull-requests: read
+    # Set job outputs to values from filter step
+    outputs:
+      frontend: ${{ steps.filter.outputs.frontend }}
+      backend: ${{ steps.filter.outputs.backend }}
+    steps:
+      # For pull requests it's not necessary to checkout the code
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            frontend:
+              - 'frontend/**'
+            backend:
+              - 'backend/**'
+
+  ci-frontend:
+    needs: changes
+    if: ${{ needs.changes.outputs.frontend == 'true' }}
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: frontend
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
@@ -24,6 +46,39 @@ jobs:
         run: yarn lint
       - name: Format
         run: yarn format
+      - name: Check diff
+        run: |
+          git add .
+          git diff --cached --exit-code
+
+  ci-backend:
+    needs: changes
+    if: ${{ needs.changes.outputs.backend == 'true' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Lint
+        run: |
+          chmod +x ./lint.sh
+          ./lint.sh
+        shell: bash
+      - name: Format
+        run: |
+          chmod +x ./format.sh
+          ./format.sh
+        shell: bash
       - name: Check diff
         run: |
           git add .
