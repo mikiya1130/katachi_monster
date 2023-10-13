@@ -1,6 +1,9 @@
 {
     "recommendations": [
+        // for frontend
         "dbaeumer.vscode-eslint",
-        "esbenp.prettier-vscode"
+        "esbenp.prettier-vscode",
+        // for backend
+        "njpwerner.autodocstring"
     ]
 }

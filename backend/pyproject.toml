@@ -1,0 +1,23 @@
+[tool.isort]
+py_version=311
+
+[tool.mypy]
+python_version = 3.11
+
+[tool.ruff]
+target-version = "py311"
+select = ["ALL"]
+ignore = [
+    "N801", "N999",
+    "D400", "D415",
+    "ANN002", "ANN003", "ANN101", "ANN102", "ANN202",
+    "S101", "S301",
+    "TD002", "TD003",
+    "ERA001",
+    "PGH003",
+    "PLR2004",
+]
+extend-exclude = ["__init__.py"]
+
+[tool.ruff.pydocstyle]
+convention = "google"

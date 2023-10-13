@@ -5,7 +5,14 @@
 make upb
 ```
 
-VSCode の PORTS で `3000` をポートフォワード
+- フロントエンド
+  - VSCode の PORTS で `3000` をポートフォワード
+  - lint 実行：`make front-lint`
+  - format 実行：`make front-format`
+- バックエンド
+  - VSCode の PORTS で `8000` をポートフォワード
+  - lint 実行：`make back-lint`
+  - format 実行：`make back-format`
 
 ## 本番環境構築
 
@@ -14,4 +21,4 @@ VSCode の PORTS で `3000` をポートフォワード
 make upb-prod
 ```
 
-VSCode の PORTS で `3030` をポートフォワード
+- ポート `3030` にアクセス
