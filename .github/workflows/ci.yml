@@ -92,6 +92,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Status check
-      - uses: re-actors/alls-green@release/v1
+        uses: re-actors/alls-green@release/v1
         with:
           jobs: ${{ toJSON(needs) }}
