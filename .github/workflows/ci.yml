@@ -71,18 +71,22 @@ jobs:
           pip install -r requirements.txt
       - name: Lint
         run: |
-          chmod +x ./lint.sh
-          ./lint.sh
+          cp ./lint.sh ./lint.copy.sh
+          chmod +x ./lint.copy.sh
+          ./lint.copy.sh
+          rm ./lint.copy.sh
         shell: bash
       - name: Format
         run: |
-          chmod +x ./format.sh
-          ./format.sh
+          cp ./format.sh ./format.copy.sh
+          chmod +x ./format.copy.sh
+          ./format.copy.sh
+          rm ./format.copy.sh
         shell: bash
       - name: Check diff
         run: |
           git add .
-          git -c core.fileMode=false diff --cached --exit-code
+          git diff --cached --exit-code
 
   status-check:
     if: always()
