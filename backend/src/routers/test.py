@@ -7,7 +7,7 @@ router = APIRouter()
 
 
 @router.get("/test")
-def read_test() -> any:
+def read_test() -> OutReadTest:
     """エンドポイント `/test`
 
     Returns:
