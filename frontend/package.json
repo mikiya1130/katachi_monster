@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start --port 3030",
     "lint": "next lint --dir src",
     "lint:fix": "next lint --dir src --fix",
     "format": "yarn update-react-imports && yarn lint:fix && prettier --write src",
