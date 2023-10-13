@@ -1,14 +1,14 @@
 "use client";
 
 import { Typography } from "@mui/material";
-import React from "react";
+import { useState, useEffect } from "react";
 
 import { axios } from "@/axios";
 
 const LevelSelect = () => {
-  const [response, setResponse] = React.useState({ data: "" });
+  const [response, setResponse] = useState({ data: "" });
 
-  React.useEffect(() => {
+  useEffect(() => {
     axios.get("/test").then((res) => {
       setResponse(res.data);
     });
