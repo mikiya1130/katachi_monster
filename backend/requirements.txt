@@ -4,4 +4,7 @@ mypy
 ruff
 
 fastapi
+numpy
+python-multipart
+rembg
 uvicorn[standard]
