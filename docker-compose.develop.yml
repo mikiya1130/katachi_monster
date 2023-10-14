@@ -8,3 +8,4 @@ services:
   backend:
     ports:
       - "8000:8000"
+    command: bash -c ". launch_dev_server.sh"

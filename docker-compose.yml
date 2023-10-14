@@ -21,4 +21,3 @@ services:
         - USER_GID=${USER_GID}
     volumes:
       - ./backend:/app
-    command: bash -c ". launch_server.sh"
