@@ -1,8 +1,18 @@
 version: "3"
 services:
-  frontend:
+  https-portal:
+    image: steveltn/https-portal:1
     ports:
-      - "3000:3000"
+      - "3000:443"
+    environment:
+      STAGE: local
+      DOMAINS: "localhost -> http://frontend:3000"
+      WEBSOCKET: "true"
+    restart: always
+    depends_on:
+      - frontend
+
+  frontend:
     command: bash -c "yarn && yarn dev"
 
   backend:
