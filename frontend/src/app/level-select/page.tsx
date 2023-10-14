@@ -3,55 +3,64 @@ import Image from "next/image";
 
 const imagesLevel1 = [
   {
-    url: "../../../images/animal_black_sheep_hitsuji.png",
+    url: "/../../../images/animal_black_sheep_hitsuji.png",
     title: "sheep_hitsuji",
-    width: "30%",
+    width: 100,
+    height: 100,
   },
   {
-    url: "../../../images/animal_hitsuji_shiboubi.png",
+    url: "/../../../images/animal_hitsuji_shiboubi.png",
     title: "hitsuji_shiboubi",
-    width: "30%",
+    width: 100,
+    height: 100,
   },
   {
-    url: "../../../images/animal_uma_horse_stand.png",
+    url: "/../../../images/animal_marmot_longhair.png",
     title: "uma",
-    width: "30%",
+    width: 100,
+    height: 100,
   },
 ];
 
 const imagesLevel2 = [
   {
-    url: "../../../images/animal_marmot_longhair.png",
+    url: "/../../../images/animal_oryx.png",
     title: "sheep_hitsuji",
-    width: "30%",
+    width: 100,
+    height: 100,
   },
   {
-    url: "../../../images/animal_oryx.png",
+    url: "/../../../images/animal_shirohera_koumori.png",
     title: "hitsuji_shiboubi",
-    width: "30%",
+    width: 100,
+    height: 100,
   },
   {
-    url: "../../../images/animal_shirohera_koumori.png",
+    url: "/../../../images/animal_shirohera_koumori.png",
     title: "uma",
-    width: "30%",
+    width: 100,
+    height: 100,
   },
 ];
 
 const imagesLevel3 = [
   {
-    url: "../../../images/animal_thomsons_gazelle.png",
+    url: "/../../../images/animal_thomsons_gazelle.png",
     title: "sheep_hitsuji",
-    width: "30%",
+    width: 100,
+    height: 100,
   },
   {
-    url: "../../../images/animal_zou_white_hakuzou.png",
+    url: "/../../../images/animal_shirohera_koumori.png",
     title: "hitsuji_shiboubi",
-    width: "30%",
+    width: 100,
+    height: 100,
   },
   {
-    url: "../../../images/animal_tenrec.png",
+    url: "/../../../images/animal_shirohera_koumori.png",
     title: "uma",
-    width: "30%",
+    width: 100,
+    height: 100,
   },
 ];
 
@@ -87,7 +96,8 @@ const LevelSelect = () => {
               <Image
                 src={image.url}
                 alt={image.title}
-                style={{ width: "100%" }} // 画像の幅を100%に設定
+                width={image.width} // 画像の幅を指定
+                height={image.height} // 画像の高さを指定
               />
             </div>
           ))}
@@ -102,7 +112,8 @@ const LevelSelect = () => {
               <Image
                 src={image.url}
                 alt={image.title}
-                style={{ width: "100%" }}
+                width={image.width} // 画像の幅を指定
+                height={image.height} // 画像の高さを指定
               />
             </div>
           ))}
@@ -117,7 +128,8 @@ const LevelSelect = () => {
               <Image
                 src={image.url}
                 alt={image.title}
-                style={{ width: "100%" }} // 画像の幅を100%に設定
+                width={image.width} // 画像の幅を指定
+                height={image.height} // 画像の高さを指定
               />
             </div>
           ))}
