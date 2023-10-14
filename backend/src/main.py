@@ -5,3 +5,4 @@ from src.routers import test
 
 app = FastAPI()
 app.include_router(test.router)
+dummy = "dummy"
