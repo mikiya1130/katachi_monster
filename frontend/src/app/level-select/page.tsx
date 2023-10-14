@@ -1,4 +1,5 @@
 import { Rating, Typography } from "@mui/material";
+import Image from "next/image";
 
 const imagesLevel1 = [
   {
@@ -83,7 +84,7 @@ const LevelSelect = () => {
         <div style={imageContainerStyle}>
           {imagesLevel1.map((image, index) => (
             <div key={index} style={{ ...imageStyle, ...borderedImageStyle }}>
-              <img
+              <Image
                 src={image.url}
                 alt={image.title}
                 style={{ width: "100%" }} // 画像の幅を100%に設定
@@ -98,7 +99,7 @@ const LevelSelect = () => {
         <div style={imageContainerStyle}>
           {imagesLevel2.map((image, index) => (
             <div key={index} style={{ ...imageStyle, ...borderedImageStyle }}>
-              <img
+              <Image
                 src={image.url}
                 alt={image.title}
                 style={{ width: "100%" }}
@@ -113,7 +114,7 @@ const LevelSelect = () => {
         <div style={imageContainerStyle}>
           {imagesLevel3.map((image, index) => (
             <div key={index} style={{ ...imageStyle, ...borderedImageStyle }}>
-              <img
+              <Image
                 src={image.url}
                 alt={image.title}
                 style={{ width: "100%" }} // 画像の幅を100%に設定
