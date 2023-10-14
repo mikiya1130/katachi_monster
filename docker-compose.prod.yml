@@ -4,3 +4,6 @@ services:
     ports:
       - "3030:3030"
     command: bash -c "yarn && yarn build && yarn start"
+
+  backend:
+    command: bash -c ". launch_prod_server.sh"
