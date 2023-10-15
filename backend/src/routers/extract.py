@@ -32,7 +32,6 @@ def put_extract(file: bytes = File(...)) -> OutPutExtract:
 
         time = datetime.now(timezone(timedelta(hours=+9))).strftime("%Y%m%d-%H%M%S-%f")
         upload_path = Path("images", f"{time}.png")
-        upload_path.parent.mkdir(parents=True, exist_ok=True)
 
         image.save(upload_path)
         return OutPutExtract(upload_path=upload_path)
