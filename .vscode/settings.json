@@ -22,6 +22,8 @@
         // import 文の自動補完を絶対パスでおこなう
         "typescript.preferences.importModuleSpecifier": "non-relative"
     },
+    // .prettierrc へのパス
+    "prettier.configPath": "frontend/.prettierrc",
     // .py 限定の設定
     "[python]": {
         // インデントタブはスペースx4

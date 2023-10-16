@@ -50,7 +50,7 @@ const Message = (_: unknown, ref: ForwardedRef<MessageRef>) => {
 
   const handleClose = (
     event: React.SyntheticEvent | Event,
-    reason?: string
+    reason?: string,
   ) => {
     if (reason === "clickaway") return;
     setOpen(false);
