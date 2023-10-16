@@ -20,21 +20,12 @@ type State = "loading" | "loaded" | "error";
 
 const Camera = ({ width, height }: Props) => {
   const scale = 0.3;
-  const [numWidth, setNumWidth] = useState<number>(0);
-  const [numHeight, setNumHeight] = useState<number>(0);
   const [access, setAccess] = useState<State>("loading");
   const wrapperRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const messageRef = useRef<MessageRef>(null);
   const router = useRouter();
-
-  useEffect(() => {
-    if (wrapperRef && wrapperRef.current) {
-      setNumWidth(wrapperRef.current.clientWidth);
-      setNumHeight(wrapperRef.current.clientHeight);
-    }
-  }, [width, height]);
 
   useEffect(() => {
     if (!videoRef) return;
@@ -79,12 +70,42 @@ const Camera = ({ width, height }: Props) => {
   };
 
   const takePicture = () => {
-    if (canvasRef.current) {
-      canvasRef.current.width = numWidth;
-      canvasRef.current.height = numHeight;
+    if (wrapperRef.current && videoRef.current && canvasRef.current) {
+      const displayWidth = wrapperRef.current.clientWidth;
+      const displayHeight = wrapperRef.current.clientHeight;
+      const videoWidth = videoRef.current.videoWidth;
+      const videoHeight = videoRef.current.videoHeight;
+
+      let drawX = 0;
+      let drawY = 0;
+      let drawW = videoWidth;
+      let drawH = videoHeight;
+
+      if (displayWidth / displayHeight < videoWidth / videoHeight) {
+        const crop = videoWidth - displayWidth * (videoHeight / displayHeight);
+        drawX = crop / 2;
+        drawW = videoWidth - crop;
+      } else {
+        const crop = videoHeight - displayHeight * (videoWidth / displayWidth);
+        drawY = crop / 2;
+        drawH = videoHeight - crop;
+      }
+
+      canvasRef.current.width = drawW;
+      canvasRef.current.height = drawH;
       const ctx = canvasRef.current.getContext("2d");
       if (ctx && videoRef.current) {
-        ctx.drawImage(videoRef.current, 0, 0, numWidth, numHeight);
+        ctx.drawImage(
+          videoRef.current,
+          drawX,
+          drawY,
+          drawW,
+          drawH,
+          0,
+          0,
+          drawW,
+          drawH,
+        );
         const base64image = canvasRef.current.toDataURL("image/png");
         messageRef.current?.call({
           type: "info",
@@ -120,7 +141,7 @@ const Camera = ({ width, height }: Props) => {
         ref={videoRef}
         style={{ position: "absolute", objectFit: "cover" }}
       />
-      <canvas ref={canvasRef} style={{ position: "absolute" }} />
+      <canvas ref={canvasRef} style={{ display: "hidden" }} />
       {access === "loaded" && (
         <IconButton
           onClick={takePicture}
