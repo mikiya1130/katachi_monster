@@ -1,16 +1,26 @@
 """エンドポイント `/test`"""
 from fastapi import APIRouter
 
-from src.schemas import OutReadTest
+from src.schemas import InPostTest, OutGetTest
 
 router = APIRouter()
 
 
 @router.get("/test")
-def read_test() -> OutReadTest:
+def get_test() -> OutGetTest:
+    """エンドポイント `/test`
+
+    Returns:
+        OutGetTest: "Hello World"
+    """
+    return OutGetTest(data="Hello World")
+
+
+@router.post("/test")
+def post_test(data: InPostTest) -> None:
     """エンドポイント `/test`
 
     Returns:
         _type_: _description_
     """
-    return OutReadTest(data="Hello World")
+    print(data)  # noqa: T201

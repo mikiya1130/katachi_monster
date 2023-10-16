@@ -2,7 +2,13 @@
 from pydantic import BaseModel, FilePath
 
 
-class OutPutExtract(BaseModel):
-    """put_extract 関数の戻り値の型"""
+class InPostExtract(BaseModel):
+    """post_extract 関数の引数の型"""
+
+    file: bytes
+
+
+class OutPostExtract(BaseModel):
+    """post_extract 関数の戻り値の型"""
 
     upload_path: FilePath

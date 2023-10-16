@@ -2,7 +2,13 @@
 from pydantic import BaseModel
 
 
-class OutReadTest(BaseModel):
-    """read_test 関数の戻り値の型"""
+class OutGetTest(BaseModel):
+    """get_test 関数の戻り値の型"""
+
+    data: str
+
+
+class InPostTest(BaseModel):
+    """post_test 関数の引数の型"""
 
     data: str
