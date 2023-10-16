@@ -1,4 +1,5 @@
 """エンドポイント `/extract`"""
+import base64
 import io
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -21,13 +22,14 @@ def post_extract(requests: InPostExtract) -> OutPostExtract:
     - 実行に失敗した場合は、ステータスコード 500 を返す
 
     Args:
-        requests (InPostExtract): 対象画像の bytes データ
+        requests (InPostExtract): 対象画像の base64image データ
 
     Returns:
         OutPostExtract: 保存先パス
     """
     try:
-        result = Rembg.extract(requests.file)
+        bytes_image = base64.b64decode(requests.base64image.split(",")[1])
+        result = Rembg.extract(bytes_image)
         image = Image.open(io.BytesIO(result))
 
         time = datetime.now(timezone(timedelta(hours=+9))).strftime("%Y%m%d-%H%M%S-%f")
