@@ -1,4 +1,4 @@
-import { Cached, RadioButtonChecked } from "@mui/icons-material";
+import { ArrowBack, Cached, RadioButtonChecked } from "@mui/icons-material";
 import {
   Button,
   CircularProgress,
@@ -143,16 +143,42 @@ const Camera = ({ width, height }: Props) => {
       />
       <canvas ref={canvasRef} style={{ display: "hidden" }} />
       {access === "loaded" && (
-        <IconButton
-          onClick={takePicture}
+        <Stack
+          direction="row"
+          justifyContent="center"
           sx={{
             position: "absolute",
+            width: "100%",
             bottom: `calc(${width} * ${scale} / 3)`,
-            color: "white",
           }}
         >
-          <RadioButtonChecked sx={{ fontSize: `calc(${width} * ${scale})` }} />
-        </IconButton>
+          <IconButton
+            onClick={() => {
+              router.push("/select-silhouette");
+            }}
+            sx={{
+              position: "absolute",
+              left: 0,
+              width: `calc(${width} * ${scale} * 0.6)`,
+              height: `calc(${width} * ${scale} * 0.6)`,
+              marginX: 4,
+              marginY: `calc(${width} * ${scale} * 0.2)`, // (1.0 - height) / 2
+              color: "white",
+            }}
+          >
+            <ArrowBack sx={{ width: "100%", height: "100%" }} />
+          </IconButton>
+          <IconButton
+            onClick={takePicture}
+            sx={{
+              width: `calc(${width} * ${scale})`,
+              height: `calc(${width} * ${scale})`,
+              color: "white",
+            }}
+          >
+            <RadioButtonChecked sx={{ width: "100%", height: "100%" }} />
+          </IconButton>
+        </Stack>
       )}
       {access === "error" && (
         <Button
