@@ -1,10 +1,20 @@
-import { Stack } from "@mui/material";
+"use client";
+import { Stack, ThemeProvider, useMediaQuery } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import Link from "next/link";
 
-import TitleLogo from "@/components/TitleLogo";
-import TitleMessage from "@/components/TitleMessage";
+import { maxWidth } from "@/consts";
+import { titleFont } from "@/theme";
 
 const Home = () => {
+  const title = "カタチモンスター";
+  const titleMessage = "タッチしてスタート";
+  const width = useMediaQuery(titleFont.breakpoints.up(maxWidth))
+    ? `${titleFont.breakpoints.values[maxWidth]}px`
+    : "100vw";
+  const logoScale = 0.9;
+  const messageScale = 0.6;
+
   return (
     <Link
       href="/level-select"
@@ -15,8 +25,26 @@ const Home = () => {
         textAlign="center"
         sx={{ height: "100%" }}
       >
-        <TitleLogo />
-        <TitleMessage />
+        <ThemeProvider theme={titleFont}>
+          <Typography
+            variant="h1"
+            sx={{
+              fontSize: `calc(${width} * ${logoScale} / ${title.length})`,
+              fontWeight: 700,
+              textShadow: "0 0 5px",
+            }}
+          >
+            {title}
+          </Typography>
+        </ThemeProvider>
+        <Typography
+          variant="body1"
+          sx={{
+            fontSize: `calc(${width} * ${messageScale} / ${titleMessage.length})`,
+          }}
+        >
+          {titleMessage}
+        </Typography>
       </Stack>
     </Link>
   );
