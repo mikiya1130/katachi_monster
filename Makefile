@@ -1,8 +1,8 @@
 build:
-	docker compose build
+	docker compose -f docker-compose.yml -f docker-compose.develop.yml build
 
 up:
-	docker compose up -d
+	docker compose -f docker-compose.yml -f docker-compose.develop.yml up -d
 
 upb:
 	docker compose -f docker-compose.yml -f docker-compose.develop.yml up -d --build
