@@ -1,7 +1,5 @@
 "use client";
-
 import { Rating, Stack, Typography } from "@mui/material";
-import React from "react";
 
 import Swiper from "@/app/level-select/Swiper";
 import { imagesLevel1, imagesLevel2, imagesLevel3 } from "@/sampleImages";

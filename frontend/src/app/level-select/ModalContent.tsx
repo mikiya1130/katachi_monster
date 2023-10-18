@@ -1,7 +1,6 @@
 import { Box, Button, Modal, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 
 import { TypeSelectedImageInfo } from "@/types";
 
@@ -70,9 +69,9 @@ const ModalContent = ({ selectedImageInfo, handleClose }: Props) => {
             variant="contained"
             color="secondary"
             sx={{
-              width: "100px", // ボタンの幅を指定
-              height: "50px", // ボタンの高さを指定
-              fontSize: "16px", // ボタンのテキストのフォントサイズを指定
+              width: "100px",
+              height: "50px",
+              fontSize: "16px",
               mb: 2,
               ml: 1,
               mt: 2,
@@ -87,9 +86,9 @@ const ModalContent = ({ selectedImageInfo, handleClose }: Props) => {
             variant="contained"
             color="secondary"
             sx={{
-              width: "100px", // ボタンの幅を指定
-              height: "50px", // ボタンの高さを指定
-              fontSize: "16px", // ボタンのテキストのフォントサイズを指定
+              width: "100px",
+              height: "50px",
+              fontSize: "16px",
               mb: 2,
               ml: 1,
               mt: 2,
