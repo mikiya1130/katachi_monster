@@ -82,7 +82,7 @@ const ModalContent = ({ selectedImageInfo, handleClose }: Props) => {
           </Button>
         </Link>
 
-        <Link href="/part-select">
+        <Link href="/select-silhouette">
           <Button
             variant="contained"
             color="secondary"
