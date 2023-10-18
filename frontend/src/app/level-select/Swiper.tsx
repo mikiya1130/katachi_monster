@@ -1,6 +1,6 @@
 import { Box, Stack } from "@mui/material";
 import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
 import { useSwipeable } from "react-swipeable";
 
 import ModalContent from "@/app/level-select/ModalContent";
@@ -33,7 +33,7 @@ const Swiper = ({ images }: Props) => {
   const [selectedImageInfo, setSelectedImageInfo] =
     React.useState<null | TypeSelectedImageInfo>(null);
 
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  // const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const handleOpen = (imageInfo: TypeSelectedImageInfo) => {
     console.log("capture phase");
@@ -49,13 +49,13 @@ const Swiper = ({ images }: Props) => {
     setSelectedImageInfo(null);
   };
 
-  const handleSwiped = (eventData: { dir: string }) => {
-    if (eventData.dir === "Left" && currentImageIndex < images.length - 1) {
-      setCurrentImageIndex(currentImageIndex + 1);
-    } else if (eventData.dir === "Right" && currentImageIndex > 0) {
-      setCurrentImageIndex(currentImageIndex - 1);
-    }
-  };
+  // const handleSwiped = (eventData: { dir: string }) => {
+  //   if (eventData.dir === "Left" && currentImageIndex < images.length - 1) {
+  //     setCurrentImageIndex(currentImageIndex + 1);
+  //   } else if (eventData.dir === "Right" && currentImageIndex > 0) {
+  //     setCurrentImageIndex(currentImageIndex - 1);
+  //   }
+  // };
 
   const handlers = useSwipeable({
     onSwiped: (eventData) => {
