@@ -6,18 +6,45 @@ on:
       - master
 
 jobs:
-  ci:
+  changes:
+    runs-on: ubuntu-latest
+    # Required permissions
+    permissions:
+      pull-requests: read
+    # Set job outputs to values from filter step
+    outputs:
+      frontend: ${{ steps.filter.outputs.frontend }}
+      backend: ${{ steps.filter.outputs.backend }}
+    steps:
+      # For pull requests it's not necessary to checkout the code
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            frontend:
+              - 'frontend/**'
+            backend:
+              - 'backend/**'
+
+  ci-frontend:
+    needs: changes
+    if: ${{ needs.changes.outputs.frontend == 'true' }}
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: frontend
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 20
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
       - name: Install yarn
         run: yarn
       - name: Lint
@@ -28,3 +55,58 @@ jobs:
         run: |
           git add .
           git diff --cached --exit-code
+
+  ci-backend:
+    needs: changes
+    if: ${{ needs.changes.outputs.backend == 'true' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - name: Cache pip
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Lint
+        run: |
+          cp ./lint.sh ./lint.copy.sh
+          chmod +x ./lint.copy.sh
+          ./lint.copy.sh
+          rm ./lint.copy.sh
+        shell: bash
+      - name: Format
+        run: |
+          cp ./format.sh ./format.copy.sh
+          chmod +x ./format.copy.sh
+          ./format.copy.sh
+          rm ./format.copy.sh
+        shell: bash
+      - name: Check diff
+        run: |
+          git add .
+          git diff --cached --exit-code
+
+  status-check:
+    if: always()
+    needs:
+      - ci-frontend
+      - ci-backend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Status check
+        uses: re-actors/alls-green@release/v1
+        with:
+          allowed-skips: ci-frontend, ci-backend
+          jobs: ${{ toJSON(needs) }}
