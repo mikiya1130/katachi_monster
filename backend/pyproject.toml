@@ -4,15 +4,18 @@ py_version=311
 [tool.mypy]
 python_version = 3.11
 ignore_missing_imports = true
+plugins = "sqlalchemy.ext.mypy.plugin"
 
 [tool.ruff]
 target-version = "py311"
 select = ["ALL"]
 ignore = [
     "N801", "N999",
-    "D400", "D403", "D415",
+    "D106", "D400", "D403", "D415",
     "ANN002", "ANN003", "ANN101", "ANN102", "ANN202",
     "S101", "S301",
+    "B008",
+    "A003",
     "TD002", "TD003",
     "ERA001",
     "PGH003",

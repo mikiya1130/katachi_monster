@@ -19,3 +19,16 @@ services:
     ports:
       - "8000:8000"
     command: bash -c ". launch_dev_server.sh"
+
+  phpmyadmin:
+    image: phpmyadmin:5.2.1
+    ports:
+      - 8080:80
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=database
+      - PMA_USER=mysql
+      - PMA_PASSWORD=${MYSQL_USER_PASSWORD}
+    restart: always
+    depends_on:
+      - database

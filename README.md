@@ -13,6 +13,10 @@ make upb
   - VSCode の PORTS で `8000` をポートフォワード
   - lint 実行：`make back-lint`
   - format 実行：`make back-format`
+- データベース
+  - CUI: `make db`
+  - phpmyadmin: VSCode の PORTS で `8080` をポートフォワード
+  - データリセット: `make downv`
 
 ## 本番環境構築
 
