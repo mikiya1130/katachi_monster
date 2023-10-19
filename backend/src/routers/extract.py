@@ -8,7 +8,7 @@ from fastapi import APIRouter, HTTPException
 from PIL import Image
 
 from src.core import Rembg
-from src.schemas import InPostExtract, OutPostExtract
+from src.types import InPostExtract, OutPostExtract
 
 router = APIRouter()
 

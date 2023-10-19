@@ -1,7 +1,7 @@
 """エンドポイント `/test`"""
 from fastapi import APIRouter
 
-from src.schemas import InPostTest, OutGetTest
+from src.types import InPostTest, OutGetTest
 
 router = APIRouter()
 

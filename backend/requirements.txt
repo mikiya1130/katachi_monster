@@ -3,8 +3,11 @@ isort
 mypy
 ruff
 
+cryptography
 fastapi
 numpy
+PyMySQL
 python-multipart
 rembg
+sqlalchemy[mypy]
 uvicorn[standard]

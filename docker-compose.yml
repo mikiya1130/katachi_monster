@@ -19,5 +19,26 @@ services:
         - USERNAME=${USERNAME}
         - USER_UID=${USER_UID}
         - USER_GID=${USER_GID}
+    environment:
+      MYSQL_PASSWORD: ${MYSQL_USER_PASSWORD}
     volumes:
       - ./backend:/app
+    depends_on:
+      - database
+
+  database:
+    image: mysql:8.1
+    environment:
+      MYSQL_DATABASE: katachi_monster
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: ${MYSQL_USER_PASSWORD}
+      TZ: Asia/Tokyo
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./database/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ./database/conf.d:/etc/mysql/conf.d
+    restart: always
+
+volumes:
+  db-data:

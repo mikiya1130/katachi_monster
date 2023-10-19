@@ -13,6 +13,9 @@ upb-prod:
 down:
 	docker compose down
 
+down-rm:
+	docker compose down --volumes --remove-orphans
+
 start:
 	docker compose start
 
@@ -42,3 +45,6 @@ back-lint:
 
 back-format:
 	docker compose exec backend bash format.sh
+
+db:
+	. ./.env && docker compose exec database mysql -p$${MYSQL_ROOT_PASSWORD}
