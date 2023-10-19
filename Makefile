@@ -13,8 +13,8 @@ upb-prod:
 down:
 	docker compose down
 
-downv:
-	docker compose down --volumes
+down-rm:
+	docker compose down --volumes --remove-orphans
 
 start:
 	docker compose start
