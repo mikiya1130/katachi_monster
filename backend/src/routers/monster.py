@@ -1,25 +1,55 @@
 """エンドポイント `/monster`"""
-from fastapi import APIRouter, Depends
+import base64
+import io
+
+from fastapi import APIRouter, Depends, HTTPException
+from PIL import Image
 from sqlalchemy.orm import Session
 
 from src.cruds import read_all_monsters
 from src.db import get_db
-from src.schemas import Monster
+from src.types.monster import Monster, OutGetMonster
 
 router = APIRouter()
 
 
 @router.get("/monster")
-def get_monster(db: Session = Depends(get_db)) -> list[Monster]:
+def get_monster(
+    db: Session = Depends(get_db),
+) -> OutGetMonster:
     """エンドポイント `/monster`
 
     Args:
         db (Session, optional): _description_. Defaults to Depends(get_db).
 
     Returns:
-        list[Monster]: monster 一覧
+        OutGetMonster: レベルごとのモンスター画像
     """
-    return read_all_monsters(db=db)
+    monsters = read_all_monsters(db=db)
+
+    results: OutGetMonster = ([], [], [])
+    for monster in monsters:
+        # monster_image に silhouette_image を貼り付けて画像を完成させる
+        monster_image = Image.open(monster.monster_path)
+        if monster_image.mode != "RGBA":
+            raise HTTPException(status_code=500, detail="Invalid image type")
+        for silhouette in monster.silhouette:
+            silhouette_image = Image.open(silhouette.silhouette_path)
+            if silhouette_image.mode != "RGBA":
+                raise HTTPException(status_code=500, detail="Invalid image type")
+            monster_image = Image.alpha_composite(monster_image, silhouette_image)
+
+        # png => base64
+        buffer = io.BytesIO()
+        monster_image.save(buffer, format="PNG")
+        base64image = base64.b64encode(buffer.getvalue())
+        base64image = bytes("data:image/png;base64,", encoding="utf-8") + base64image
+
+        # レベルごとに分類して results に追加
+        level = int(monster.level) - 1
+        results[level].append(Monster(id=monster.id, base64image=base64image))  # type: ignore
+
+    return results
 
 
 # @router.get("/monster/{monster}")
