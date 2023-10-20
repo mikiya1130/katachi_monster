@@ -1,4 +1,6 @@
 """monsters テーブルのカラムの型定義"""
+from typing import Literal
+
 from pydantic import BaseModel
 
 from src.schemas.silhouette import Silhouette
@@ -7,7 +9,7 @@ from src.schemas.silhouette import Silhouette
 class MonsterBase(BaseModel):
     """Base"""
 
-    level: int
+    level: Literal[1, 2, 3]
     monster_path: str
 
 
