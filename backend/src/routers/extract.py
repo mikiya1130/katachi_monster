@@ -1,14 +1,12 @@
 """エンドポイント `/extract`"""
-import base64
-import io
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from fastapi import APIRouter, HTTPException
-from PIL import Image
 
 from src.core import Rembg
 from src.types import InPostExtract, OutPostExtract
+from src.utils import base64image_to_png
 
 router = APIRouter()
 
@@ -28,14 +26,13 @@ def post_extract(requests: InPostExtract) -> OutPostExtract:
         OutPostExtract: 保存先パス
     """
     try:
-        bytes_image = base64.b64decode(requests.base64image.split(",")[1])
-        result = Rembg.extract(bytes_image)
-        image = Image.open(io.BytesIO(result))
+        image = base64image_to_png(bytes(requests.base64image, encoding="utf-8"))
+        result = Rembg.extract(image)
 
         time = datetime.now(timezone(timedelta(hours=+9))).strftime("%Y%m%d-%H%M%S-%f")
         upload_path = Path("images", f"{time}.png")
 
-        image.save(upload_path)
+        result.save(upload_path)
         return OutPostExtract(upload_path=upload_path)
     except RuntimeError:
         return HTTPException(status_code=500)  # type: ignore
