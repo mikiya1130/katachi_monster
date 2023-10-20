@@ -1,7 +1,4 @@
 """エンドポイント `/monster`"""
-import base64
-import io
-
 from fastapi import APIRouter, Depends, HTTPException
 from PIL import Image
 from sqlalchemy.orm import Session
@@ -9,6 +6,7 @@ from sqlalchemy.orm import Session
 from src.cruds import read_all_monsters
 from src.db import get_db
 from src.types.monster import Monster, OutGetMonster
+from src.utils import png_to_base64image
 
 router = APIRouter()
 
@@ -40,10 +38,7 @@ def get_monster(
             monster_image = Image.alpha_composite(monster_image, silhouette_image)
 
         # png => base64
-        buffer = io.BytesIO()
-        monster_image.save(buffer, format="PNG")
-        base64image = base64.b64encode(buffer.getvalue())
-        base64image = bytes("data:image/png;base64,", encoding="utf-8") + base64image
+        base64image = png_to_base64image(monster_image)
 
         # レベルごとに分類して results に追加
         level = int(monster.level) - 1

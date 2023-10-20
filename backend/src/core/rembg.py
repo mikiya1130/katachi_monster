@@ -2,6 +2,7 @@
 from collections.abc import AsyncGenerator, Callable
 
 from fastapi import FastAPI
+from PIL import Image
 from rembg import new_session, remove
 
 
@@ -32,7 +33,7 @@ class Rembg:
         return lifespan
 
     @classmethod
-    def extract(cls, file: bytes) -> bytes:
+    def extract(cls, file: Image) -> Image:
         """物体抽出の実行
 
         Args:
@@ -41,5 +42,5 @@ class Rembg:
         Returns:
             bytes: 抽出画像の bytes データ
         """
-        result: bytes = remove(file, session=cls.session)
+        result: Image = remove(file, session=cls.session)
         return result
