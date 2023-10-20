@@ -138,6 +138,9 @@ const Camera = ({ width, height }: Props) => {
       <video
         width="100%"
         height="100%"
+        muted={true}
+        autoPlay={true}
+        playsInline={true}
         ref={videoRef}
         style={{ position: "absolute", objectFit: "cover" }}
       />
