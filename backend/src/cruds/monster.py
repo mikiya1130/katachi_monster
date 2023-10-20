@@ -29,3 +29,8 @@ def init_monsters(db: Session) -> None:
 def read_all_monsters(db: Session) -> list[schemas.Monster]:
     """monsters テーブルの全てのレコードを取得する"""
     return db.query(models.Monster).all()  # type: ignore
+
+
+def read_monster(db: Session, monster_id: int) -> schemas.Monster:
+    """monsters テーブルの指定された id のレコードを取得する"""
+    return db.query(models.Monster).filter(models.Monster.id == monster_id).first()  # type: ignore
