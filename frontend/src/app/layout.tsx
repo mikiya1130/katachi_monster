@@ -1,15 +1,15 @@
+import "@fontsource/noto-sans-jp/700.css";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
 import { CssBaseline } from "@mui/material";
 import Container from "@mui/material/Container";
 import { ThemeProvider } from "@mui/material/styles";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
-import "@fontsource/noto-sans-jp/700.css";
 
-import { maxWidth, title } from "@/consts";
+import { maxWidth } from "@/consts";
 import theme from "@/theme";
 
 const inter = Inter({ subsets: ["latin"] });
