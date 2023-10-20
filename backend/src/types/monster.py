@@ -7,6 +7,7 @@ class Monster(BaseModel):
 
     id: int
     base64image: str = Field(pattern=r"^data:image/png;base64,")
+    segment: str | None = None
 
 
 # get_monster 関数の戻り値の型
