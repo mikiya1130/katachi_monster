@@ -1,7 +1,83 @@
-import { Typography } from "@mui/material";
+"use client";
+import { Box, Button, Stack } from "@mui/material";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import * as React from "react";
+
+import { axios } from "@/axios";
 
 const SelectSilhouette = () => {
-  return <Typography>{"select silhouette"}</Typography>;
+  const searchParams = useSearchParams();
+  const [image, setImage] = useState<string>();
+  const [segment, setSegment] = useState<string[][]>();
+  const [segmentWidth, setSegmentWidth] = useState<number>(0);
+  const [segmentHeight, setSegmentHeight] = useState<number>(0);
+  const router = useRouter();
+
+  const decode_2d_list = (str: string) =>
+    str.split("|").map((row: string) => row.split(","));
+
+  useEffect(() => {
+    const monsterId = searchParams.get("monsterId") ?? "1"; // TODO: パラメータない時の処理を実装する
+    axios.get(`monster/${monsterId}`).then((res) => {
+      setImage(res.data.base64image);
+      setSegment(decode_2d_list(res.data.segment));
+    });
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (segment) {
+      setSegmentWidth(segment[0].length);
+      setSegmentHeight(segment.length);
+    }
+  }, [segment]);
+
+  const clickSilhouette = (
+    positionX: number,
+    positionY: number,
+  ): number | null => {
+    const segmentX = Math.floor(segmentWidth * positionX);
+    const segmentY = Math.floor(segmentHeight * positionY);
+    if (segment) {
+      const value = segment[segmentY][segmentX];
+      if (value.startsWith("s")) {
+        return Number(value.replace("s", ""));
+      }
+    }
+    return null;
+  };
+
+  const handleClickImage = (e: React.MouseEvent<HTMLElement>) => {
+    const dom = e.currentTarget.getBoundingClientRect();
+    const positionX = Math.max(0, e.clientX - dom.x) / dom.width;
+    const positionY = Math.max(0, e.clientY - dom.y) / dom.height;
+    const silhouetteId = clickSilhouette(positionX, positionY);
+    if (silhouetteId !== null) {
+      router.push(`/take-picture?silhouetteId=${silhouetteId}`);
+    }
+  };
+
+  return (
+    <Stack
+      height="inherit"
+      alignItems="center"
+      justifyContent="center"
+      spacing={4}
+      padding={4}
+    >
+      <Box
+        component="img"
+        src={image}
+        onClick={handleClickImage}
+        sx={{ width: "100%", aspectRatio: 1, objectFit: "contain" }}
+      />
+      <Link href="/level-select">
+        <Button variant="outlined">もどる</Button>
+      </Link>
+    </Stack>
+  );
 };
 
 export default SelectSilhouette;
