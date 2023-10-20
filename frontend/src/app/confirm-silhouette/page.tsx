@@ -31,7 +31,7 @@ const ConfirmSilhouette = () => {
       <Box
         component="img"
         src={image}
-        sx={{ aspectRatio: 1, objectFit: "contain" }}
+        sx={{ width: "100%", aspectRatio: 1, objectFit: "contain" }}
       />
       <Stack direction="row" spacing={4}>
         <Link href="/take-picture">
