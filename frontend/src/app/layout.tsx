@@ -15,7 +15,7 @@ import theme from "@/theme";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: title,
+  title: "カタチモンスター",
   description: "",
 };
 
