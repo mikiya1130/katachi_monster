@@ -95,12 +95,6 @@ const TakePicture = () => {
     <>
       {cameraState !== "error" ? (
         <Box width={width} height="100svh" sx={{ position: "relative" }}>
-          {cameraState === "loading" && (
-            <Centering>
-              <CircularProgress />
-              <Typography>{"カメラ読み込み中……"}</Typography>
-            </Centering>
-          )}
           <Camera
             width={width}
             height="100svh"
@@ -116,13 +110,21 @@ const TakePicture = () => {
               pointerEvents: "none",
             }}
           >
-            <Box
-              component="img"
-              src={silhouette}
-              width="100%"
-              height="100%"
-              sx={{ objectFit: "contain", opacity: 0.2 }}
-            />
+            {cameraState === "loading" && (
+              <>
+                <CircularProgress />
+                <Typography>{"カメラ読み込み中……"}</Typography>
+              </>
+            )}
+            {cameraState === "loaded" && (
+              <Box
+                component="img"
+                src={silhouette}
+                width="100%"
+                height="100%"
+                sx={{ objectFit: "contain", opacity: 0.2 }}
+              />
+            )}
           </Centering>
         </Box>
       ) : (
