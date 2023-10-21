@@ -1,4 +1,6 @@
 """エンドポイント `/extract` の型定義"""
+from pathlib import Path
+
 from pydantic import BaseModel, FilePath, validator
 
 
@@ -19,3 +21,10 @@ class OutPostExtract(BaseModel):
     """post_extract 関数の戻り値の型"""
 
     upload_path: FilePath
+
+    @validator("upload_path")
+    def check_base64image(cls, v: Path) -> Path:  # noqa: N805
+        """`upload_path` が `images` ディレクトリ以下を指していることを確認"""
+        if not v.is_relative_to("images/pictures/"):
+            raise TypeError
+        return v
