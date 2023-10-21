@@ -34,7 +34,7 @@ def get_silhouette(
     silhouette_image = Image.open(silhouette.silhouette_path)
     if silhouette_image.mode != "RGBA":
         raise HTTPException(status_code=500, detail="Invalid image type")
-    silhouette_image = binalize_alpha(silhouette_image, high=50)
+    silhouette_image = binalize_alpha(silhouette_image)
 
     # cropping & padding silhouette
     if crop:
