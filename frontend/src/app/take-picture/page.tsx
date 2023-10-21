@@ -39,7 +39,7 @@ const TakePicture = () => {
     const silhouetteId = searchParams.get("silhouetteId") ?? "1"; // TODO: パラメータない時の処理を実装する
     setSilhouetteId(silhouetteId);
 
-    axios.get(`silhouette/${silhouetteId}`).then((res) => {
+    axios.get(`silhouette/${silhouetteId}?crop=true`).then((res) => {
       setSilhouette(res.data.base64image);
     });
   }, [searchParams]);
