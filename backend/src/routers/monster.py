@@ -50,9 +50,9 @@ def _merge_silhouettes(monster: schemas.Monster) -> tuple[Image.Image, list[list
 
 
 @router.get("/monster")
-def get_monster(
+def get_all_monster(
     db: Session = Depends(get_db),
-) -> types.monster.OutGetMonster:
+) -> types.monster.OutGetAllMonster:
     """エンドポイント `/monster`
 
     Args:
@@ -63,7 +63,7 @@ def get_monster(
     """
     monsters = read_all_monsters(db=db)
 
-    results: types.monster.OutGetMonster = ([], [], [])
+    results: types.monster.OutGetAllMonster = ([], [], [])
     for monster in monsters:
         try:
             monster_image, _ = _merge_silhouettes(monster)
@@ -81,7 +81,7 @@ def get_monster(
 
 
 @router.get("/monster/{monster_id}")
-def get_monster_monster(
+def get_monster(
     monster_id: int,
     db: Session = Depends(get_db),
 ) -> types.Monster:

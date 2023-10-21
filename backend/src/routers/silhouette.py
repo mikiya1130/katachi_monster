@@ -12,7 +12,7 @@ router = APIRouter()
 
 
 @router.get("/silhouette/{silhouette_id}")
-def get_silhouette_silhouette(
+def get_silhouette(
     silhouette_id: int,
     db: Session = Depends(get_db),
 ) -> types.Silhouette:
