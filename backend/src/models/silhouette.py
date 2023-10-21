@@ -9,6 +9,6 @@ class Silhouette(Base):
 
     __tablename__ = "silhouettes"
 
-    id = Column(Integer, primary_key=True, index=True)
-    monster_id = Column(Integer, ForeignKey("monsters.id"), nullable=False)
-    silhouette_path = Column(String(128), unique=True, nullable=False)
+    id: int = Column(Integer, primary_key=True, index=True)
+    monster_id: int = Column(Integer, ForeignKey("monsters.id"), nullable=False)
+    silhouette_path: str = Column(String(128), unique=True, nullable=False)

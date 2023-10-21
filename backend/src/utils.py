@@ -20,7 +20,7 @@ def png_to_base64image(png_image: Image) -> bytes:
     buffer = io.BytesIO()
     png_image.save(buffer, format="PNG")
     base64image = base64.b64encode(buffer.getvalue())
-    return bytes("data:image/png;base64,", encoding="utf-8") + base64image
+    return b"data:image/png;base64," + base64image
 
 
 def base64image_to_png(base64image: bytes) -> Image:

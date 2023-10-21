@@ -11,8 +11,8 @@ class Monster(Base):
 
     __tablename__ = "monsters"
 
-    id = Column(Integer, primary_key=True, index=True)
-    level = Column(Integer, nullable=False)
-    monster_path = Column(String(128), unique=True, nullable=False)
+    id: int = Column(Integer, primary_key=True, index=True)
+    level: int = Column(Integer, nullable=False)
+    monster_path: str = Column(String(128), unique=True, nullable=False)
 
-    silhouette: Mapped[Silhouette] = relationship("Silhouette")
+    silhouette: Mapped[list[Silhouette]] = relationship("Silhouette")
