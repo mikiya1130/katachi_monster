@@ -5,6 +5,7 @@
 
 import { Cached } from "@mui/icons-material";
 import {
+  Box,
   Button,
   CircularProgress,
   Typography,
@@ -26,6 +27,7 @@ const TakePicture = () => {
   const [silhouetteId, setSilhouetteId] = useState<string>("1");
   const router = useRouter();
   const [cameraState, setCameraState] = useState<CameraState>("loading");
+  const [silhouette, setSilhouette] = useState<string>();
   const messageRef = useRef<MessageRef>(null);
   const width = useMediaQuery(theme.breakpoints.up(maxWidth))
     ? `${theme.breakpoints.values[maxWidth]}px`
@@ -36,6 +38,10 @@ const TakePicture = () => {
     setMonsterId(monsterId);
     const silhouetteId = searchParams.get("silhouetteId") ?? "1"; // TODO: パラメータない時の処理を実装する
     setSilhouetteId(silhouetteId);
+
+    axios.get(`silhouette/${silhouetteId}`).then((res) => {
+      setSilhouette(res.data.base64image);
+    });
   }, [searchParams]);
 
   const updateCameraStateCallback = (cameraState: CameraState) => {
@@ -88,7 +94,7 @@ const TakePicture = () => {
   return (
     <>
       {cameraState !== "error" ? (
-        <>
+        <Box width={width} height="100svh" sx={{ position: "relative" }}>
           {cameraState === "loading" && (
             <Centering>
               <CircularProgress />
@@ -102,7 +108,23 @@ const TakePicture = () => {
             takePictureCallback={takePictureCallback}
             handleClickBack={handleClickBack}
           />
-        </>
+          <Centering
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              pointerEvents: "none",
+            }}
+          >
+            <Box
+              component="img"
+              src={silhouette}
+              width="100%"
+              height="100%"
+              sx={{ objectFit: "contain" }}
+            />
+          </Centering>
+        </Box>
       ) : (
         <Centering>
           <Button
