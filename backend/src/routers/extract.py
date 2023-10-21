@@ -15,7 +15,7 @@ router = APIRouter()
 def post_extract(requests: InPostExtract) -> OutPostExtract:
     """エンドポイント `/extract`
 
-    - 物体抽出後の画像を `/images` ディレクトリ下に保存する
+    - 物体抽出後の画像を `/images/pictures` ディレクトリ下に保存する
     - 保存先パスを返す
     - 実行に失敗した場合は、ステータスコード 500 を返す
 
@@ -30,7 +30,7 @@ def post_extract(requests: InPostExtract) -> OutPostExtract:
         result = Rembg.extract(image)
 
         time = datetime.now(timezone(timedelta(hours=+9))).strftime("%Y%m%d-%H%M%S-%f")
-        upload_path = Path("images", f"{time}.png")
+        upload_path = Path("images/pictures", f"{time}.png")
 
         result.save(upload_path)
         return OutPostExtract(upload_path=upload_path)
