@@ -111,8 +111,3 @@ def get_monster_monster(
         base64image=base64image,  # type: ignore
         segment=encoded_segment,
     )
-
-
-# @router.get("/monster/{monster}/{silhouette}")
-# def get_monster_monster_silhouette(monster: str, silhouette: str):
-#     pass
