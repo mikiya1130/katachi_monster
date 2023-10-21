@@ -1,4 +1,8 @@
+/**
+ * /select-silhouette?monsterId=${monsterId}
+ */
 "use client";
+
 import { Box, Button, Stack } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -10,17 +14,20 @@ import { axios } from "@/axios";
 
 const SelectSilhouette = () => {
   const searchParams = useSearchParams();
+  const [monsterId, setMonsterId] = useState<string>("1");
+  const router = useRouter();
   const [image, setImage] = useState<string>();
   const [segment, setSegment] = useState<string[][]>();
   const [segmentWidth, setSegmentWidth] = useState<number>(0);
   const [segmentHeight, setSegmentHeight] = useState<number>(0);
-  const router = useRouter();
 
   const decode_2d_list = (str: string) =>
     str.split("|").map((row: string) => row.split(","));
 
   useEffect(() => {
     const monsterId = searchParams.get("monsterId") ?? "1"; // TODO: パラメータない時の処理を実装する
+    setMonsterId(monsterId);
+
     axios.get(`monster/${monsterId}`).then((res) => {
       setImage(res.data.base64image);
       setSegment(decode_2d_list(res.data.segment));
@@ -55,7 +62,9 @@ const SelectSilhouette = () => {
     const positionY = Math.max(0, e.clientY - dom.y) / dom.height;
     const silhouetteId = clickSilhouette(positionX, positionY);
     if (silhouetteId !== null) {
-      router.push(`/take-picture?silhouetteId=${silhouetteId}`);
+      router.push(
+        `/take-picture?monsterId=${monsterId}&silhouetteId=${silhouetteId}`,
+      );
     }
   };
 

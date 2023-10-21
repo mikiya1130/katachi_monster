@@ -1,35 +1,38 @@
-import { ArrowBack, Cached, RadioButtonChecked } from "@mui/icons-material";
-import {
-  Button,
-  CircularProgress,
-  IconButton,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
-
-import { axios } from "@/axios";
-import Message, { MessageRef } from "@/components/Message";
+import { ArrowBack, RadioButtonChecked } from "@mui/icons-material";
+import { Box, IconButton, Stack } from "@mui/material";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 type Props = {
   width: string;
   height: string;
+  updateCameraStateCallback: (cameraState: CameraState) => void;
+  takePictureCallback: (base64image: string) => void;
+  handleClickBack: () => void;
 };
-type State = "loading" | "loaded" | "error";
+export type CameraState = "loading" | "loaded" | "error";
 
-const Camera = ({ width, height }: Props) => {
+const Camera = ({
+  width,
+  height,
+  updateCameraStateCallback,
+  takePictureCallback,
+  handleClickBack,
+}: Props) => {
   const scale = 0.3;
-  const [access, setAccess] = useState<State>("loading");
+  const [cameraState, setCameraState] = useState<CameraState>("loading");
   const wrapperRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const messageRef = useRef<MessageRef>(null);
-  const router = useRouter();
 
-  useEffect(() => {
-    if (!videoRef) return;
+  const updateCameraState = useCallback(
+    (cameraState: CameraState) => {
+      setCameraState(cameraState);
+      updateCameraStateCallback(cameraState);
+    },
+    [updateCameraStateCallback],
+  );
 
+  const loadCamera = useCallback(() => {
     navigator.mediaDevices
       .getUserMedia({
         video: { facingMode: "environment" },
@@ -39,37 +42,23 @@ const Camera = ({ width, height }: Props) => {
         if (videoRef.current && videoRef.current.srcObject == null) {
           videoRef.current.srcObject = stream;
           videoRef.current.play();
-          setAccess("loaded");
+          updateCameraState("loaded");
         }
       })
       .catch(() => {
-        messageRef.current?.call({
-          type: "error",
-          message: "カメラにアクセスできません",
-        });
-        setAccess("error");
+        updateCameraState("error");
       });
-  }, [videoRef, setAccess]);
+  }, [updateCameraState]);
 
-  const postImage = async (base64image: string): Promise<string> => {
-    return axios
-      .post("/extract", {
-        base64image: base64image,
-      })
-      .then((res) => {
-        const imagePath: string = res.data.upload_path;
-        return imagePath;
-      })
-      .catch((error) => {
-        messageRef.current?.call({
-          type: "error",
-          message: error.message,
-        });
-        return "";
-      });
-  };
+  useEffect(() => {
+    if (videoRef) {
+      loadCamera();
+    }
+  }, [videoRef, loadCamera, updateCameraStateCallback]);
 
   const takePicture = () => {
+    let base64image = "";
+
     if (wrapperRef.current && videoRef.current && canvasRef.current) {
       const displayWidth = wrapperRef.current.clientWidth;
       const displayHeight = wrapperRef.current.clientHeight;
@@ -106,35 +95,20 @@ const Camera = ({ width, height }: Props) => {
           drawW,
           drawH,
         );
-        const base64image = canvasRef.current.toDataURL("image/png");
-        messageRef.current?.call({
-          type: "info",
-          message: "画像を処理しています……",
-        });
-        postImage(base64image).then((imagePath) => {
-          if (imagePath) {
-            router.push(`/confirm-silhouette?imagePath=${imagePath}`);
-          }
-        });
+        base64image = canvasRef.current.toDataURL("image/png");
       }
     }
+
+    takePictureCallback(base64image);
   };
 
   return (
-    <Stack
+    <Box
       width={width}
       height={height}
-      alignItems="center"
-      justifyContent="center"
       sx={{ position: "relative" }}
       ref={wrapperRef}
     >
-      {access === "loading" && (
-        <>
-          <CircularProgress />
-          <Typography>{"カメラ読み込み中……"}</Typography>
-        </>
-      )}
       <video
         width="100%"
         height="100%"
@@ -144,58 +118,46 @@ const Camera = ({ width, height }: Props) => {
         ref={videoRef}
         style={{ position: "absolute", objectFit: "cover" }}
       />
-      <canvas ref={canvasRef} style={{ display: "hidden" }} />
-      {access === "loaded" && (
-        <Stack
-          direction="row"
-          justifyContent="center"
-          sx={{
-            position: "absolute",
-            width: "100%",
-            bottom: `calc(${width} * ${scale} / 3)`,
-          }}
-        >
-          <IconButton
-            onClick={() => {
-              router.push("/select-silhouette");
-            }}
+      {cameraState === "loaded" && (
+        <>
+          <canvas ref={canvasRef} style={{ display: "hidden" }} />
+          <Stack
+            direction="row"
+            justifyContent="center"
             sx={{
               position: "absolute",
-              left: 0,
-              width: `calc(${width} * ${scale} * 0.6)`,
-              height: `calc(${width} * ${scale} * 0.6)`,
-              marginX: 4,
-              marginY: `calc(${width} * ${scale} * 0.2)`, // (1.0 - height) / 2
-              color: "white",
+              width: "100%",
+              bottom: `calc(${width} * ${scale} / 3)`,
             }}
           >
-            <ArrowBack sx={{ width: "100%", height: "100%" }} />
-          </IconButton>
-          <IconButton
-            onClick={takePicture}
-            sx={{
-              width: `calc(${width} * ${scale})`,
-              height: `calc(${width} * ${scale})`,
-              color: "white",
-            }}
-          >
-            <RadioButtonChecked sx={{ width: "100%", height: "100%" }} />
-          </IconButton>
-        </Stack>
+            <IconButton
+              onClick={handleClickBack}
+              sx={{
+                position: "absolute",
+                left: 0,
+                width: `calc(${width} * ${scale} * 0.6)`,
+                height: `calc(${width} * ${scale} * 0.6)`,
+                marginX: 4,
+                marginY: `calc(${width} * ${scale} * 0.2)`, // (1.0 - height) / 2
+                color: "white",
+              }}
+            >
+              <ArrowBack sx={{ width: "100%", height: "100%" }} />
+            </IconButton>
+            <IconButton
+              onClick={takePicture}
+              sx={{
+                width: `calc(${width} * ${scale})`,
+                height: `calc(${width} * ${scale})`,
+                color: "white",
+              }}
+            >
+              <RadioButtonChecked sx={{ width: "100%", height: "100%" }} />
+            </IconButton>
+          </Stack>
+        </>
       )}
-      {access === "error" && (
-        <Button
-          variant="contained"
-          color="warning"
-          size="large"
-          startIcon={<Cached />}
-          onClick={() => window.location.reload()}
-        >
-          {"再読み込み"}
-        </Button>
-      )}
-      <Message ref={messageRef} />
-    </Stack>
+    </Box>
   );
 };
 

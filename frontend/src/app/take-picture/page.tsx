@@ -1,17 +1,124 @@
+/**
+ * /take-picture?monsterId=${monsterId}&silhouetteId=${silhouetteId}
+ */
 "use client";
 
-import { useMediaQuery } from "@mui/material";
+import { Cached } from "@mui/icons-material";
+import {
+  Button,
+  CircularProgress,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
-import Camera from "@/app/take-picture/Camera";
+import Camera, { CameraState } from "@/app/take-picture/Camera";
+import { axios } from "@/axios";
+import Centering from "@/components/Centering";
+import Message, { MessageRef } from "@/components/Message";
 import { maxWidth } from "@/consts";
 import theme from "@/theme";
 
 const TakePicture = () => {
+  const searchParams = useSearchParams();
+  const [monsterId, setMonsterId] = useState<string>("1");
+  const [silhouetteId, setSilhouetteId] = useState<string>("1");
+  const router = useRouter();
+  const [cameraState, setCameraState] = useState<CameraState>("loading");
+  const messageRef = useRef<MessageRef>(null);
   const width = useMediaQuery(theme.breakpoints.up(maxWidth))
     ? `${theme.breakpoints.values[maxWidth]}px`
     : "100vw";
 
-  return <Camera width={width} height="100svh" />;
+  useEffect(() => {
+    const monsterId = searchParams.get("monsterId") ?? "1"; // TODO: パラメータない時の処理を実装する
+    setMonsterId(monsterId);
+    const silhouetteId = searchParams.get("silhouetteId") ?? "1"; // TODO: パラメータない時の処理を実装する
+    setSilhouetteId(silhouetteId);
+  }, [searchParams]);
+
+  const updateCameraStateCallback = (cameraState: CameraState) => {
+    setCameraState(cameraState);
+
+    if (cameraState == "error") {
+      messageRef.current?.call({
+        type: "error",
+        message: "カメラにアクセスできません",
+      });
+    }
+  };
+
+  const takePictureCallback = (base64image: string) => {
+    if (base64image === "") {
+      messageRef.current?.call({
+        type: "error",
+        message: "撮影に失敗しました",
+      });
+      return;
+    }
+
+    messageRef.current?.call({
+      type: "info",
+      message: "画像を処理しています……",
+    });
+
+    axios
+      .post("/extract", {
+        base64image: base64image,
+      })
+      .then((res) => {
+        const imagePath: string = res.data.upload_path;
+        router.push(
+          ` confirm-silhouette?monsterId=${monsterId}&silhouetteId=${silhouetteId}&imagePath=${imagePath}`,
+        );
+      })
+      .catch((error) => {
+        messageRef.current?.call({
+          type: "error",
+          message: error.message,
+        });
+      });
+  };
+
+  const handleClickBack = () => {
+    router.push(`/select-silhouette?monsterId=${monsterId}`);
+  };
+
+  return (
+    <>
+      {cameraState !== "error" ? (
+        <>
+          {cameraState === "loading" && (
+            <Centering>
+              <CircularProgress />
+              <Typography>{"カメラ読み込み中……"}</Typography>
+            </Centering>
+          )}
+          <Camera
+            width={width}
+            height="100svh"
+            updateCameraStateCallback={updateCameraStateCallback}
+            takePictureCallback={takePictureCallback}
+            handleClickBack={handleClickBack}
+          />
+        </>
+      ) : (
+        <Centering>
+          <Button
+            variant="contained"
+            color="warning"
+            size="large"
+            startIcon={<Cached />}
+            onClick={() => window.location.reload()}
+          >
+            {"再読み込み"}
+          </Button>
+        </Centering>
+      )}
+      <Message ref={messageRef} />
+    </>
+  );
 };
 
 export default TakePicture;
