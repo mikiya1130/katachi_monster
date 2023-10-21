@@ -10,7 +10,7 @@ def merge_silhouettes(monster: Monster) -> tuple[Image.Image, list[list[str]]]:
     """monster_image に silhouette_image を貼り付けて画像を完成させる
 
     Args:
-        monster (schemas.Monster): モンスターのレコード
+        monster (Monster): モンスターのレコード
 
     Returns:
         tuple[Image, list[list[str]]]: モンスター画像、セグメント情報
