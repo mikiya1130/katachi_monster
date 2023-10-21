@@ -71,6 +71,49 @@ def get_alpha(image: Image) -> npt.NDArray[np.uint8]:
     return np.array(image.split()[-1])
 
 
+def cropping_image(image: Image) -> Image:
+    """画像の透明部分を切り取る
+
+    Args:
+        image (Image): Image 画像
+
+    Returns:
+        Image: _description_
+    """
+    alpha = get_alpha(image)
+    reduce_max_row, reduce_max_col = alpha.max(axis=0), alpha.max(axis=1)
+    row_range, col_range = np.where(reduce_max_row)[0], np.where(reduce_max_col)[0]
+    (left, right), (top, bottom) = row_range[[0, -1]], col_range[[0, -1]]
+    return image.crop((left, top, right + 1, bottom + 1))
+
+
+def padding_image(
+    image: Image,
+    padding_w: float = 1.5,
+    padding_h: float = 3.0,
+) -> Image:
+    """透明のパディングを加える
+
+    Args:
+        image (Image): Image 画像
+        padding_w (float, optional):
+            元画像に対し左右に加えるパディング割合. Defaults to 1.5.
+        padding_h (float, optional):
+            元画像に対し上下に加えるパディング割合. Defaults to 3.0.
+
+    Returns:
+        Image: _description_
+    """
+    width, height = image.size
+    padded_width, padded_height = int(width * padding_w), int(height * padding_h)
+    padded_iamge = Image.new("RGBA", (padded_width, padded_height))
+    padded_iamge.paste(
+        image,
+        ((padded_width - width) // 2, (padded_height - height) // 2),
+    )
+    return padded_iamge
+
+
 T = TypeVar("T")
 
 
