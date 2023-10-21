@@ -121,7 +121,7 @@ const TakePicture = () => {
               src={silhouette}
               width="100%"
               height="100%"
-              sx={{ objectFit: "contain" }}
+              sx={{ objectFit: "contain", opacity: 0.2 }}
             />
           </Centering>
         </Box>
