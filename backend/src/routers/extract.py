@@ -26,7 +26,7 @@ def post_extract(requests: InPostExtract) -> OutPostExtract:
         OutPostExtract: 保存先パス
     """
     try:
-        image = base64image_to_png(bytes(requests.base64image, encoding="utf-8"))
+        image = base64image_to_png(requests.base64image)
         result = Rembg.extract(image)
 
         time = datetime.now(timezone(timedelta(hours=+9))).strftime("%Y%m%d-%H%M%S-%f")
@@ -34,5 +34,5 @@ def post_extract(requests: InPostExtract) -> OutPostExtract:
 
         result.save(upload_path)
         return OutPostExtract(upload_path=upload_path)
-    except RuntimeError:
-        return HTTPException(status_code=500)  # type: ignore
+    except RuntimeError as e:
+        raise HTTPException(status_code=500) from e

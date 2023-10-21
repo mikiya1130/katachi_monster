@@ -4,9 +4,10 @@ from fastapi import APIRouter, Depends, HTTPException
 from PIL import Image
 from sqlalchemy.orm import Session
 
-from src import schemas, types
 from src.cruds import read_all_monsters, read_monster
 from src.db import get_db
+from src.models import Monster
+from src.types import OutGetAllMonster, OutGetMonster
 from src.utils import (
     binalize_alpha,
     encode_2d_list,
@@ -18,7 +19,7 @@ from src.utils import (
 router = APIRouter()
 
 
-def _merge_silhouettes(monster: schemas.Monster) -> tuple[Image.Image, list[list[str]]]:
+def _merge_silhouettes(monster: Monster) -> tuple[Image.Image, list[list[str]]]:
     """monster_image に silhouette_image を貼り付けて画像を完成させる
 
     Args:
@@ -52,18 +53,18 @@ def _merge_silhouettes(monster: schemas.Monster) -> tuple[Image.Image, list[list
 @router.get("/monster")
 def get_all_monster(
     db: Session = Depends(get_db),
-) -> types.monster.OutGetAllMonster:
+) -> OutGetAllMonster:
     """エンドポイント `/monster`
 
     Args:
         db (Session, optional): _description_. Defaults to Depends(get_db).
 
     Returns:
-        OutGetMonster: レベルごとのモンスター画像
+        OutGetAllMonster: レベルごとのモンスター画像
     """
     monsters = read_all_monsters(db=db)
 
-    results: types.monster.OutGetAllMonster = ([], [], [])
+    returns = OutGetAllMonster(monsters=([], [], []))
     for monster in monsters:
         try:
             monster_image, _ = _merge_silhouettes(monster)
@@ -73,18 +74,20 @@ def get_all_monster(
         # png => base64
         base64image = png_to_base64image(monster_image)
 
-        # レベルごとに分類して results に追加
+        # レベルごとに分類して returns に追加
         level = int(monster.level) - 1
-        results[level].append(types.Monster(id=monster.id, base64image=base64image))  # type: ignore
+        returns.monsters[level].append(
+            OutGetMonster(id=monster.id, base64image=base64image),
+        )
 
-    return results
+    return returns
 
 
 @router.get("/monster/{monster_id}")
 def get_monster(
     monster_id: int,
     db: Session = Depends(get_db),
-) -> types.Monster:
+) -> OutGetMonster:
     """エンドポイント `/monster/{monster_id}`
 
     Args:
@@ -92,9 +95,12 @@ def get_monster(
         db (Session, optional): _description_. Defaults to Depends(get_db).
 
     Returns:
-        Monster: モンスター画像
+        OutGetMonster: モンスター画像
     """
     monster = read_monster(db=db, monster_id=monster_id)
+    if monster is None:
+        raise HTTPException(status_code=500, detail="Monster not found")
+
     try:
         monster_image, segment = _merge_silhouettes(monster)
     except ValueError as e:
@@ -106,8 +112,8 @@ def get_monster(
     segment = pooling_2d(segment)
     encoded_segment = encode_2d_list(segment)
 
-    return types.Monster(
+    return OutGetMonster(
         id=monster.id,
-        base64image=base64image,  # type: ignore
+        base64image=base64image,
         segment=encoded_segment,
     )
