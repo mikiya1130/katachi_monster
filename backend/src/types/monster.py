@@ -10,5 +10,5 @@ class Monster(BaseModel):
     segment: str | None = None
 
 
-# get_monster 関数の戻り値の型
-OutGetMonster = tuple[list[Monster], list[Monster], list[Monster]]
+# get_all_monster 関数の戻り値の型
+OutGetAllMonster = tuple[list[Monster], list[Monster], list[Monster]]
