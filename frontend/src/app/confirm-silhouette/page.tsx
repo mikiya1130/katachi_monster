@@ -24,7 +24,7 @@ const ConfirmSilhouette = () => {
 
     const pictureId = searchParams.get("pictureId");
     if (pictureId) {
-      axios.get(`/picture/${pictureId}`).then((res) => {
+      axios.get(`/picture/${pictureId}?overlap_silhouette=true`).then((res) => {
         setImage(res.data.base64image);
       });
     }

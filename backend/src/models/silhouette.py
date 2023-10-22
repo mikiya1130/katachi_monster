@@ -1,7 +1,9 @@
 """silhouettes テーブルの定義"""
 from sqlalchemy import CheckConstraint, Column, ForeignKey, Integer, String
+from sqlalchemy.orm import Mapped, relationship
 
 from src.db import Base
+from src.models.picture import Picture
 
 
 class Silhouette(Base):
@@ -19,3 +21,5 @@ class Silhouette(Base):
         unique=True,
         nullable=False,
     )
+
+    picture: Mapped[list[Picture]] = relationship("Picture")

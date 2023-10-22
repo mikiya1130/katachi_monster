@@ -29,26 +29,47 @@ router = APIRouter()
 def get_picture(
     picture_id: int,
     db: Session = Depends(get_db),
+    *,
+    overlap_silhouette: bool = False,
 ) -> OutGetPicture:
     """エンドポイント `/picture/{picture_id}`
 
     Args:
         picture_id (int): 取得する撮影画像の id
         db (Session, optional): _description_. Defaults to Depends(get_db).
+        overlap_silhouette (bool, optional):
+            透過シルエットを重ねた画像を作成する. Defaults to False.
 
     Returns:
         OutGetPicture: 撮影画像
     """
     db_picture = read_picture(db=db, picture_id=picture_id)
+    db_silhouette = read_silhouette(db=db, silhouette_id=db_picture.silhouette_id)
 
-    # alpha 値を2値化
+    # 撮影画像の処理
     picture = Image.open(db_picture.picture_path)
     if picture.mode != "RGBA":
         raise HTTPException(status_code=500, detail="Invalid image type")
     picture = binalize_alpha(picture)
 
-    # cropping silhouette with padding
-    picture = cropping_image(picture, padding_w=0.2, padding_h=0.2)
+    if overlap_silhouette:
+        # シルエット画像の処理
+        silhouette = Image.open(db_silhouette.silhouette_path)
+        if silhouette.mode != "RGBA":
+            raise HTTPException(status_code=500, detail="Invalid image type")
+        silhouette = binalize_alpha(silhouette, high=100)
+        silhouette = cropping_image(
+            silhouette,
+            padding_w=0.2,
+            padding_h=0.2,
+        )
+
+        # NOTE: 1ピクセル程度ずれる可能性はありそう?
+        if picture.size != silhouette.size:
+            raise HTTPException(status_code=500, detail="Not same size")
+
+        # 撮影画像にシルエット画像を重ねる
+        picture = Image.alpha_composite(picture, silhouette)
 
     # png => base64
     base64image = png_to_base64image(picture)
@@ -73,14 +94,14 @@ def post_picture(
         OutPostPicture: 保存先レコードへの id
     """
     try:
-        # 撮影画像を処理
+        # 撮影画像の処理
         picture = base64image_to_png(requests.base64image)
         picture = Rembg.extract(picture)
         picture = binalize_alpha(picture, high=200)
         picture = filtering_maximum(picture)
         picture = smoothing(picture)
 
-        # シルエット画像を処理
+        # シルエット画像の処理
         db_silhouette = read_silhouette(db=db, silhouette_id=requests.silhouette_id)
         silhouette = Image.open(db_silhouette.silhouette_path)
         if silhouette.mode != "RGBA":
@@ -92,11 +113,19 @@ def post_picture(
             padding_h=1.00,
         )
 
-        # シルエット画像を撮影画像に内接させるようにリサイズ
-        silhouette = resize_to_contain(picture, silhouette)
+        # 撮影画像をシルエット画像に外接させるようにリサイズ
+        # - CSS の object-fit: "cover" に相当
+        # - ただし、`picture` を `silhouette` のサイズでトリミングしない
+        _, scale = resize_to_contain(picture, silhouette)
+        width, height = picture.size
+        new_width, new_height = round(width * (1 / scale)), round(height * (1 / scale))
+        picture = picture.resize((new_width, new_height))
 
         # シルエット位置を基準にクロッピング
         position = get_truth_size(silhouette)
+        shift_x = (picture.size[0] - silhouette.size[0]) // 2
+        shift_y = (picture.size[1] - silhouette.size[1]) // 2
+        position.shift(shift_x, shift_y)
         picture = cropping_image(
             picture,
             position=position,
