@@ -70,14 +70,14 @@ const TakePicture = () => {
     });
 
     axios
-      .post("/extract", {
+      .post("/picture", {
         silhouette_id: silhouetteId,
         base64image: base64image,
       })
       .then((res) => {
-        const imageId: string = res.data.image_id;
+        const pictureId: string = res.data.picture_id;
         router.push(
-          ` confirm-silhouette?monsterId=${monsterId}&silhouetteId=${silhouetteId}&imageId=${imageId}`,
+          ` confirm-silhouette?monsterId=${monsterId}&silhouetteId=${silhouetteId}&pictureId=${pictureId}`,
         );
       })
       .catch((error) => {
