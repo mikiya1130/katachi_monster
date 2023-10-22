@@ -71,12 +71,13 @@ const TakePicture = () => {
 
     axios
       .post("/extract", {
+        silhouette_id: silhouetteId,
         base64image: base64image,
       })
       .then((res) => {
-        const imagePath: string = res.data.upload_path;
+        const imageId: string = res.data.image_id;
         router.push(
-          ` confirm-silhouette?monsterId=${monsterId}&silhouetteId=${silhouetteId}&imagePath=${imagePath}`,
+          ` confirm-silhouette?monsterId=${monsterId}&silhouetteId=${silhouetteId}&imageId=${imageId}`,
         );
       })
       .catch((error) => {
