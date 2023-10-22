@@ -133,8 +133,34 @@ class Position:  # noqa: D101
     right: int
     top: int
     bottom: int
-    width: int
-    height: int
+
+    def shift(self, x: int, y: int) -> None:
+        """座標を平行移動させる
+
+        Args:
+            x (int): 横方向の移動量
+            y (int): 縦方向の移動量
+        """
+        self.left += x
+        self.right += x
+        self.top += y
+        self.bottom += y
+
+    @property
+    def width(self) -> int:  # noqa: D102
+        return self.right - self.left
+
+    @property
+    def height(self) -> int:  # noqa: D102
+        return self.bottom - self.top
+
+    @property
+    def center_x(self) -> int:  # noqa: D102
+        return self.left + self.width // 2
+
+    @property
+    def center_y(self) -> int:  # noqa: D102
+        return self.top + self.height // 2
 
 
 def get_truth_size(
@@ -156,22 +182,15 @@ def get_truth_size(
     range = np.where(cond(alpha))  # type: ignore  # noqa: A001
     top, bottom = min(range[0]), max(range[0])
     left, right = min(range[1]), max(range[1])
-    return Position(
-        left=left,
-        right=right,
-        top=top,
-        bottom=bottom,
-        width=right - left + 1,
-        height=bottom - top + 1,
-    )
+    return Position(left=left, right=right, top=top, bottom=bottom)
 
 
 def cropping_image(
     image: Image,
     position: Position | None = None,
     cond: Callable[[np.uint8], npt.NDArray[bool]] = lambda a: a > 0,  # type: ignore
-    padding_w: float = 1.0,
-    padding_h: float = 1.0,
+    padding_w: float = 0.0,
+    padding_h: float = 0.0,
 ) -> Image:
     """画像の透明部分を切り取る
 
@@ -181,8 +200,8 @@ def cropping_image(
             画像の不透明部分を計算する代わりに位置情報を与える. Defaults to None.
         cond (Callable[[np.uint8], npt.NDArray[bool]], optional):
             不透明判定する alpha 値の条件. Defaults to lambda a: a > 0.
-        padding_w (float, optional): 左右に加えるパディング割合. Defaults to 1.0.
-        padding_h (float, optional): 上下に加えるパディング割合. Defaults to 1.0.
+        padding_w (float, optional): 左右に加えるパディング割合. Defaults to 0.0.
+        padding_h (float, optional): 上下に加えるパディング割合. Defaults to 0.0.
 
     Returns:
         Image: 切り取り後 Image 画像
@@ -205,7 +224,7 @@ def cropping_image(
 T = TypeVar("T")
 
 
-def resize_to_contain(image_1: Image, image_2: Image) -> Image:
+def resize_to_contain(image_1: Image, image_2: Image) -> tuple[Image.Image, float]:
     """`image_1` に内接するように `image_2` をリサイズする
 
     Args:
@@ -213,7 +232,7 @@ def resize_to_contain(image_1: Image, image_2: Image) -> Image:
         image_2 (Image): リサイズ対象画像
 
     Returns:
-        Image: `image_2` のリサイズ後画像
+        Image: tuple[Image.Image, float]: `image_2` のリサイズ後画像、変換倍率
     """
     width_1, height_1 = image_1.size[:2]
     width_2, height_2 = image_2.size[:2]
@@ -228,7 +247,7 @@ def resize_to_contain(image_1: Image, image_2: Image) -> Image:
     offset_x, offset_y = (width_1 - width_2) // 2, (height_1 - height_2) // 2
     image_ret.paste(image_2, (offset_x, offset_y))
 
-    return image_ret
+    return image_ret, scale
 
 
 def pooling_2d(list_2d: list[list[T]], pool_size: int = 2) -> list[list[T]]:
