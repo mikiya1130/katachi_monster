@@ -11,7 +11,6 @@ class Image(Base):
 
     id: int = Column(Integer, primary_key=True, index=True)
     user_id: int = Column(Integer, ForeignKey("users.id"), nullable=False)
-    monster_id: int = Column(Integer, ForeignKey("monsters.id"), nullable=False)
     silhouette_id: int = Column(Integer, ForeignKey("silhouettes.id"), nullable=False)
     image_path: str = Column(
         String(128),

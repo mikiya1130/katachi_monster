@@ -1,29 +1,7 @@
 """monsters テーブルの CRUD 関数"""
-from pathlib import Path
-
 from sqlalchemy.orm import Session
 
-from src.models import Monster, Silhouette
-
-
-def init_monsters(db: Session) -> None:
-    """monsters テーブルへの初期データ投入"""
-    if not db.query(Monster).all():
-        dir_list = Path("images/silhouettes").glob("sample_animal_*")
-        for dir in dir_list:  # noqa: A001
-            level = int(dir.name.split("_")[2])
-            monster_path = dir / "monster.png"
-            silhouette = [
-                Silhouette(silhouette_path=str(silhouette_path))
-                for silhouette_path in dir.glob("silhouette_*.png")
-            ]
-            monster = Monster(
-                level=level,
-                monster_path=str(monster_path),
-                silhouette=silhouette,
-            )
-            db.add(monster)
-        db.commit()
+from src.models import Monster
 
 
 def read_all_monsters(db: Session) -> list[Monster]:

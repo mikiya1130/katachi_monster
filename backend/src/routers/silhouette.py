@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from src.cruds import read_silhouette
 from src.db import get_db
 from src.types import OutGetSilhouette
-from src.utils import binalize_alpha, cropping_image, padding_image, png_to_base64image
+from src.utils import binalize_alpha, cropping_image, png_to_base64image
 
 router = APIRouter()
 
@@ -28,20 +28,23 @@ def get_silhouette(
     Returns:
         OutGetSilhouette: シルエット画像
     """
-    silhouette = read_silhouette(db=db, silhouette_id=silhouette_id)
+    db_silhouette = read_silhouette(db=db, silhouette_id=silhouette_id)
 
     # alpha 値を2値化
-    silhouette_image = Image.open(silhouette.silhouette_path)
+    silhouette_image = Image.open(db_silhouette.silhouette_path)
     if silhouette_image.mode != "RGBA":
         raise HTTPException(status_code=500, detail="Invalid image type")
     silhouette_image = binalize_alpha(silhouette_image)
 
-    # cropping & padding silhouette
+    # cropping silhouette with padding
     if crop:
-        silhouette_image = cropping_image(silhouette_image)
-        silhouette_image = padding_image(silhouette_image)
+        silhouette_image = cropping_image(
+            silhouette_image,
+            padding_w=0.25,
+            padding_h=1.00,
+        )
 
     # png => base64
     base64image = png_to_base64image(silhouette_image)
 
-    return OutGetSilhouette(id=silhouette.id, base64image=base64image)
+    return OutGetSilhouette(id=db_silhouette.id, base64image=base64image)
