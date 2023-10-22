@@ -1,12 +1,12 @@
-from .extract import InPostExtract, OutGetExtract, OutPostExtract
 from .monster import OutGetAllMonster, OutGetMonster
+from .picture import InPostPicture, OutGetPicture, OutPostPicture
 from .silhouette import OutGetSilhouette
 
 __all__ = [
-    "OutGetExtract",
-    "InPostExtract",
-    "OutPostExtract",
     "OutGetMonster",
     "OutGetAllMonster",
+    "OutGetPicture",
+    "InPostPicture",
+    "OutPostPicture",
     "OutGetSilhouette",
 ]

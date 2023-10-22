@@ -1,9 +1,9 @@
-"""エンドポイント `/extract` の型定義"""
+"""エンドポイント `/picture` の型定義"""
 from pydantic import BaseModel, Field, validator
 
 
-class OutGetExtract(BaseModel):
-    """get_extract 関数の戻り値の型"""
+class OutGetPicture(BaseModel):
+    """get_picture 関数の戻り値の型"""
 
     id: int = Field(ge=1)  # id >= 1
     base64image: bytes
@@ -16,8 +16,8 @@ class OutGetExtract(BaseModel):
         return v
 
 
-class InPostExtract(BaseModel):
-    """post_extract 関数の引数の型"""
+class InPostPicture(BaseModel):
+    """post_picture 関数の引数の型"""
 
     silhouette_id: int
     base64image: bytes
@@ -30,7 +30,7 @@ class InPostExtract(BaseModel):
         return v
 
 
-class OutPostExtract(BaseModel):
-    """post_extract 関数の戻り値の型"""
+class OutPostPicture(BaseModel):
+    """post_picture 関数の戻り値の型"""
 
-    image_id: int = Field(ge=1)  # id >= 1
+    picture_id: int = Field(ge=1)  # id >= 1

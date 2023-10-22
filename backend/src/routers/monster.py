@@ -28,12 +28,12 @@ def get_all_monster(
     returns = OutGetAllMonster(monsters=([], [], []))
     for db_monster in db_monsters:
         try:
-            monster_image, _ = merge_silhouettes(db_monster)
+            monster, _ = merge_silhouettes(db_monster)
         except ValueError as e:
             raise HTTPException(status_code=500, detail="Invalid image type") from e
 
         # png => base64
-        base64image = png_to_base64image(monster_image)
+        base64image = png_to_base64image(monster)
 
         # レベルごとに分類して returns に追加
         level = int(db_monster.level) - 1
@@ -63,12 +63,12 @@ def get_monster(
         raise HTTPException(status_code=500, detail="Monster not found")
 
     try:
-        monster_image, segment = merge_silhouettes(db_monster)
+        monster, segment = merge_silhouettes(db_monster)
     except ValueError as e:
         raise HTTPException(status_code=500, detail="Invalid image type") from e
 
     # png => base64
-    base64image = png_to_base64image(monster_image)
+    base64image = png_to_base64image(monster)
     # pooling & list[list[str]] => str
     segment = pooling_2d(segment)
     encoded_segment = encode_2d_list(segment)

@@ -205,7 +205,7 @@ def cropping_image(
 T = TypeVar("T")
 
 
-def resize_to_contain(image_1: Image, image_2: Image) -> Image.Image:
+def resize_to_contain(image_1: Image, image_2: Image) -> Image:
     """`image_1` に内接するように `image_2` をリサイズする
 
     Args:
@@ -213,7 +213,7 @@ def resize_to_contain(image_1: Image, image_2: Image) -> Image.Image:
         image_2 (Image): リサイズ対象画像
 
     Returns:
-        Image.Image: `image_2` のリサイズ後画像
+        Image: `image_2` のリサイズ後画像
     """
     width_1, height_1 = image_1.size[:2]
     width_2, height_2 = image_2.size[:2]

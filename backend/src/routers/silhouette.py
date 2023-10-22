@@ -31,20 +31,16 @@ def get_silhouette(
     db_silhouette = read_silhouette(db=db, silhouette_id=silhouette_id)
 
     # alpha 値を2値化
-    silhouette_image = Image.open(db_silhouette.silhouette_path)
-    if silhouette_image.mode != "RGBA":
+    silhouette = Image.open(db_silhouette.silhouette_path)
+    if silhouette.mode != "RGBA":
         raise HTTPException(status_code=500, detail="Invalid image type")
-    silhouette_image = binalize_alpha(silhouette_image)
+    silhouette = binalize_alpha(silhouette)
 
     # cropping silhouette with padding
     if crop:
-        silhouette_image = cropping_image(
-            silhouette_image,
-            padding_w=0.25,
-            padding_h=1.00,
-        )
+        silhouette = cropping_image(silhouette, padding_w=0.25, padding_h=1.00)
 
     # png => base64
-    base64image = png_to_base64image(silhouette_image)
+    base64image = png_to_base64image(silhouette)
 
     return OutGetSilhouette(id=db_silhouette.id, base64image=base64image)

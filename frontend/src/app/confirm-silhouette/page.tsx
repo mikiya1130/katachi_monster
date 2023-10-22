@@ -1,5 +1,5 @@
 /**
- * /confirm-silhouette?monsterId=${monsterId}&silhouetteId=${silhouetteId}&imageId=${imageId}
+ * /confirm-silhouette?monsterId=${monsterId}&silhouetteId=${silhouetteId}&pictureId=${pictureId}
  */
 "use client";
 
@@ -22,9 +22,9 @@ const ConfirmSilhouette = () => {
     const silhouetteId = searchParams.get("silhouetteId") ?? "1"; // TODO: パラメータない時の処理を実装する
     setSilhouetteId(silhouetteId);
 
-    const imageId = searchParams.get("imageId");
-    if (imageId) {
-      axios.get(`/extract/${imageId}`).then((res) => {
+    const pictureId = searchParams.get("pictureId");
+    if (pictureId) {
+      axios.get(`/picture/${pictureId}`).then((res) => {
         setImage(res.data.base64image);
       });
     }
