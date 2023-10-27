@@ -6,9 +6,12 @@ import {
   Modal,
   Stack,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
 import Link from "next/link";
 
+import { maxWidth } from "@/consts";
+import theme from "@/theme";
 import { TypeSelectedImageInfo } from "@/types";
 
 type Props = {
@@ -17,19 +20,9 @@ type Props = {
 };
 
 const ModalContent = ({ selectedImageInfo, handleClose }: Props) => {
-  const modalStyle = {
-    position: "absolute" as const,
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: "calc(100svh * 0.8)",
-    height: "calc(100svh * 0.8)",
-    bgcolor: "background.paper",
-    border: 2,
-    solid: "#000",
-    boxShadow: 21,
-    p: 4,
-  };
+  const width = useMediaQuery(theme.breakpoints.up(maxWidth))
+    ? `${theme.breakpoints.values[maxWidth]}px`
+    : "100vw";
 
   return (
     <Modal
@@ -37,12 +30,18 @@ const ModalContent = ({ selectedImageInfo, handleClose }: Props) => {
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      sx={{ backgroundColor: "rgb(0,0,0,0.1)" }}
     >
       <Stack
         alignItems="center"
         justifyContent="center"
         spacing={2}
-        sx={modalStyle}
+        position="absolute"
+        width={`calc(${width} * 0.8)`}
+        bgcolor="background.paper"
+        border="2px solid #000"
+        p={4}
+        sx={{ top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
       >
         <IconButton
           onClick={handleClose}
@@ -59,7 +58,7 @@ const ModalContent = ({ selectedImageInfo, handleClose }: Props) => {
         </IconButton>
 
         <Typography
-          fontSize={40}
+          fontSize={24}
           id="modal-modal-description"
           sx={{ textAlign: "center" }}
         >
@@ -74,8 +73,8 @@ const ModalContent = ({ selectedImageInfo, handleClose }: Props) => {
             mt: 2,
             border: 2,
             solid: "#000",
-            width: "60%",
-            height: "60%",
+            width: "90%",
+            height: "90%",
             aspectRatio: 1,
             objectFit: "contain",
           }}
@@ -83,15 +82,11 @@ const ModalContent = ({ selectedImageInfo, handleClose }: Props) => {
 
         <Stack direction="row" spacing={4}>
           <Link href="/view-details">
-            <Button variant="outlined" size="large">
-              くわしくみる
-            </Button>
+            <Button variant="outlined">くわしくみる</Button>
           </Link>
 
           <Link href="/select-silhouette">
-            <Button variant="contained" size="large">
-              けってい
-            </Button>
+            <Button variant="contained">けってい</Button>
           </Link>
         </Stack>
       </Stack>

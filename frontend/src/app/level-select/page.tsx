@@ -13,23 +13,25 @@ const LevelSelect = () => {
   ];
 
   const height = "100svh";
-  const headerHeight = "1rem";
-  const contentHeight = `calc(${height} - ${headerHeight})`;
+  const headerHeight = "2rem";
+  const contentHeight = `calc(${height} - 80px - ${headerHeight})`; // 80pxは一番外側のStackのpy
+  const ratingHeight = "2rem";
+  const swiperHeight = `calc(100% - ${ratingHeight})`;
 
   return (
     <Stack py={5} direction="column" justifyContent="center" height="100svh">
       <Typography fontSize={headerHeight}>レベル</Typography>
-      <Stack direction="column" height={contentHeight}>
+      <Stack direction="column" height={contentHeight} spacing={3}>
         {swiperList.map((images, level) => {
           return (
-            <Box flexGrow={1} key={level}>
+            <Box flexGrow={1} flexShrink={1} key={level}>
               <Rating
                 value={level + 1}
                 max={swiperList.length}
-                size="large"
                 readOnly
+                sx={{ fontSize: ratingHeight }}
               />
-              <Swiper images={images} />
+              <Swiper images={images} height={swiperHeight} />
             </Box>
           );
         })}

@@ -1,5 +1,4 @@
 import { Box, Stack } from "@mui/material";
-import Image from "next/image";
 import { useState } from "react";
 import { useSwipeable } from "react-swipeable";
 
@@ -7,9 +6,10 @@ import ModalContent from "@/app/level-select/ModalContent";
 import { TypeSelectedImageInfo } from "@/types";
 type Props = {
   images: TypeSelectedImageInfo[];
+  height: string;
 };
 
-const Swiper = ({ images }: Props) => {
+const Swiper = ({ images, height }: Props) => {
   const [selectedImageInfo, setSelectedImageInfo] =
     useState<null | TypeSelectedImageInfo>(null);
 
@@ -33,9 +33,12 @@ const Swiper = ({ images }: Props) => {
   });
 
   return (
-    <div {...handlers}>
+    <div {...handlers} style={{ height: height }}>
       <Stack
+        height="100%"
         direction="row"
+        gap={2}
+        px={2}
         sx={{
           overflowX: "scroll",
         }}
@@ -43,30 +46,28 @@ const Swiper = ({ images }: Props) => {
         {images.map((image) => (
           <>
             <Box
+              component="img"
+              src={image.url}
+              alt={image.title}
+              onClick={() => handleOpen2()}
+              onClickCapture={() => handleOpen(image)}
               key={image.title}
               p={1}
+              height="100%"
               border={2}
               borderColor="#000"
               sx={{
-                textAlign: "center",
-                margin: "0 auto",
+                aspectRatio: 1,
+                objectFit: "contain",
               }}
-            >
-              <Image
-                src={image.url}
-                alt={image.title}
-                width={image.width}
-                height={image.height}
-                onClick={() => handleOpen2()}
-                onClickCapture={() => handleOpen(image)}
+            />
+
+            {selectedImageInfo && (
+              <ModalContent
+                selectedImageInfo={selectedImageInfo}
+                handleClose={handleClose}
               />
-              {selectedImageInfo && (
-                <ModalContent
-                  selectedImageInfo={selectedImageInfo}
-                  handleClose={handleClose}
-                />
-              )}
-            </Box>
+            )}
           </>
         ))}
       </Stack>
