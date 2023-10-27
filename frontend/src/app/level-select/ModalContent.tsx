@@ -1,5 +1,12 @@
-import { Box, Button, Modal, Typography } from "@mui/material";
-import Image from "next/image";
+import { Close } from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  IconButton,
+  Modal,
+  Stack,
+  Typography,
+} from "@mui/material";
 import Link from "next/link";
 
 import { TypeSelectedImageInfo } from "@/types";
@@ -10,15 +17,16 @@ type Props = {
 };
 
 const ModalContent = ({ selectedImageInfo, handleClose }: Props) => {
-  const style = {
+  const modalStyle = {
     position: "absolute" as const,
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 300,
-    height: 300,
+    width: "calc(100svh * 0.8)",
+    height: "calc(100svh * 0.8)",
     bgcolor: "background.paper",
-    border: "2px solid #000",
+    border: 2,
+    solid: "#000",
     boxShadow: 21,
     p: 4,
   };
@@ -30,74 +38,63 @@ const ModalContent = ({ selectedImageInfo, handleClose }: Props) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style}>
-        <Button
+      <Stack
+        alignItems="center"
+        justifyContent="center"
+        spacing={2}
+        sx={modalStyle}
+      >
+        <IconButton
           onClick={handleClose}
-          variant="contained"
           color="primary"
-          sx={{ position: "absolute", top: 0, right: 0 }}
+          sx={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+            width: "10%",
+            height: "10%",
+          }}
         >
-          ×
-        </Button>
+          <Close sx={{ width: "100%", height: "100%" }} />
+        </IconButton>
 
         <Typography
+          fontSize={40}
           id="modal-modal-description"
-          sx={{ mt: 2, textAlign: "center" }}
+          sx={{ textAlign: "center" }}
         >
           これでいい？
         </Typography>
 
         <Box
+          component="img"
+          src={selectedImageInfo.url}
+          alt={selectedImageInfo.title}
           sx={{
-            border: "2px solid #000",
-            padding: "10px",
             mt: 2,
-            ml: 6,
-            mr: 6,
+            border: 2,
+            solid: "#000",
+            width: "60%",
+            height: "60%",
+            aspectRatio: 1,
+            objectFit: "contain",
           }}
-        >
-          <Image
-            src={selectedImageInfo.url}
-            alt={selectedImageInfo.title}
-            width={selectedImageInfo.width}
-            height={selectedImageInfo.height}
-          />
-        </Box>
+        />
 
-        <Link href="/view-details">
-          <Button
-            variant="contained"
-            color="secondary"
-            sx={{
-              width: "100px",
-              height: "50px",
-              fontSize: "16px",
-              mb: 2,
-              ml: 1,
-              mt: 2,
-            }}
-          >
-            くわしくみる
-          </Button>
-        </Link>
+        <Stack direction="row" spacing={4}>
+          <Link href="/view-details">
+            <Button variant="outlined" size="large">
+              くわしくみる
+            </Button>
+          </Link>
 
-        <Link href="/select-silhouette">
-          <Button
-            variant="contained"
-            color="secondary"
-            sx={{
-              width: "100px",
-              height: "50px",
-              fontSize: "16px",
-              mb: 2,
-              ml: 1,
-              mt: 2,
-            }}
-          >
-            けってい
-          </Button>
-        </Link>
-      </Box>
+          <Link href="/select-silhouette">
+            <Button variant="contained" size="large">
+              けってい
+            </Button>
+          </Link>
+        </Stack>
+      </Stack>
     </Modal>
   );
 };

@@ -13,12 +13,7 @@ const LevelSelect = () => {
   ];
 
   return (
-    <Stack
-      py={5}
-      direction="column"
-      justifyContent="center"
-      sx={{ height: "100svh" }}
-    >
+    <Stack py={5} direction="column" justifyContent="center" height="100svh">
       <Typography>レベル</Typography>
       {swiperList.map((images, level) => {
         return (

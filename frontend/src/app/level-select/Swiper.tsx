@@ -44,11 +44,12 @@ const Swiper = ({ images }: Props) => {
           <>
             <Box
               key={image.title}
+              p={1}
+              border={2}
+              borderColor="#000"
               sx={{
                 textAlign: "center",
                 margin: "0 auto",
-                border: "2px solid #000",
-                padding: "10px",
               }}
             >
               <Image
