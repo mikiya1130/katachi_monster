@@ -10,7 +10,6 @@ import {
 import Link from "next/link";
 
 import { TypeMonster } from "@/app/level-select/types";
-import Centering from "@/components/Centering";
 import Image from "@/components/Image";
 import { maxWidth } from "@/consts";
 import theme from "@/theme";
@@ -33,8 +32,9 @@ const ModalContent = ({ monster, handleClose }: Props) => {
       aria-describedby="modal-modal-description"
       sx={{ backgroundColor: "rgb(0,0,0,0.1)" }}
     >
-      <Centering
-        height="auto"
+      <Stack
+        alignItems="center"
+        justifyContent="center"
         spacing={2}
         position="absolute"
         width={`calc(${width} * 0.8)`}
@@ -80,7 +80,7 @@ const ModalContent = ({ monster, handleClose }: Props) => {
             <Button variant="contained">けってい</Button>
           </Link>
         </Stack>
-      </Centering>
+      </Stack>
     </Modal>
   );
 };
