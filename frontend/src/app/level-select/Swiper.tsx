@@ -21,41 +21,39 @@ const Swiper = ({ images, height }: Props) => {
   };
 
   return (
-    <Box style={{ height: height }}>
-      <Stack
-        height="100%"
-        direction="row"
-        gap={2}
-        px={2}
-        sx={{
-          overflowX: "scroll",
-        }}
-      >
-        {images.map((image, index) => (
-          <Box
-            key={index}
-            component="img"
-            src={image.url}
-            alt={image.title}
-            onClick={() => handleOpen(image)}
-            p={1}
-            height="100%"
-            border={2}
-            borderColor="#000"
-            sx={{
-              aspectRatio: 1,
-              objectFit: "contain",
-            }}
-          />
-        ))}
-      </Stack>
+    <Stack
+      height={height}
+      direction="row"
+      gap={2}
+      px={2}
+      sx={{
+        overflowX: "scroll",
+      }}
+    >
+      {images.map((image, index) => (
+        <Box
+          key={index}
+          component="img"
+          src={image.url}
+          alt={image.title}
+          onClick={() => handleOpen(image)}
+          p={1}
+          height="100%"
+          border={2}
+          borderColor="#000"
+          sx={{
+            aspectRatio: 1,
+            objectFit: "contain",
+          }}
+        />
+      ))}
       {selectedImageInfo && (
         <ModalContent
           selectedImageInfo={selectedImageInfo}
           handleClose={handleClose}
         />
       )}
-    </Box>
+    </Stack>
   );
 };
 
