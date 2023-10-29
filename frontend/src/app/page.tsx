@@ -1,8 +1,9 @@
 "use client";
-import { Stack, ThemeProvider, useMediaQuery } from "@mui/material";
+import { ThemeProvider, useMediaQuery } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
 
+import Centering from "@/components/Centering";
 import { maxWidth } from "@/consts";
 import { titleFont } from "@/theme";
 
@@ -20,11 +21,7 @@ const Home = () => {
       href="/level-select"
       style={{ color: "inherit", textDecoration: "none" }}
     >
-      <Stack
-        justifyContent="space-around"
-        textAlign="center"
-        sx={{ height: "100%" }}
-      >
+      <Centering justifyContent="space-around">
         <ThemeProvider theme={titleFont}>
           <Typography
             variant="h1"
@@ -45,7 +42,7 @@ const Home = () => {
         >
           {titleMessage}
         </Typography>
-      </Stack>
+      </Centering>
     </Link>
   );
 };

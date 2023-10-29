@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 
+import Centering from "@/components/Centering";
 import { maxWidth } from "@/consts";
 import theme from "@/theme";
 import { TypeSelectedImageInfo } from "@/types";
@@ -32,9 +33,8 @@ const ModalContent = ({ selectedImageInfo, handleClose }: Props) => {
       aria-describedby="modal-modal-description"
       sx={{ backgroundColor: "rgb(0,0,0,0.1)" }}
     >
-      <Stack
-        alignItems="center"
-        justifyContent="center"
+      <Centering
+        height="auto"
         spacing={2}
         position="absolute"
         width={`calc(${width} * 0.8)`}
@@ -83,7 +83,7 @@ const ModalContent = ({ selectedImageInfo, handleClose }: Props) => {
             <Button variant="contained">けってい</Button>
           </Link>
         </Stack>
-      </Stack>
+      </Centering>
     </Modal>
   );
 };

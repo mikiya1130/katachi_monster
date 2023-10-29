@@ -9,6 +9,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { axios } from "@/axios";
+import Centering from "@/components/Centering";
 
 const ConfirmSilhouette = () => {
   const searchParams = useSearchParams();
@@ -31,13 +32,7 @@ const ConfirmSilhouette = () => {
   }, [searchParams]);
 
   return (
-    <Stack
-      height="inherit"
-      alignItems="center"
-      justifyContent="center"
-      spacing={4}
-      padding={4}
-    >
+    <Centering spacing={4} padding={4}>
       <Box
         component="img"
         src={image}
@@ -53,7 +48,7 @@ const ConfirmSilhouette = () => {
           <Button variant="contained">けってい</Button>
         </Link>
       </Stack>
-    </Stack>
+    </Centering>
   );
 };
 
