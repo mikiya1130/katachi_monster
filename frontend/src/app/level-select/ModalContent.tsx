@@ -9,18 +9,18 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 
-import { TypeSelectedImageInfo } from "@/app/level-select/types";
+import { TypeMonster } from "@/app/level-select/types";
 import Centering from "@/components/Centering";
 import Image from "@/components/Image";
 import { maxWidth } from "@/consts";
 import theme from "@/theme";
 
 type Props = {
-  selectedImageInfo: TypeSelectedImageInfo;
+  monster: TypeMonster;
   handleClose: () => void;
 };
 
-const ModalContent = ({ selectedImageInfo, handleClose }: Props) => {
+const ModalContent = ({ monster, handleClose }: Props) => {
   const width = useMediaQuery(theme.breakpoints.up(maxWidth))
     ? `${theme.breakpoints.values[maxWidth]}px`
     : "100vw";
@@ -62,8 +62,8 @@ const ModalContent = ({ selectedImageInfo, handleClose }: Props) => {
         </Typography>
 
         <Image
-          src={selectedImageInfo.base64image}
-          alt={`monster_${selectedImageInfo.id}`}
+          src={monster.base64image}
+          alt={`monster_${monster.id}`}
           width="90%"
           sx={{
             border: 2,

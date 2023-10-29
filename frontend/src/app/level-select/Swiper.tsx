@@ -2,23 +2,22 @@ import { Stack } from "@mui/material";
 import { useState } from "react";
 
 import ModalContent from "@/app/level-select/ModalContent";
-import { TypeSelectedImageInfo } from "@/app/level-select/types";
+import { TypeMonster } from "@/app/level-select/types";
 import Image from "@/components/Image";
 type Props = {
-  images: TypeSelectedImageInfo[];
+  monsters: TypeMonster[];
   height: number | string;
 };
 
-const Swiper = ({ images, height }: Props) => {
-  const [selectedImageInfo, setSelectedImageInfo] =
-    useState<null | TypeSelectedImageInfo>(null);
+const Swiper = ({ monsters, height }: Props) => {
+  const [monster, setMonster] = useState<null | TypeMonster>(null);
 
-  const handleOpen = (imageInfo: TypeSelectedImageInfo) => {
-    setSelectedImageInfo(imageInfo);
+  const handleOpen = (imageInfo: TypeMonster) => {
+    setMonster(imageInfo);
   };
 
   const handleClose = () => {
-    setSelectedImageInfo(null);
+    setMonster(null);
   };
 
   return (
@@ -31,24 +30,19 @@ const Swiper = ({ images, height }: Props) => {
         overflowX: "scroll",
       }}
     >
-      {images.map((image) => (
+      {monsters.map((monster) => (
         <Image
-          key={image.id}
-          src={image.base64image}
-          alt={`monster_${image.id}`}
-          onClick={() => handleOpen(image)}
+          key={monster.id}
+          src={monster.base64image}
+          alt={`monster_${monster.id}`}
+          onClick={() => handleOpen(monster)}
           p={1}
           height="100%"
           border={2}
           borderColor="#000"
         />
       ))}
-      {selectedImageInfo && (
-        <ModalContent
-          selectedImageInfo={selectedImageInfo}
-          handleClose={handleClose}
-        />
-      )}
+      {monster && <ModalContent monster={monster} handleClose={handleClose} />}
     </Stack>
   );
 };
