@@ -43,8 +43,8 @@ const Swiper = ({ images, height }: Props) => {
           overflowX: "scroll",
         }}
       >
-        {images.map((image) => (
-          <>
+        {images.map((image, index) => (
+          <Box key={index}>
             <Box
               component="img"
               src={image.url}
@@ -68,7 +68,7 @@ const Swiper = ({ images, height }: Props) => {
                 handleClose={handleClose}
               />
             )}
-          </>
+          </Box>
         ))}
       </Stack>
     </div>
