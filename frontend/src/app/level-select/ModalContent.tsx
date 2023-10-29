@@ -1,6 +1,5 @@
 import { Close } from "@mui/icons-material";
 import {
-  Box,
   Button,
   IconButton,
   Modal,
@@ -11,6 +10,7 @@ import {
 import Link from "next/link";
 
 import Centering from "@/components/Centering";
+import Image from "@/components/Image";
 import { maxWidth } from "@/consts";
 import theme from "@/theme";
 import { TypeSelectedImageInfo } from "@/types";
@@ -61,16 +61,13 @@ const ModalContent = ({ selectedImageInfo, handleClose }: Props) => {
           これでいい？
         </Typography>
 
-        <Box
-          component="img"
+        <Image
           src={selectedImageInfo.url}
           alt={selectedImageInfo.title}
+          width="90%"
           sx={{
             border: 2,
             solid: "#000",
-            width: "90%",
-            aspectRatio: 1,
-            objectFit: "contain",
           }}
         />
 
