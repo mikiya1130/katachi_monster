@@ -18,7 +18,7 @@ const SelectSilhouette = () => {
   const searchParams = useSearchParams();
   const [monsterId, setMonsterId] = useState<string>("1");
   const router = useRouter();
-  const [image, setImage] = useState<string>();
+  const [image, setImage] = useState<string>("");
   const [segment, setSegment] = useState<string[][]>();
   const [segmentWidth, setSegmentWidth] = useState<number>(0);
   const [segmentHeight, setSegmentHeight] = useState<number>(0);
@@ -72,7 +72,12 @@ const SelectSilhouette = () => {
 
   return (
     <Centering height="inherit" spacing={4} padding={4}>
-      <Image src={image} onClick={handleClickImage} width="100%" />
+      <Image
+        src={image}
+        alt="silhouette"
+        onClick={handleClickImage}
+        width="100%"
+      />
       <Link href="/level-select">
         <Button variant="outlined">もどる</Button>
       </Link>
