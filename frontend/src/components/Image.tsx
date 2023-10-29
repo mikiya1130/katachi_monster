@@ -1,7 +1,7 @@
 /**
  * 画像表示用コンポーネント
  */
-import { Box, BoxProps, Skeleton } from "@mui/material";
+import { Box, BoxProps, Skeleton, SxProps, Theme } from "@mui/material";
 
 type ImageProps = {
   src: string;
@@ -9,6 +9,7 @@ type ImageProps = {
   width?: number | string;
   height?: number | string;
   objectFit?: string;
+  sx?: SxProps<Theme>;
 };
 type Props = BoxProps & ImageProps;
 
@@ -18,6 +19,7 @@ const Image = ({
   width = "auto",
   height = "auto",
   objectFit = "contain",
+  sx = {},
   ...boxProps
 }: Props) => {
   const ImageComponent = (
@@ -27,7 +29,10 @@ const Image = ({
       alt={alt}
       width={width}
       height={height}
-      sx={{ aspectRatio: 1, objectFit: objectFit }}
+      sx={[
+        { aspectRatio: 1, objectFit: objectFit },
+        ...(Array.isArray(sx) ? sx : [sx]),
+      ]}
       {...boxProps}
     />
   );
