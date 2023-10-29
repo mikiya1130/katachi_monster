@@ -7,11 +7,13 @@ import { TypeMonster } from "@/app/level-select/types";
 import { axios } from "@/axios";
 
 const LevelSelect = () => {
-  const [monstersList, setMonstersList] = useState<TypeMonster[][]>([
-    [],
-    [],
-    [],
-  ]);
+  const [monstersList, setMonstersList] = useState<TypeMonster[][]>(
+    Array.from(new Array(3), (_, i) =>
+      new Array(5)
+        .fill(null)
+        .map((_, j) => ({ id: 10 * i + j, base64image: "" })),
+    ),
+  );
 
   const boxRef = useRef<HTMLDivElement>(null);
   const ratingRef = useRef<HTMLSpanElement>(null);
