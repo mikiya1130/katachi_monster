@@ -57,11 +57,7 @@ const ModalContent = ({ selectedImageInfo, handleClose }: Props) => {
           <Close sx={{ width: "100%", height: "100%" }} />
         </IconButton>
 
-        <Typography
-          fontSize={24}
-          id="modal-modal-description"
-          sx={{ textAlign: "center" }}
-        >
+        <Typography fontSize={24} textAlign="center">
           これでいい？
         </Typography>
 
@@ -70,11 +66,9 @@ const ModalContent = ({ selectedImageInfo, handleClose }: Props) => {
           src={selectedImageInfo.url}
           alt={selectedImageInfo.title}
           sx={{
-            mt: 2,
             border: 2,
             solid: "#000",
             width: "90%",
-            height: "90%",
             aspectRatio: 1,
             objectFit: "contain",
           }}
