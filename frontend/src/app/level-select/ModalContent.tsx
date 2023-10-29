@@ -72,11 +72,11 @@ const ModalContent = ({ monster, handleClose }: Props) => {
         />
 
         <Stack direction="row" spacing={4}>
-          <Link href="/view-details">
+          <Link href={`/view-details?monsterId=${monster.id}`}>
             <Button variant="outlined">くわしくみる</Button>
           </Link>
 
-          <Link href="/select-silhouette">
+          <Link href={`/select-silhouette?monsterId=${monster.id}`}>
             <Button variant="contained">けってい</Button>
           </Link>
         </Stack>
