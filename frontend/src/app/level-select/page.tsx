@@ -27,7 +27,6 @@ const LevelSelect = () => {
 
   useEffect(() => {
     axios.get("monster").then((res) => {
-      console.log(res.data.monsters);
       setMonstersList(res.data.monsters);
     });
   }, []);
