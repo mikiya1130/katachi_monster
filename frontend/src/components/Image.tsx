@@ -1,7 +1,7 @@
 /**
  * 画像表示用コンポーネント
  */
-import { Box, BoxProps } from "@mui/material";
+import { Box, BoxProps, Skeleton } from "@mui/material";
 
 type ImageProps = {
   src: string;
@@ -20,7 +20,7 @@ const Image = ({
   objectFit = "contain",
   ...boxProps
 }: Props) => {
-  return (
+  const ImageComponent = (
     <Box
       component="img"
       src={src}
@@ -31,6 +31,8 @@ const Image = ({
       {...boxProps}
     />
   );
+
+  return <>{src ? ImageComponent : <Skeleton>{ImageComponent}</Skeleton>}</>;
 };
 
 export default Image;
