@@ -3,7 +3,7 @@
  */
 "use client";
 
-import { Box, Button, Stack } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import * as React from "react";
 
 import { axios } from "@/axios";
+import Centering from "@/components/Centering";
 
 const SelectSilhouette = () => {
   const searchParams = useSearchParams();
@@ -69,13 +70,7 @@ const SelectSilhouette = () => {
   };
 
   return (
-    <Stack
-      height="inherit"
-      alignItems="center"
-      justifyContent="center"
-      spacing={4}
-      padding={4}
-    >
+    <Centering height="inherit" spacing={4} padding={4}>
       <Box
         component="img"
         src={image}
@@ -85,7 +80,7 @@ const SelectSilhouette = () => {
       <Link href="/level-select">
         <Button variant="outlined">もどる</Button>
       </Link>
-    </Stack>
+    </Centering>
   );
 };
 

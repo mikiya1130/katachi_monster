@@ -26,7 +26,7 @@ const LevelSelect = () => {
   }, [boxRef, ratingRef]);
 
   return (
-    <Stack py={5} height="100svh">
+    <Stack py={5} height="100%">
       <Typography fontSize="2rem">レベル</Typography>
       <Stack direction="column" spacing={3} flexGrow={1}>
         {swiperList.map((images, level) => {
