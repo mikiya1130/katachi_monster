@@ -1,7 +1,8 @@
-import { Box, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import { useState } from "react";
 
 import ModalContent from "@/app/level-select/ModalContent";
+import Image from "@/components/Image";
 import { TypeSelectedImageInfo } from "@/types";
 type Props = {
   images: TypeSelectedImageInfo[];
@@ -31,9 +32,8 @@ const Swiper = ({ images, height }: Props) => {
       }}
     >
       {images.map((image, index) => (
-        <Box
+        <Image
           key={index}
-          component="img"
           src={image.url}
           alt={image.title}
           onClick={() => handleOpen(image)}
@@ -41,10 +41,6 @@ const Swiper = ({ images, height }: Props) => {
           height="100%"
           border={2}
           borderColor="#000"
-          sx={{
-            aspectRatio: 1,
-            objectFit: "contain",
-          }}
         />
       ))}
       {selectedImageInfo && (

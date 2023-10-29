@@ -17,6 +17,7 @@ import { useEffect, useRef, useState } from "react";
 import Camera, { CameraState } from "@/app/take-picture/Camera";
 import { axios } from "@/axios";
 import Centering from "@/components/Centering";
+import Image from "@/components/Image";
 import Message, { MessageRef } from "@/components/Message";
 import { maxWidth } from "@/consts";
 import theme from "@/theme";
@@ -27,7 +28,7 @@ const TakePicture = () => {
   const [silhouetteId, setSilhouetteId] = useState<string>("1");
   const router = useRouter();
   const [cameraState, setCameraState] = useState<CameraState>("loading");
-  const [silhouette, setSilhouette] = useState<string>();
+  const [silhouette, setSilhouette] = useState<string>("");
   const messageRef = useRef<MessageRef>(null);
   const width = useMediaQuery(theme.breakpoints.up(maxWidth))
     ? `${theme.breakpoints.values[maxWidth]}px`
@@ -118,12 +119,12 @@ const TakePicture = () => {
               </>
             )}
             {cameraState === "loaded" && (
-              <Box
-                component="img"
+              <Image
                 src={silhouette}
+                alt="silhouette"
                 width="100%"
                 height="100%"
-                sx={{ objectFit: "contain", opacity: 0.2 }}
+                sx={{ opacity: 0.2 }}
               />
             )}
           </Centering>

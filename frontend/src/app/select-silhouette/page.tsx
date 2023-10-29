@@ -3,7 +3,7 @@
  */
 "use client";
 
-import { Box, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
@@ -12,6 +12,7 @@ import * as React from "react";
 
 import { axios } from "@/axios";
 import Centering from "@/components/Centering";
+import Image from "@/components/Image";
 
 const SelectSilhouette = () => {
   const searchParams = useSearchParams();
@@ -71,12 +72,7 @@ const SelectSilhouette = () => {
 
   return (
     <Centering height="inherit" spacing={4} padding={4}>
-      <Box
-        component="img"
-        src={image}
-        onClick={handleClickImage}
-        sx={{ width: "100%", aspectRatio: 1, objectFit: "contain" }}
-      />
+      <Image src={image} onClick={handleClickImage} width="100%" />
       <Link href="/level-select">
         <Button variant="outlined">もどる</Button>
       </Link>
