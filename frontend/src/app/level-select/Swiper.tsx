@@ -32,31 +32,29 @@ const Swiper = ({ images, height }: Props) => {
         }}
       >
         {images.map((image, index) => (
-          <Box key={index}>
-            <Box
-              component="img"
-              src={image.url}
-              alt={image.title}
-              onClick={() => handleOpen(image)}
-              p={1}
-              height="100%"
-              border={2}
-              borderColor="#000"
-              sx={{
-                aspectRatio: 1,
-                objectFit: "contain",
-              }}
-            />
-
-            {selectedImageInfo && (
-              <ModalContent
-                selectedImageInfo={selectedImageInfo}
-                handleClose={handleClose}
-              />
-            )}
-          </Box>
+          <Box
+            key={index}
+            component="img"
+            src={image.url}
+            alt={image.title}
+            onClick={() => handleOpen(image)}
+            p={1}
+            height="100%"
+            border={2}
+            borderColor="#000"
+            sx={{
+              aspectRatio: 1,
+              objectFit: "contain",
+            }}
+          />
         ))}
       </Stack>
+      {selectedImageInfo && (
+        <ModalContent
+          selectedImageInfo={selectedImageInfo}
+          handleClose={handleClose}
+        />
+      )}
     </Box>
   );
 };
