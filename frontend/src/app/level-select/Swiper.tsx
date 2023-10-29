@@ -6,7 +6,7 @@ import ModalContent from "@/app/level-select/ModalContent";
 import { TypeSelectedImageInfo } from "@/types";
 type Props = {
   images: TypeSelectedImageInfo[];
-  height: string;
+  height: number | string;
 };
 
 const Swiper = ({ images, height }: Props) => {

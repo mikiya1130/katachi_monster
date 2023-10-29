@@ -1,5 +1,6 @@
 "use client";
 import { Box, Rating, Stack, Typography } from "@mui/material";
+import { useEffect, useRef, useState } from "react";
 
 import Swiper from "@/app/level-select/Swiper";
 import { imagesLevel1, imagesLevel2, imagesLevel3 } from "@/sampleImages";
@@ -12,24 +13,31 @@ const LevelSelect = () => {
     imagesLevel3,
   ];
 
-  const height = "100svh";
-  const headerHeight = "2rem";
-  const contentHeight = `calc(${height} - 80px - ${headerHeight})`; // 80pxは一番外側のStackのpy
-  const ratingHeight = "2rem";
-  const swiperHeight = `calc(100% - ${ratingHeight})`;
+  const boxRef = useRef<HTMLDivElement>(null);
+  const ratingRef = useRef<HTMLSpanElement>(null);
+  const [swiperHeight, setSwiperHeight] = useState<number>(0);
+
+  useEffect(() => {
+    if (boxRef.current && ratingRef.current) {
+      const boxHeight = boxRef.current.clientHeight;
+      const ratingHeight = ratingRef.current.clientHeight;
+      setSwiperHeight(boxHeight - ratingHeight);
+    }
+  }, [boxRef, ratingRef]);
 
   return (
-    <Stack py={5} direction="column" justifyContent="center" height="100svh">
-      <Typography fontSize={headerHeight}>レベル</Typography>
-      <Stack direction="column" height={contentHeight} spacing={3}>
+    <Stack py={5} height="100svh">
+      <Typography fontSize="2rem">レベル</Typography>
+      <Stack direction="column" spacing={3} flexGrow={1}>
         {swiperList.map((images, level) => {
           return (
-            <Box flexGrow={1} flexShrink={1} key={level}>
+            <Box key={level} flexGrow={1} ref={boxRef}>
               <Rating
                 value={level + 1}
                 max={swiperList.length}
                 readOnly
-                sx={{ fontSize: ratingHeight }}
+                sx={{ fontSize: "2rem" }}
+                ref={ratingRef}
               />
               <Swiper images={images} height={swiperHeight} />
             </Box>
