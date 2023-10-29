@@ -9,18 +9,17 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 
-import Centering from "@/components/Centering";
+import { TypeMonster } from "@/app/level-select/types";
 import Image from "@/components/Image";
 import { maxWidth } from "@/consts";
 import theme from "@/theme";
-import { TypeSelectedImageInfo } from "@/types";
 
 type Props = {
-  selectedImageInfo: TypeSelectedImageInfo;
+  monster: TypeMonster;
   handleClose: () => void;
 };
 
-const ModalContent = ({ selectedImageInfo, handleClose }: Props) => {
+const ModalContent = ({ monster, handleClose }: Props) => {
   const width = useMediaQuery(theme.breakpoints.up(maxWidth))
     ? `${theme.breakpoints.values[maxWidth]}px`
     : "100vw";
@@ -33,8 +32,9 @@ const ModalContent = ({ selectedImageInfo, handleClose }: Props) => {
       aria-describedby="modal-modal-description"
       sx={{ backgroundColor: "rgb(0,0,0,0.1)" }}
     >
-      <Centering
-        height="auto"
+      <Stack
+        alignItems="center"
+        justifyContent="center"
         spacing={2}
         position="absolute"
         width={`calc(${width} * 0.8)`}
@@ -62,8 +62,8 @@ const ModalContent = ({ selectedImageInfo, handleClose }: Props) => {
         </Typography>
 
         <Image
-          src={selectedImageInfo.url}
-          alt={selectedImageInfo.title}
+          src={monster.base64image}
+          alt={`monster_${monster.id}`}
           width="90%"
           sx={{
             border: 2,
@@ -72,15 +72,15 @@ const ModalContent = ({ selectedImageInfo, handleClose }: Props) => {
         />
 
         <Stack direction="row" spacing={4}>
-          <Link href="/view-details">
+          <Link href={`/view-details?monsterId=${monster.id}`}>
             <Button variant="outlined">くわしくみる</Button>
           </Link>
 
-          <Link href="/select-silhouette">
+          <Link href={`/select-silhouette?monsterId=${monster.id}`}>
             <Button variant="contained">けってい</Button>
           </Link>
         </Stack>
-      </Centering>
+      </Stack>
     </Modal>
   );
 };

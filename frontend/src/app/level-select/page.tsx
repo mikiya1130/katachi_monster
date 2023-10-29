@@ -3,15 +3,17 @@ import { Box, Rating, Stack, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 
 import Swiper from "@/app/level-select/Swiper";
-import { imagesLevel1, imagesLevel2, imagesLevel3 } from "@/sampleImages";
-import { TypeSelectedImageInfo } from "@/types";
+import { TypeMonster } from "@/app/level-select/types";
+import { axios } from "@/axios";
 
 const LevelSelect = () => {
-  const swiperList: TypeSelectedImageInfo[][] = [
-    imagesLevel1,
-    imagesLevel2,
-    imagesLevel3,
-  ];
+  const [monstersList, setMonstersList] = useState<TypeMonster[][]>(
+    Array.from(new Array(3), (_, i) =>
+      new Array(5)
+        .fill(null)
+        .map((_, j) => ({ id: 10 * i + j, base64image: "" })),
+    ),
+  );
 
   const boxRef = useRef<HTMLDivElement>(null);
   const ratingRef = useRef<HTMLSpanElement>(null);
@@ -25,21 +27,27 @@ const LevelSelect = () => {
     }
   }, [boxRef, ratingRef]);
 
+  useEffect(() => {
+    axios.get("monster").then((res) => {
+      setMonstersList(res.data.monsters);
+    });
+  }, []);
+
   return (
     <Stack py={5} height="100%">
       <Typography fontSize="2rem">レベル</Typography>
       <Stack direction="column" spacing={3} flexGrow={1}>
-        {swiperList.map((images, level) => {
+        {monstersList.map((monsters, level) => {
           return (
             <Box key={level} flexGrow={1} ref={boxRef}>
               <Rating
                 value={level + 1}
-                max={swiperList.length}
+                max={monstersList.length}
                 readOnly
                 sx={{ fontSize: "2rem" }}
                 ref={ratingRef}
               />
-              <Swiper images={images} height={swiperHeight} />
+              <Swiper monsters={monsters} height={swiperHeight} />
             </Box>
           );
         })}
