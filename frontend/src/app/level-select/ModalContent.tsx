@@ -62,8 +62,8 @@ const ModalContent = ({ selectedImageInfo, handleClose }: Props) => {
         </Typography>
 
         <Image
-          src={selectedImageInfo.url}
-          alt={selectedImageInfo.title}
+          src={selectedImageInfo.base64image}
+          alt={`monster_${selectedImageInfo.id}`}
           width="90%"
           sx={{
             border: 2,

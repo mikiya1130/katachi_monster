@@ -31,11 +31,11 @@ const Swiper = ({ images, height }: Props) => {
         overflowX: "scroll",
       }}
     >
-      {images.map((image, index) => (
+      {images.map((image) => (
         <Image
-          key={index}
-          src={image.url}
-          alt={image.title}
+          key={image.id}
+          src={image.base64image}
+          alt={`monster_${image.id}`}
           onClick={() => handleOpen(image)}
           p={1}
           height="100%"
