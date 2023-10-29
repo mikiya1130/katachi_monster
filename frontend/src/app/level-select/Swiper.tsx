@@ -2,8 +2,8 @@ import { Stack } from "@mui/material";
 import { useState } from "react";
 
 import ModalContent from "@/app/level-select/ModalContent";
+import { TypeSelectedImageInfo } from "@/app/level-select/types";
 import Image from "@/components/Image";
-import { TypeSelectedImageInfo } from "@/types";
 type Props = {
   images: TypeSelectedImageInfo[];
   height: number | string;

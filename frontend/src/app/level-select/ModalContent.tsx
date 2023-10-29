@@ -9,11 +9,11 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 
+import { TypeSelectedImageInfo } from "@/app/level-select/types";
 import Centering from "@/components/Centering";
 import Image from "@/components/Image";
 import { maxWidth } from "@/consts";
 import theme from "@/theme";
-import { TypeSelectedImageInfo } from "@/types";
 
 type Props = {
   selectedImageInfo: TypeSelectedImageInfo;

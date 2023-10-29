@@ -3,8 +3,8 @@ import { Box, Rating, Stack, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 
 import Swiper from "@/app/level-select/Swiper";
+import { TypeSelectedImageInfo } from "@/app/level-select/types";
 import { axios } from "@/axios";
-import { TypeSelectedImageInfo } from "@/types";
 
 const LevelSelect = () => {
   const [imagesList, setImagesList] = useState<TypeSelectedImageInfo[][]>([
