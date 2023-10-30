@@ -35,27 +35,29 @@ const NamingMonster = () => {
           width={`50%`}
         />
       </Box>
-      <Box display="flex" alignItems="center" justifyContent="center">
-        <Box
-          component="form"
-          sx={{
-            "& > :not(style)": { m: 1, width: "25ch" },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <TextField
-            id="filled-basic"
-            label="モンスターのなまえ"
-            variant="filled"
-            value={inputValue}
-            onChange={handleInputChange}
-          />
-        </Box>
+      <Box
+        component="form"
+        noValidate
+        autoComplete="off"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        pt={4}
+        sx={{
+          "& > :not(style)": { m: 1, width: "80%" },
+        }}
+      >
+        <TextField
+          id="filled-basic"
+          label="モンスターのなまえ"
+          variant="filled"
+          value={inputValue}
+          onChange={handleInputChange}
+        />
       </Box>
-      <Box display="flex" alignItems="center" justifyContent="center">
+      <Box display="flex" alignItems="center" justifyContent="center" pt={1}>
         <Link href={`次のリンク`}>
-          <Button variant="contained">次へ</Button>
+          <Button variant="contained">つぎへ</Button>
         </Link>
       </Box>
     </Stack>
