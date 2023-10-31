@@ -3,7 +3,7 @@
  */
 "use client";
 
-import { Button } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
@@ -78,9 +78,14 @@ const SelectSilhouette = () => {
         onClick={handleClickImage}
         width="100%"
       />
-      <Link href="/level-select">
-        <Button variant="outlined">もどる</Button>
-      </Link>
+      <Stack direction="row" spacing={4}>
+        <Link href="/level-select">
+          <Button variant="outlined">もどる</Button>
+        </Link>
+        <Link href={`/naming-monster?monsterId=${monsterId}`}>
+          <Button variant="contained">つぎへ</Button>
+        </Link>
+      </Stack>
     </Centering>
   );
 };
