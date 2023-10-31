@@ -1,15 +1,29 @@
+/**
+ * /naming-monster?monsterId=${monsterId}
+ */
 "use client";
 import { Button, TextField } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { ChangeEvent, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { ChangeEvent, useEffect, useState } from "react";
 
+import { axios } from "@/axios";
 import Centering from "@/components/Centering";
 import Image from "@/components/Image";
 
 const NamingMonster = () => {
+  const searchParams = useSearchParams();
+  const [image, setImage] = useState<string>("");
+  const [inputValue, setInputValue] = useState("");
+
   const message = "なまえをつけよう";
 
-  const [inputValue, setInputValue] = useState("");
+  useEffect(() => {
+    const monsterId = searchParams.get("monsterId") ?? "1"; // TODO: パラメータない時の処理を実装する
+    axios.get(`monster/${monsterId}`).then((res) => {
+      setImage(res.data.base64image);
+    });
+  }, [searchParams]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -21,7 +35,7 @@ const NamingMonster = () => {
     <Centering p={4} spacing={4}>
       <Typography fontSize="2rem">{message}</Typography>
       <Image
-        src="../../../images/animal_black_sheep_hitsuji.png"
+        src={image}
         alt="monster"
         maxHeight="30%" // NOTE: 値の調整注意
         width="100%"
