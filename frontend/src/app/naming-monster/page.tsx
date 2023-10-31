@@ -1,8 +1,9 @@
 "use client";
-import { Box, Button, Stack, TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { ChangeEvent, useState } from "react";
 
+import Centering from "@/components/Centering";
 import Image from "@/components/Image";
 
 const NamingMonster = () => {
@@ -17,53 +18,30 @@ const NamingMonster = () => {
   const isButtonDisabled = inputValue.length < 1 || inputValue.length > 10;
 
   return (
-    <Stack
-      p={4}
-      spacing={10}
-      alignItems="center"
-      justifyContent="center"
-      height="100%"
-    >
-      <Typography fontSize="2rem" align="center">
-        {message}
-      </Typography>
-
+    <Centering p={4} spacing={4}>
+      <Typography fontSize="2rem">{message}</Typography>
       <Image
-        src={"../../../images/animal_black_sheep_hitsuji.png"}
-        alt={"monster"}
-        width={`50%`}
-      />
-
-      <Box
-        component="form"
-        noValidate
-        autoComplete="off"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
+        src="../../../images/animal_black_sheep_hitsuji.png"
+        alt="monster"
+        maxHeight="30%" // NOTE: 値の調整注意
         width="100%"
-        sx={{
-          "& > :not(style)": { m: 1, width: "13rem" },
-        }}
+      />
+      <TextField
+        id="filled-basic"
+        label="モンスターのなまえ"
+        variant="filled"
+        value={inputValue}
+        sx={{ maxWidth: "13rem" }} // NOTE: Max10文字が入る大きさ
+        onChange={handleInputChange}
+      />
+      <Button
+        variant="contained"
+        disabled={isButtonDisabled}
+        // onClick={handleNextClick}
       >
-        <TextField
-          id="filled-basic"
-          label="モンスターのなまえ"
-          variant="filled"
-          value={inputValue}
-          onChange={handleInputChange}
-        />
-      </Box>
-      <Box display="flex" alignItems="center" justifyContent="center">
-        <Button
-          variant="contained"
-          disabled={isButtonDisabled}
-          // onClick={handleNextClick}
-        >
-          つぎへ
-        </Button>
-      </Box>
-    </Stack>
+        つぎへ
+      </Button>
+    </Centering>
   );
 };
 
