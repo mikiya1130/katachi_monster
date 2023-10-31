@@ -1,7 +1,6 @@
 "use client";
 import { Box, Button, Stack, TextField } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import Link from "next/link";
 import { ChangeEvent, useState } from "react";
 
 import Image from "@/components/Image";
@@ -9,32 +8,32 @@ import Image from "@/components/Image";
 const NamingMonster = () => {
   const message = "なまえをつけよう";
 
-  // const width = useMediaQuery(theme.breakpoints.up(maxWidth))
-  //   ? `${theme.breakpoints.values[maxWidth]}px`
-  //   : "100vw";
-
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
+  const isButtonDisabled = inputValue.length < 1 || inputValue.length > 10;
+
   return (
-    <Stack p={4}>
+    <Stack
+      p={4}
+      spacing={10}
+      alignItems="center"
+      justifyContent="center"
+      height="100%"
+    >
       <Typography fontSize="2rem" align="center">
         {message}
       </Typography>
-      <Box display="flex" alignItems="center" justifyContent="center">
-        <Image
-          // key={monster.id}
-          // src={monster.base64image}
-          // alt={`monster_${monster.id}`}
-          src={"../../../images/animal_black_sheep_hitsuji.png"}
-          alt={"monster"}
-          p={1}
-          width={`50%`}
-        />
-      </Box>
+
+      <Image
+        src={"../../../images/animal_black_sheep_hitsuji.png"}
+        alt={"monster"}
+        width={`50%`}
+      />
+
       <Box
         component="form"
         noValidate
@@ -42,9 +41,9 @@ const NamingMonster = () => {
         display="flex"
         alignItems="center"
         justifyContent="center"
-        pt={4}
+        width="100%"
         sx={{
-          "& > :not(style)": { m: 1, width: "80%" },
+          "& > :not(style)": { m: 1, width: "13rem" },
         }}
       >
         <TextField
@@ -55,10 +54,14 @@ const NamingMonster = () => {
           onChange={handleInputChange}
         />
       </Box>
-      <Box display="flex" alignItems="center" justifyContent="center" pt={1}>
-        <Link href={`次のリンク`}>
-          <Button variant="contained">つぎへ</Button>
-        </Link>
+      <Box display="flex" alignItems="center" justifyContent="center">
+        <Button
+          variant="contained"
+          disabled={isButtonDisabled}
+          // onClick={handleNextClick}
+        >
+          つぎへ
+        </Button>
       </Box>
     </Stack>
   );
