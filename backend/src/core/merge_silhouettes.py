@@ -1,4 +1,4 @@
-"""monster_image に silhouette_image を貼り付けて画像を完成させる"""
+"""monster_image と silhouette_image を貼り合わせて画像を完成させる"""
 import numpy as np
 from PIL import Image
 
@@ -7,8 +7,9 @@ from src.utils import binalize_alpha, cropping_image, get_alpha, get_truth_size
 
 
 def merge_silhouettes(db_monster: Monster) -> tuple[Image.Image, list[list[str]]]:
-    """monster_image に silhouette_image を貼り付けて画像を完成させる
+    """monster_image と silhouette_image を貼り合わせて画像を完成させる
 
+    NOTE: silhouette_image の id の小さい順 → monster_image の順で重ねている
     NOTE: セグメント情報は、ピクセルごとに領域を以下の文字列で表した2次元配列
           撮影済み画像は、image_id ではなく元のシルエットの silhouette_id なので注意
             - 背景: ""
@@ -27,9 +28,8 @@ def merge_silhouettes(db_monster: Monster) -> tuple[Image.Image, list[list[str]]
         raise ValueError
     monster = binalize_alpha(monster)
 
-    mosnter_alpha = get_alpha(monster)
-    segment = np.full_like(mosnter_alpha, "", dtype=object)
-    segment[mosnter_alpha == 255] = f"m{db_monster.id}"
+    image = Image.new("RGBA", monster.size, (0, 0, 0, 0))
+    segment = np.full(image.size, "", dtype=object)
 
     for db_silhouette in db_monster.silhouette:
         # NOTE: DB で global / local 座標を管理するのがよさそう
@@ -81,13 +81,18 @@ def merge_silhouettes(db_monster: Monster) -> tuple[Image.Image, list[list[str]]
             silhouette = cropping_image(silhouette)
             segment_id = f"s{db_silhouette.id}"
 
-        padding_silhouette = Image.new("RGBA", monster.size, (0, 0, 0, 0))
+        padding_silhouette = Image.new("RGBA", image.size, (0, 0, 0, 0))
         offset_x, offset_y = global_x - local_x, global_y - local_y
         padding_silhouette.paste(silhouette, (offset_x, offset_y))
 
-        monster = Image.alpha_composite(monster, padding_silhouette)
+        image = Image.alpha_composite(image, padding_silhouette)
 
         silhouette_alpha = get_alpha(padding_silhouette)
         segment[silhouette_alpha == 255] = segment_id
 
-    return monster, segment.tolist()
+    image = Image.alpha_composite(image, monster)
+
+    mosnter_alpha = get_alpha(monster)
+    segment[mosnter_alpha == 255] = f"m{db_monster.id}"
+
+    return image, segment.tolist()
