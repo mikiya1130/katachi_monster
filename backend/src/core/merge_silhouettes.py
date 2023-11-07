@@ -10,10 +10,11 @@ def merge_silhouettes(db_monster: Monster) -> tuple[Image.Image, list[list[str]]
     """monster_image に silhouette_image を貼り付けて画像を完成させる
 
     NOTE: セグメント情報は、ピクセルごとに領域を以下の文字列で表した2次元配列
-        - 背景：""
-        - モンスター："m{monster_id}"
-        - シルエット："s{silhouette_id}"
-        - 撮影済み画像："i{silhouette_id}"  # image_id ではなく元のシルエットの silhouette_id
+          撮影済み画像は、image_id ではなく元のシルエットの silhouette_id なので注意
+            - 背景: ""
+            - モンスター: "m{monster_id}"
+            - シルエット: "s{silhouette_id}"
+            - 撮影済み画像: "i{silhouette_id}"
 
     Args:
         db_monster (Monster): モンスターのレコード
