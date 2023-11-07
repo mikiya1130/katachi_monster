@@ -3,8 +3,7 @@
  */
 "use client";
 
-import { Button, Stack } from "@mui/material";
-import Link from "next/link";
+import { Stack } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -13,6 +12,7 @@ import * as React from "react";
 import { axios } from "@/axios";
 import Centering from "@/components/Centering";
 import Image from "@/components/Image";
+import LinkButton from "@/components/LinkButton";
 
 const SelectSilhouette = () => {
   const searchParams = useSearchParams();
@@ -86,17 +86,16 @@ const SelectSilhouette = () => {
         width="100%"
       />
       <Stack direction="row" spacing={4}>
-        <Link href="/level-select">
-          <Button variant="outlined">もどる</Button>
-        </Link>
-        <Link href={`/naming-monster?monsterId=${monsterId}`}>
-          <Button
-            variant="contained"
-            disabled={includeSilhouettesNotReplacedPicture}
-          >
-            つぎへ
-          </Button>
-        </Link>
+        <LinkButton href="/level-select" variant="outlined">
+          もどる
+        </LinkButton>
+        <LinkButton
+          href={`/naming-monster?monsterId=${monsterId}`}
+          variant="contained"
+          disabled={includeSilhouettesNotReplacedPicture}
+        >
+          つぎへ
+        </LinkButton>
       </Stack>
     </Centering>
   );

@@ -3,14 +3,14 @@
  */
 "use client";
 
-import { Button, Stack } from "@mui/material";
-import Link from "next/link";
+import { Stack } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { axios } from "@/axios";
 import Centering from "@/components/Centering";
 import Image from "@/components/Image";
+import LinkButton from "@/components/LinkButton";
 
 const ConfirmSilhouette = () => {
   const searchParams = useSearchParams();
@@ -36,14 +36,18 @@ const ConfirmSilhouette = () => {
     <Centering spacing={4} padding={4}>
       <Image src={image} alt="silhouette" width="100%" />
       <Stack direction="row" spacing={4}>
-        <Link
+        <LinkButton
           href={`/take-picture?monsterId=${monsterId}&silhouetteId=${silhouetteId}`}
+          variant="outlined"
         >
-          <Button variant="outlined">とりなおし</Button>
-        </Link>
-        <Link href={`/select-silhouette?monsterId=${monsterId}`}>
-          <Button variant="contained">けってい</Button>
-        </Link>
+          とりなおし
+        </LinkButton>
+        <LinkButton
+          href={`/select-silhouette?monsterId=${monsterId}`}
+          variant="contained"
+        >
+          けってい
+        </LinkButton>
       </Stack>
     </Centering>
   );

@@ -1,16 +1,15 @@
 import { Close } from "@mui/icons-material";
 import {
-  Button,
   IconButton,
   Modal,
   Stack,
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import Link from "next/link";
 
 import { TypeMonster } from "@/app/level-select/types";
 import Image from "@/components/Image";
+import LinkButton from "@/components/LinkButton";
 import { maxWidth } from "@/consts";
 import theme from "@/theme";
 
@@ -72,13 +71,19 @@ const ModalContent = ({ monster, handleClose }: Props) => {
         />
 
         <Stack direction="row" spacing={4}>
-          <Link href={`/view-details?monsterId=${monster.id}`}>
-            <Button variant="outlined">くわしくみる</Button>
-          </Link>
+          <LinkButton
+            href={`/view-details?monsterId=${monster.id}`}
+            variant="outlined"
+          >
+            くわしくみる
+          </LinkButton>
 
-          <Link href={`/select-silhouette?monsterId=${monster.id}`}>
-            <Button variant="contained">けってい</Button>
-          </Link>
+          <LinkButton
+            href={`/select-silhouette?monsterId=${monster.id}`}
+            variant="contained"
+          >
+            けってい
+          </LinkButton>
         </Stack>
       </Stack>
     </Modal>
