@@ -3,8 +3,7 @@
  */
 "use client";
 
-import { Button } from "@mui/material";
-import Link from "next/link";
+import { Stack } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -13,6 +12,7 @@ import * as React from "react";
 import { axios } from "@/axios";
 import Centering from "@/components/Centering";
 import Image from "@/components/Image";
+import LinkButton from "@/components/LinkButton";
 
 const SelectSilhouette = () => {
   const searchParams = useSearchParams();
@@ -22,6 +22,10 @@ const SelectSilhouette = () => {
   const [segment, setSegment] = useState<string[][]>();
   const [segmentWidth, setSegmentWidth] = useState<number>(0);
   const [segmentHeight, setSegmentHeight] = useState<number>(0);
+  const [
+    includeSilhouettesNotReplacedPicture,
+    setIncludeSilhouettesNotReplacedPicture,
+  ] = useState<boolean>(false);
 
   const decode_2d_list = (str: string) =>
     str.split("|").map((row: string) => row.split(","));
@@ -40,6 +44,9 @@ const SelectSilhouette = () => {
     if (segment) {
       setSegmentWidth(segment[0].length);
       setSegmentHeight(segment.length);
+      setIncludeSilhouettesNotReplacedPicture(
+        segment.some((row) => row.some((value) => value.includes("s"))),
+      );
     }
   }, [segment]);
 
@@ -51,8 +58,8 @@ const SelectSilhouette = () => {
     const segmentY = Math.floor(segmentHeight * positionY);
     if (segment) {
       const value = segment[segmentY][segmentX];
-      if (value.startsWith("s")) {
-        return Number(value.replace("s", ""));
+      if (value.startsWith("s") || value.startsWith("i")) {
+        return Number(value.replace("s", "").replace("i", ""));
       }
     }
     return null;
@@ -78,9 +85,18 @@ const SelectSilhouette = () => {
         onClick={handleClickImage}
         width="100%"
       />
-      <Link href="/level-select">
-        <Button variant="outlined">もどる</Button>
-      </Link>
+      <Stack direction="row" spacing={4}>
+        <LinkButton href="/level-select" variant="outlined">
+          もどる
+        </LinkButton>
+        <LinkButton
+          href={`/naming-monster?monsterId=${monsterId}`}
+          variant="contained"
+          disabled={includeSilhouettesNotReplacedPicture}
+        >
+          つぎへ
+        </LinkButton>
+      </Stack>
     </Centering>
   );
 };

@@ -9,6 +9,13 @@ from src.utils import binalize_alpha, cropping_image, get_alpha, get_truth_size
 def merge_silhouettes(db_monster: Monster) -> tuple[Image.Image, list[list[str]]]:
     """monster_image に silhouette_image を貼り付けて画像を完成させる
 
+    NOTE: セグメント情報は、ピクセルごとに領域を以下の文字列で表した2次元配列
+          撮影済み画像は、image_id ではなく元のシルエットの silhouette_id なので注意
+            - 背景: ""
+            - モンスター: "m{monster_id}"
+            - シルエット: "s{silhouette_id}"
+            - 撮影済み画像: "i{silhouette_id}"
+
     Args:
         db_monster (Monster): モンスターのレコード
 
@@ -56,6 +63,7 @@ def merge_silhouettes(db_monster: Monster) -> tuple[Image.Image, list[list[str]]
             )
 
             silhouette = cropping_image(silhouette)
+            segment_id = f"i{db_silhouette.id}"
         else:
             # 撮影済み画像が存在しないとき
             silhouette = Image.open(db_silhouette.silhouette_path)
@@ -71,6 +79,7 @@ def merge_silhouettes(db_monster: Monster) -> tuple[Image.Image, list[list[str]]
             )
 
             silhouette = cropping_image(silhouette)
+            segment_id = f"s{db_silhouette.id}"
 
         padding_silhouette = Image.new("RGBA", monster.size, (0, 0, 0, 0))
         offset_x, offset_y = global_x - local_x, global_y - local_y
@@ -79,6 +88,6 @@ def merge_silhouettes(db_monster: Monster) -> tuple[Image.Image, list[list[str]]
         monster = Image.alpha_composite(monster, padding_silhouette)
 
         silhouette_alpha = get_alpha(padding_silhouette)
-        segment[silhouette_alpha == 255] = f"s{db_silhouette.id}"
+        segment[silhouette_alpha == 255] = segment_id
 
     return monster, segment.tolist()
