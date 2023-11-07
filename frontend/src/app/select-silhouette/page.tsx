@@ -22,6 +22,10 @@ const SelectSilhouette = () => {
   const [segment, setSegment] = useState<string[][]>();
   const [segmentWidth, setSegmentWidth] = useState<number>(0);
   const [segmentHeight, setSegmentHeight] = useState<number>(0);
+  const [
+    includeSilhouettesNotReplacedPicture,
+    setIncludeSilhouettesNotReplacedPicture,
+  ] = useState<boolean>(false);
 
   const decode_2d_list = (str: string) =>
     str.split("|").map((row: string) => row.split(","));
@@ -40,6 +44,9 @@ const SelectSilhouette = () => {
     if (segment) {
       setSegmentWidth(segment[0].length);
       setSegmentHeight(segment.length);
+      setIncludeSilhouettesNotReplacedPicture(
+        segment.some((row) => row.some((value) => value.includes("s"))),
+      );
     }
   }, [segment]);
 
@@ -51,8 +58,8 @@ const SelectSilhouette = () => {
     const segmentY = Math.floor(segmentHeight * positionY);
     if (segment) {
       const value = segment[segmentY][segmentX];
-      if (value.startsWith("s")) {
-        return Number(value.replace("s", ""));
+      if (value.startsWith("s") || value.startsWith("i")) {
+        return Number(value.replace("s", "").replace("i", ""));
       }
     }
     return null;
@@ -83,7 +90,12 @@ const SelectSilhouette = () => {
           <Button variant="outlined">もどる</Button>
         </Link>
         <Link href={`/naming-monster?monsterId=${monsterId}`}>
-          <Button variant="contained">つぎへ</Button>
+          <Button
+            variant="contained"
+            disabled={includeSilhouettesNotReplacedPicture}
+          >
+            つぎへ
+          </Button>
         </Link>
       </Stack>
     </Centering>
