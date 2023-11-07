@@ -41,9 +41,9 @@ def init_db(db: Session = get_db().__next__()) -> None:
     def init_monsters(db: Session) -> None:
         """monsters テーブルへの初期データ投入"""
         if not db.query(Monster).all():
-            dir_list = Path("images/silhouettes").glob("sample_animal_*")
+            dir_list = Path("images/silhouettes").glob("animal_[123]_*")
             for dir in dir_list:  # noqa: A001
-                level = int(dir.name.split("_")[2])
+                level = int(dir.name.split("_")[1])
                 monster_path = dir / "monster.png"
                 db_silhouette = [
                     Silhouette(silhouette_path=str(silhouette_path))
