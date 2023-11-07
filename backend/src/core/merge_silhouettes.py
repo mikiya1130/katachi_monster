@@ -23,6 +23,14 @@ def merge_silhouettes(db_monster: Monster) -> tuple[Image.Image, list[list[str]]
     Returns:
         tuple[Image, list[list[str]]]: モンスター画像、セグメント情報
     """
+    monster = Image.open(db_monster.monster_path)
+    if monster.mode != "RGBA":
+        raise ValueError
+    monster = binalize_alpha(monster)
+
+    image = Image.new("RGBA", monster.size, (0, 0, 0, 0))
+    segment = np.full_like(image, "", dtype=object)
+
     for db_silhouette in db_monster.silhouette:
         # NOTE: DB で global / local 座標を管理するのがよさそう
         if db_silhouette.picture:
@@ -73,22 +81,18 @@ def merge_silhouettes(db_monster: Monster) -> tuple[Image.Image, list[list[str]]
             silhouette = cropping_image(silhouette)
             segment_id = f"s{db_silhouette.id}"
 
-        padding_silhouette = Image.new("RGBA", monster.size, (0, 0, 0, 0))
+        padding_silhouette = Image.new("RGBA", image.size, (0, 0, 0, 0))
         offset_x, offset_y = global_x - local_x, global_y - local_y
         padding_silhouette.paste(silhouette, (offset_x, offset_y))
 
-        monster = Image.alpha_composite(monster, padding_silhouette)
+        image = Image.alpha_composite(image, padding_silhouette)
 
         silhouette_alpha = get_alpha(padding_silhouette)
         segment[silhouette_alpha == 255] = segment_id
 
-    monster = Image.open(db_monster.monster_path)
-    if monster.mode != "RGBA":
-        raise ValueError
-    monster = binalize_alpha(monster)
+    image = Image.alpha_composite(image, monster)
 
     mosnter_alpha = get_alpha(monster)
-    segment = np.full_like(mosnter_alpha, "", dtype=object)
     segment[mosnter_alpha == 255] = f"m{db_monster.id}"
 
-    return monster, segment.tolist()
+    return image, segment.tolist()
