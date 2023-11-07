@@ -29,7 +29,7 @@ def merge_silhouettes(db_monster: Monster) -> tuple[Image.Image, list[list[str]]
     monster = binalize_alpha(monster)
 
     image = Image.new("RGBA", monster.size, (0, 0, 0, 0))
-    segment = np.full_like(image, "", dtype=object)
+    segment = np.full(image.size, "", dtype=object)
 
     for db_silhouette in db_monster.silhouette:
         # NOTE: DB で global / local 座標を管理するのがよさそう
