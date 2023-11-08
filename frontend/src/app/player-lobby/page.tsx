@@ -17,11 +17,11 @@ const PlayerLobby = () => {
       <Typography fontSize="2rem" align="left">
         {title}
       </Typography>
-      <Link href={``}>
+      <Link href={`/create-room`}>
         <Button variant="outlined">たいせんするへやをつくる</Button>
       </Link>
 
-      <Link href={``}>
+      <Link href={`/enter-room`}>
         <Button variant="contained">たいせんするへやにはいる</Button>
       </Link>
     </Stack>
