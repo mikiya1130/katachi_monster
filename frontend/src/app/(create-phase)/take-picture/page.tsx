@@ -14,7 +14,7 @@ import {
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-import Camera, { CameraState } from "@/app/take-picture/Camera";
+import Camera, { CameraState } from "@/app/(create-phase)/take-picture/Camera";
 import { axios } from "@/axios";
 import Centering from "@/components/Centering";
 import Image from "@/components/Image";

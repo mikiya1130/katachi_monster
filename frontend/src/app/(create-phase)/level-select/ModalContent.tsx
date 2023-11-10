@@ -7,7 +7,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 
-import { TypeMonster } from "@/app/level-select/types";
+import { TypeMonster } from "@/app/(create-phase)/level-select/types";
 import Image from "@/components/Image";
 import LinkButton from "@/components/LinkButton";
 import { maxWidth } from "@/consts";
