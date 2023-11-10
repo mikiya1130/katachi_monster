@@ -1,8 +1,8 @@
 import { Stack } from "@mui/material";
 import { useState } from "react";
 
-import ModalContent from "@/app/level-select/ModalContent";
-import { TypeMonster } from "@/app/level-select/types";
+import ModalContent from "@/app/(create-phase)/level-select/ModalContent";
+import { TypeMonster } from "@/app/(create-phase)/level-select/types";
 import Image from "@/components/Image";
 type Props = {
   monsters: TypeMonster[];

@@ -2,8 +2,8 @@
 import { Box, Rating, Stack, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 
-import Swiper from "@/app/level-select/Swiper";
-import { TypeMonster } from "@/app/level-select/types";
+import Swiper from "@/app/(create-phase)/level-select/Swiper";
+import { TypeMonster } from "@/app/(create-phase)/level-select/types";
 import { axios } from "@/axios";
 
 const LevelSelect = () => {
