@@ -2,6 +2,12 @@
 from pydantic import BaseModel, Field, validator
 
 
+class OutGetMonsterIds(BaseModel):
+    """get_monster_ids 関数の戻り値の型"""
+
+    monster_ids: tuple[list[int], list[int], list[int]]
+
+
 class OutGetMonster(BaseModel):
     """get_monster 関数の戻り値の型"""
 
@@ -15,9 +21,3 @@ class OutGetMonster(BaseModel):
         if not v.decode().startswith("data:image/png;base64,"):
             raise TypeError
         return v
-
-
-class OutGetAllMonster(BaseModel):
-    """get_all_monster 関数の戻り値の型"""
-
-    monsters: tuple[list[OutGetMonster], list[OutGetMonster], list[OutGetMonster]]
