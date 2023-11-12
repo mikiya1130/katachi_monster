@@ -1,10 +1,10 @@
-from .monster import OutGetAllMonster, OutGetMonster
+from .monster import OutGetMonster, OutGetMonsterIds
 from .picture import InPostPicture, OutGetPicture, OutPostPicture
 from .silhouette import OutGetSilhouette
 
 __all__ = [
+    "OutGetMonsterIds",
     "OutGetMonster",
-    "OutGetAllMonster",
     "OutGetPicture",
     "InPostPicture",
     "OutPostPicture",

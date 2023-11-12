@@ -1,15 +1,15 @@
 import { Stack } from "@mui/material";
 import { useState } from "react";
 
+import Content from "@/app/(create-phase)/level-select/Content";
 import ModalContent from "@/app/(create-phase)/level-select/ModalContent";
 import { TypeMonster } from "@/app/(create-phase)/level-select/types";
-import Image from "@/components/Image";
 type Props = {
-  monsters: TypeMonster[];
+  monsterIds: number[];
   height: number | string;
 };
 
-const Swiper = ({ monsters, height }: Props) => {
+const Swiper = ({ monsterIds, height }: Props) => {
   const [monster, setMonster] = useState<null | TypeMonster>(null);
 
   const handleOpen = (imageInfo: TypeMonster) => {
@@ -30,16 +30,11 @@ const Swiper = ({ monsters, height }: Props) => {
         overflowX: "scroll",
       }}
     >
-      {monsters.map((monster) => (
-        <Image
-          key={monster.id}
-          src={monster.base64image}
-          alt={`monster_${monster.id}`}
-          onClick={() => handleOpen(monster)}
-          p={1}
-          height="100%"
-          border={2}
-          borderColor="#000"
+      {monsterIds.map((monsterId) => (
+        <Content
+          key={monsterId}
+          monsterId={monsterId}
+          handleOpen={handleOpen}
         />
       ))}
       {monster && <ModalContent monster={monster} handleClose={handleClose} />}
