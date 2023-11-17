@@ -18,7 +18,7 @@ const Home = () => {
 
   return (
     <Link
-      href="/level-select"
+      href="/mode-select"
       style={{ color: "inherit", textDecoration: "none" }}
     >
       <Centering justifyContent="space-around">
