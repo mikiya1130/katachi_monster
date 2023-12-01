@@ -91,6 +91,8 @@ def post_picture(
     Args:
         requests (InPostPicture): 対象画像の base64image データ
         db (Session, optional): _description_. Defaults to Depends(get_db).
+
+    Returns:
         OutPostPicture: 保存先レコードへの id
     """
     try:
