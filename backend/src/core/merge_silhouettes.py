@@ -6,7 +6,10 @@ from src.models import Monster, Silhouette
 from src.utils import binalize_alpha, cropping_image, get_alpha, get_truth_size
 
 
-def merge_silhouettes(db_monster: Monster) -> tuple[Image.Image, list[list[str]]]:
+def merge_silhouettes(
+    db_monster: Monster,
+    user_id: int,
+) -> tuple[Image.Image, list[list[str]]]:
     """monster_image と silhouette_image を貼り合わせて画像を完成させる
 
     NOTE: silhouette_image の id の小さい順 → monster_image の順で重ねている
@@ -19,6 +22,7 @@ def merge_silhouettes(db_monster: Monster) -> tuple[Image.Image, list[list[str]]
 
     Args:
         db_monster (Monster): モンスターのレコード
+        user_id (int): ユーザーの id
 
     Returns:
         tuple[Image, list[list[str]]]: モンスター画像、セグメント情報
@@ -33,9 +37,8 @@ def merge_silhouettes(db_monster: Monster) -> tuple[Image.Image, list[list[str]]
 
     for db_silhouette in db_monster.silhouette:
         # NOTE: DB で global / local 座標を管理するのがよさそう
-        if db_silhouette.picture:
+        if db_silhouette.picture and db_silhouette.picture[-1].user_id == user_id:
             # 撮影済み画像が存在するとき
-            # TODO: ユーザー id で制限する必要あり  # noqa: FIX002
             db_picture = db_silhouette.picture[-1]
 
             silhouette = Image.open(db_picture.picture_path)

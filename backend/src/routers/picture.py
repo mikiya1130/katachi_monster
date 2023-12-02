@@ -2,12 +2,12 @@
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Cookie, Depends, HTTPException
 from PIL import Image
 from sqlalchemy.orm import Session
 
 from src.core import Rembg
-from src.cruds import create_picture, read_picture, read_silhouette
+from src.cruds import create_picture, read_picture, read_silhouette, read_user
 from src.db import get_db
 from src.models import Picture
 from src.types import InPostPicture, OutGetPicture, OutPostPicture
@@ -81,6 +81,7 @@ def get_picture(
 def post_picture(
     requests: InPostPicture,
     db: Session = Depends(get_db),
+    user_token: str | None = Cookie(None),
 ) -> OutPostPicture:
     """エンドポイント `/picture`
 
@@ -91,10 +92,15 @@ def post_picture(
     Args:
         requests (InPostPicture): 対象画像の base64image データ
         db (Session, optional): _description_. Defaults to Depends(get_db).
+        user_token (str|None, optional): ユーザー token. Defaults to Cookie(None).
 
     Returns:
         OutPostPicture: 保存先レコードへの id
     """
+    if user_token is None:
+        raise HTTPException(status_code=500, detail="Invalid user token")
+    db_user = read_user(db=db, user_token=user_token)
+
     try:
         # 撮影画像の処理
         picture = base64image_to_png(requests.base64image)
@@ -142,7 +148,7 @@ def post_picture(
 
         # DB に反映
         db_picture = Picture(
-            user_id=1,  # TODO: 修正  # noqa: FIX002
+            user_id=db_user.id,
             silhouette_id=requests.silhouette_id,
             picture_path=str(picture_path),
         )
