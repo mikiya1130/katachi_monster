@@ -1,9 +1,13 @@
 "use client";
-import { Box, Button, Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
+import AttackCenter from "@/app/(battle-phase)/battle-attack-select/AttackCenter";
+import ButtonSelectCenter from "@/app/(battle-phase)/battle-attack-select/ButtonSelectCenter";
 import Field from "@/app/(battle-phase)/battle-attack-select/Field";
+import GtpButton from "@/app/(battle-phase)/battle-attack-select/GtpButton";
+import HpCalculateCenter from "@/app/(battle-phase)/battle-attack-select/HpCalculateCenter";
 import { axios } from "@/axios";
 
 const BattleAttackSelect = () => {
@@ -31,6 +35,14 @@ const BattleAttackSelect = () => {
       title: "pa",
     },
   ];
+
+  const hp = 100;
+
+  const [outcome, setOutcome] = useState<"win" | "lose" | "draw" | null>("win");
+
+  const [state, setState] = useState<"buttonSelect" | "hpCalculate" | "attack">(
+    "buttonSelect",
+  );
 
   useEffect(() => {
     const monsterIdSelf = searchParams.get("monsterIdSelf") ?? "1"; // TODO: パラメータない時の処理を実装する
@@ -70,37 +82,29 @@ const BattleAttackSelect = () => {
       <Field
         height="30%"
         color="blue"
-        monsterName="あいてのモンスターのなまえ"
+        monsterName="Opponent monster name"
         monsterImage={imageOpponent}
         isSelf={false}
       />
 
-      <Box sx={{ height: "30%", width: "100%" }}></Box>
+      <Box sx={{ height: "30%", width: "100%" }}>
+        {state === "buttonSelect" && <ButtonSelectCenter />}
+        {state === "hpCalculate" && <HpCalculateCenter setState={setState} />}
+        {state === "attack" && (
+          <AttackCenter setState={setState} outcome={outcome} />
+        )}
+      </Box>
 
       <Field
         height="30%"
         color="red"
-        monsterName="じぶんのモンスターのなまえ"
+        monsterName="Self monster name"
         monsterImage={imageSelf}
         isSelf={true}
       />
 
       <Box ref={gtpRef} sx={{ height: "10%", width: "100%" }} pt="5px">
-        <Stack direction="row" justifyContent="space-between">
-          {images.map((image) => (
-            <Button
-              key={image.title}
-              sx={{
-                height: gtpHeight,
-                width: gtpHeight,
-                backgroundImage: `url(${image.url})`,
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "contain",
-                borderRadius: "50%",
-              }}
-            />
-          ))}
-        </Stack>
+        <GtpButton gtpHeight={gtpHeight} state={state} setState={setState} />
       </Box>
     </Stack>
   );
