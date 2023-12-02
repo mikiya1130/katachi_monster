@@ -12,7 +12,7 @@ export const config = {
 };
 
 export async function middleware(request: NextRequest) {
-  if (!request.cookies.has("userToken")) {
+  if (!request.cookies.has("user_token")) {
     // ユーザー識別用の token が cookie に保存されていない場合
     if (request.nextUrl.pathname === "/") {
       // トップページの場合
@@ -27,7 +27,7 @@ export async function middleware(request: NextRequest) {
       const data = await res.json();
       // cookie に保存
       const response = NextResponse.next();
-      response.cookies.set("userToken", data.user_token);
+      response.cookies.set("user_token", data.user_token);
       return response;
     } else {
       // トップページ以外の場合
