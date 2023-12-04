@@ -33,7 +33,7 @@ const GtpButton = ({ gtpHeight, state, setState }: Props) => {
   };
 
   return (
-    <Stack direction="row" justifyContent="space-between">
+    <Stack direction="row" justifyContent="space-between" pt={1}>
       {images.map((image) => (
         <Button
           key={image.title}
