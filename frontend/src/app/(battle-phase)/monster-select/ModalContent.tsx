@@ -63,10 +63,19 @@ const ModalContent = ({ monster, handleClose }: Props) => {
           モンスター名
         </Typography>
 
-        <Stack direction="row" spacing={4}>
-          <Typography fontSize={24} textAlign="center">
-            HP：100
-          </Typography>
+        <Stack direction="row" spacing={2}>
+          <Chip
+            avatar={
+              <Avatar sx={{ bgcolor: "black" }} variant="rounded">
+                <Typography color="white" fontWeight={600}>
+                  HP
+                </Typography>
+              </Avatar>
+            }
+            label="100"
+            variant="outlined"
+            sx={{ borderRadius: "8px", bgcolor: "white" }}
+          />
           <Box>
             <Chip
               avatar={<Avatar alt="Gu" src="images/gu.png" />}
