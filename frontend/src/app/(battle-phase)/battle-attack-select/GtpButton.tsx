@@ -29,7 +29,8 @@ const GtpButton = ({ gtpHeight, state, setState }: Props) => {
 
   const buttonHandler = (buttonTitle: string) => {
     setActiveButton(buttonTitle);
-    setState("hpCalculate");
+    //TODO: バックエンドに出した手を送る
+    setState("hpCalculate"); //送信出来たら別の画面に移る
   };
 
   return (

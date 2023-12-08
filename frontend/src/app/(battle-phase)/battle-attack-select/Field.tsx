@@ -10,9 +10,23 @@ type Props = {
   monsterName: string;
   monsterImage: string;
   isSelf: boolean;
+  hp: number;
+  guSore: number;
+  chokiScore: number;
+  paScore: number;
 };
 
-const Field = ({ height, color, monsterName, monsterImage, isSelf }: Props) => {
+const Field = ({
+  height,
+  color,
+  monsterName,
+  monsterImage,
+  isSelf,
+  hp,
+  guSore,
+  chokiScore,
+  paScore,
+}: Props) => {
   const direction = isSelf ? "column" : "column-reverse";
   const removeBorder = isSelf ? { borderTop: 0 } : { borderBottom: 0 };
 
@@ -42,25 +56,25 @@ const Field = ({ height, color, monsterName, monsterImage, isSelf }: Props) => {
               </Typography>
             </Avatar>
           }
-          label="100"
+          label={`${hp}`}
           variant="outlined"
           sx={{ borderRadius: "8px", bgcolor: "white" }}
         />
         <Chip
           avatar={<Avatar alt="Gu" src="images/gu.png" />}
-          label="32"
+          label={`${guSore}`}
           variant="outlined"
           sx={{ bgcolor: "white" }}
         />
         <Chip
-          avatar={<Avatar alt="Gu" src="images/choki.png" />}
-          label="10"
+          avatar={<Avatar alt="choki" src="images/choki.png" />}
+          label={`${chokiScore}`}
           variant="outlined"
           sx={{ bgcolor: "white" }}
         />
         <Chip
-          avatar={<Avatar alt="Gu" src="images/pa.png" />}
-          label="51"
+          avatar={<Avatar alt="Pu" src="images/pa.png" />}
+          label={`${paScore}`}
           variant="outlined"
           sx={{ bgcolor: "white" }}
         />
