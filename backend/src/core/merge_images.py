@@ -6,7 +6,7 @@ from src.models import Monster, Silhouette
 from src.utils import binalize_alpha, cropping_image, get_alpha, get_truth_size
 
 
-def merge_silhouettes(
+def merge_images(
     db_monster: Monster,
     user_id: int,
 ) -> tuple[Image.Image, list[list[str]]]:
