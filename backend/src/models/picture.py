@@ -10,6 +10,11 @@ class Picture(Base):
     __tablename__ = "pictures"
 
     id: int = Column(Integer, primary_key=True, index=True)
+    user_monster_id: int | None = Column(
+        Integer,
+        ForeignKey("user_monsters.id"),
+        nullable=True,
+    )
     silhouette_id: int = Column(Integer, ForeignKey("silhouettes.id"), nullable=False)
     user_id: int = Column(Integer, ForeignKey("users.id"), nullable=False)
     picture_path: str = Column(
