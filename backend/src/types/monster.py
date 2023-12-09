@@ -16,6 +16,10 @@ class OutGetMonster(BaseModel):
     id: int = Field(ge=1)  # id >= 1
     base64image: bytes
     segment: str | None = Field(default=None)
+    name: str | None = Field(max_length=10)
+    gu: int | None = Field(ge=0)  # gu >= 0
+    choki: int | None = Field(ge=0)  # choki >= 0
+    pa: int | None = Field(ge=0)  # pa >= 0
 
     @validator("base64image")
     def check_base64image(cls, v: bytes) -> bytes:  # noqa: N805
