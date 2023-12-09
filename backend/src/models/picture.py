@@ -18,3 +18,4 @@ class Picture(Base):
         unique=True,
         nullable=False,
     )
+    match_rate: int = Column(Integer, nullable=False)
