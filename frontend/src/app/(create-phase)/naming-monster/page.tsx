@@ -4,7 +4,7 @@
 "use client";
 import { Button, TextField } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
 
 import { axios } from "@/axios";
@@ -13,23 +13,42 @@ import Image from "@/components/Image";
 
 const NamingMonster = () => {
   const searchParams = useSearchParams();
+  const [monsterId, setMonsterId] = useState<string>("1");
   const [image, setImage] = useState<string>("");
-  const [inputValue, setInputValue] = useState("");
+  const router = useRouter();
+  const [inputValue, setInputValue] = useState<string>("");
+  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
 
   const message = "なまえをつけよう";
+  const invalidInputValue = inputValue.length < 1 || inputValue.length > 10;
 
   useEffect(() => {
     const monsterId = searchParams.get("monsterId") ?? "1"; // TODO: パラメータない時の処理を実装する
+    setMonsterId(monsterId);
     axios.get(`monster/${monsterId}`).then((res) => {
       setImage(res.data.base64image);
     });
   }, [searchParams]);
 
+  useEffect(() => {
+    setIsButtonDisabled(invalidInputValue);
+  }, [invalidInputValue]);
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
-  const isButtonDisabled = inputValue.length < 1 || inputValue.length > 10;
+  const handleNextClick = () => {
+    setIsButtonDisabled(true);
+    axios
+      .post("user_monster", { monster_id: monsterId, name: inputValue })
+      .then(() => {
+        router.push("/mode-select");
+      })
+      .catch(() => {
+        setIsButtonDisabled(invalidInputValue);
+      });
+  };
 
   return (
     <Centering p={4} spacing={4}>
@@ -51,7 +70,7 @@ const NamingMonster = () => {
       <Button
         variant="contained"
         disabled={isButtonDisabled}
-        // onClick={handleNextClick}
+        onClick={handleNextClick}
       >
         つぎへ
       </Button>

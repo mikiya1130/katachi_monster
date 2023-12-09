@@ -36,7 +36,7 @@ def get_db() -> Generator[Session, None, None]:
 
 def init_db(db: Session = get_db().__next__()) -> None:
     """初期処理"""
-    from src.models import Monster, Silhouette, User
+    from src.models import Monster, Silhouette
 
     def init_monsters(db: Session) -> None:
         """monsters テーブルへの初期データ投入"""
@@ -57,19 +57,10 @@ def init_db(db: Session = get_db().__next__()) -> None:
                 db.add(db_monster)
             db.commit()
 
-    # TODO: 削除  # noqa: FIX002
-    def init_users(db: Session) -> None:
-        """users テーブルへの初期データ投入"""
-        if not db.query(User).filter(User.id == "1").first():
-            db_user = User(password="password")  # noqa: S106
-            db.add(db_user)
-            db.commit()
-
     while True:
         try:
             Base.metadata.create_all(bind=engine)
             init_monsters(db=db)
-            init_users(db=db)
             logger.info("success initialize database")
             break
         except OperationalError as e:

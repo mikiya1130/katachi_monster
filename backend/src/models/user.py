@@ -10,4 +10,4 @@ class User(Base):
     __tablename__ = "users"
 
     id: int = Column(Integer, primary_key=True, index=True)
-    password: str = Column(String(128), nullable=False)
+    token: str = Column(String(128), nullable=False)
