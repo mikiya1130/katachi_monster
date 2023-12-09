@@ -19,9 +19,7 @@ export async function middleware(request: NextRequest) {
       // token を新規作成
       const res = await fetch("http://backend:8000/user", {
         method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({}),
       });
       const data = await res.json();
