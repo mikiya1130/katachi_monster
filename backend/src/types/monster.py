@@ -1,11 +1,13 @@
 """エンドポイント `/monster` の型定義"""
 from pydantic import BaseModel, Field, validator
 
+TypeMonsterIds = tuple[list[int], list[int], list[int]]
 
-class OutGetMonsterIds(BaseModel):
-    """get_monster_ids 関数の戻り値の型"""
 
-    monster_ids: tuple[list[int], list[int], list[int]]
+class OutGetMonsters(BaseModel):
+    """get_monsters 関数の戻り値の型"""
+
+    monster_ids: TypeMonsterIds
 
 
 class OutGetMonster(BaseModel):

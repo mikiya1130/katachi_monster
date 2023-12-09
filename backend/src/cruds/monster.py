@@ -4,12 +4,13 @@ import logging
 from sqlalchemy.orm import Session
 
 from src.models import Monster
+from src.types.monster import TypeMonsterIds
 
 logging.basicConfig()
 logging.getLogger("sqlalchemy.engine").setLevel(logging.INFO)
 
 
-def read_monster_num(db: Session) -> tuple[list[int], list[int], list[int]]:
+def read_monster_ids(db: Session) -> TypeMonsterIds:
     """monsters テーブルに登録されているモンスターの id をレベルごとに返す"""
     level_1 = [
         int(result[0])
