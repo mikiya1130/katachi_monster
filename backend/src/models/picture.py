@@ -10,8 +10,8 @@ class Picture(Base):
     __tablename__ = "pictures"
 
     id: int = Column(Integer, primary_key=True, index=True)
-    user_id: int = Column(Integer, ForeignKey("users.id"), nullable=False)
     silhouette_id: int = Column(Integer, ForeignKey("silhouettes.id"), nullable=False)
+    user_id: int = Column(Integer, ForeignKey("users.id"), nullable=False)
     picture_path: str = Column(
         String(128),
         CheckConstraint("picture_path REGEXP '^images\/pictures\/'"),  # noqa: W605
