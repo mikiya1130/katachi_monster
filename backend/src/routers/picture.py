@@ -1,8 +1,9 @@
 """エンドポイント `/picture`"""
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Cookie, Depends, HTTPException
 from PIL import Image
 from sqlalchemy.orm import Session
 
+from src.core import check_user
 from src.cruds import read_picture, read_silhouette
 from src.db import get_db
 from src.types import OutGetPicture
@@ -15,6 +16,7 @@ router = APIRouter()
 def get_picture(
     picture_id: int,
     db: Session = Depends(get_db),
+    user_token: str | None = Cookie(None),
     *,
     overlap_silhouette: bool = False,
 ) -> OutGetPicture:
@@ -22,14 +24,17 @@ def get_picture(
 
     Args:
         picture_id (int): 取得する撮影画像の id
-        db (Session, optional): _description_. Defaults to Depends(get_db).
+        db (Session, optional): DB.
+        user_token (str|None, optional): Cookie.
         overlap_silhouette (bool, optional):
             透過シルエットを重ねた画像を作成する. Defaults to False.
 
     Returns:
         OutGetPicture: 撮影画像
     """
-    db_picture = read_picture(db=db, picture_id=picture_id)
+    user_id = check_user(db, user_token)
+
+    db_picture = read_picture(db=db, picture_id=picture_id, user_id=user_id)
     db_silhouette = read_silhouette(db=db, silhouette_id=db_picture.silhouette_id)
 
     # 撮影画像の処理

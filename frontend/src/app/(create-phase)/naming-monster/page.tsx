@@ -41,7 +41,7 @@ const NamingMonster = () => {
   const handleNextClick = () => {
     setIsButtonDisabled(true);
     axios
-      .post("user_monster", { monster_id: monsterId, name: inputValue })
+      .post(`monster/${monsterId}`, { name: inputValue })
       .then(() => {
         router.push("/mode-select");
       })

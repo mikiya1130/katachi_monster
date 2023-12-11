@@ -31,6 +31,7 @@ router = APIRouter()
 def get_silhouette(
     silhouette_id: int,
     db: Session = Depends(get_db),
+    user_token: str | None = Cookie(None),
     *,
     crop: bool = False,
 ) -> OutGetSilhouette:
@@ -38,12 +39,15 @@ def get_silhouette(
 
     Args:
         silhouette_id (int): 取得するシルエットの id
-        db (Session, optional): _description_. Defaults to Depends(get_db).
+        db (Session, optional): DB.
+        user_token (str|None, optional): Cookie.
         crop (bool, optional): シルエットサイズに合わせて切り抜くか. Defaults to False.
 
     Returns:
         OutGetSilhouette: シルエット画像
     """
+    check_user(db, user_token)
+
     db_silhouette = read_silhouette(db=db, silhouette_id=silhouette_id)
 
     # alpha 値を2値化

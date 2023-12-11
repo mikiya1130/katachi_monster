@@ -27,3 +27,15 @@ class OutGetMonster(BaseModel):
         if not v.decode().startswith("data:image/png;base64,"):
             raise TypeError
         return v
+
+
+class InPostMonster(BaseModel):
+    """post_monster 関数の引数の型"""
+
+    name: str = Field(max_length=10)
+
+
+class OutPostMonster(BaseModel):
+    """post_monster 関数の戻り値の型"""
+
+    user_monster_id: int = Field(ge=1)  # id >= 1
