@@ -1,7 +1,9 @@
 """user_monsters テーブルの定義"""
 from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy.orm import Mapped, relationship
 
 from src.db import Base
+from src.models.picture import Picture
 
 
 class UserMonster(Base):
@@ -13,3 +15,8 @@ class UserMonster(Base):
     monster_id: int = Column(Integer, ForeignKey("monsters.id"), nullable=False)
     user_id: int = Column(Integer, ForeignKey("users.id"), nullable=False)
     name: str = Column(String(10), nullable=False)
+    gu: int = Column(Integer, nullable=False)
+    choki: int = Column(Integer, nullable=False)
+    pa: int = Column(Integer, nullable=False)
+
+    picture: Mapped[list[Picture]] = relationship("Picture")

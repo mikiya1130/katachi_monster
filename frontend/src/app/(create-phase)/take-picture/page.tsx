@@ -71,8 +71,7 @@ const TakePicture = () => {
     });
 
     axios
-      .post("/picture", {
-        silhouette_id: silhouetteId,
+      .post(`silhouette/${silhouetteId}`, {
         base64image: base64image,
       })
       .then((res) => {

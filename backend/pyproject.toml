@@ -10,16 +10,17 @@ plugins = "sqlalchemy.ext.mypy.plugin"
 target-version = "py311"
 select = ["ALL"]
 ignore = [
-    "N801", "N999",
-    "D106", "D400", "D403", "D415",
-    "ANN002", "ANN003", "ANN101", "ANN102", "ANN202",
-    "S101", "S301",
-    "B008",
     "A003",
-    "TD002", "TD003",
+    "ANN002", "ANN003", "ANN101", "ANN102", "ANN202",
+    "B008",
+    "D106", "D400", "D403", "D415",
     "ERA001",
+    "FBT001", "FBT002",
+    "N801", "N999",
     "PGH003",
     "PLR2004",
+    "S101", "S301",
+    "TD002", "TD003",
 ]
 extend-exclude = ["__init__.py"]
 

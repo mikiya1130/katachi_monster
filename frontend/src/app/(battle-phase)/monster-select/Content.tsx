@@ -16,7 +16,7 @@ const Content = ({ monsterId, handleOpen }: Props) => {
   });
 
   useEffect(() => {
-    axios.get(`monster/${monsterId}`).then((res) => {
+    axios.get(`monster/${monsterId}/user_monster`).then((res) => {
       setMonster({
         id: monsterId,
         base64image: res.data.base64image,

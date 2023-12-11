@@ -3,6 +3,7 @@ from .utils import (
     Position,
     base64image_to_png,
     binalize_alpha,
+    calc_iou,
     cropping_image,
     encode_2d_list,
     filtering_maximum,
@@ -30,5 +31,6 @@ __all__ = [
     "cropping_image",
     "resize_to_contain",
     "pooling_2d",
+    "calc_iou",
     "encode_2d_list",
 ]

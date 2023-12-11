@@ -1,26 +1,13 @@
 """エンドポイント `/picture`"""
-from datetime import datetime, timedelta, timezone
-from pathlib import Path
-
 from fastapi import APIRouter, Cookie, Depends, HTTPException
 from PIL import Image
 from sqlalchemy.orm import Session
 
-from src.core import Rembg
-from src.cruds import create_picture, read_picture, read_silhouette, read_user
+from src.core import check_user
+from src.cruds import read_picture, read_silhouette
 from src.db import get_db
-from src.models import Picture
-from src.types import InPostPicture, OutGetPicture, OutPostPicture
-from src.utils import (
-    base64image_to_png,
-    binalize_alpha,
-    cropping_image,
-    filtering_maximum,
-    get_truth_size,
-    png_to_base64image,
-    resize_to_contain,
-    smoothing,
-)
+from src.types import OutGetPicture
+from src.utils import binalize_alpha, cropping_image, png_to_base64image
 
 router = APIRouter()
 
@@ -29,6 +16,7 @@ router = APIRouter()
 def get_picture(
     picture_id: int,
     db: Session = Depends(get_db),
+    user_token: str | None = Cookie(None),
     *,
     overlap_silhouette: bool = False,
 ) -> OutGetPicture:
@@ -36,14 +24,17 @@ def get_picture(
 
     Args:
         picture_id (int): 取得する撮影画像の id
-        db (Session, optional): _description_. Defaults to Depends(get_db).
+        db (Session, optional): DB.
+        user_token (str|None, optional): Cookie.
         overlap_silhouette (bool, optional):
             透過シルエットを重ねた画像を作成する. Defaults to False.
 
     Returns:
         OutGetPicture: 撮影画像
     """
-    db_picture = read_picture(db=db, picture_id=picture_id)
+    user_id = check_user(db, user_token)
+
+    db_picture = read_picture(db=db, picture_id=picture_id, user_id=user_id)
     db_silhouette = read_silhouette(db=db, silhouette_id=db_picture.silhouette_id)
 
     # 撮影画像の処理
@@ -75,85 +66,3 @@ def get_picture(
     base64image = png_to_base64image(picture)
 
     return OutGetPicture(id=db_picture.id, base64image=base64image)
-
-
-@router.post("/picture")
-def post_picture(
-    requests: InPostPicture,
-    db: Session = Depends(get_db),
-    user_token: str | None = Cookie(None),
-) -> OutPostPicture:
-    """エンドポイント `/picture`
-
-    - 物体抽出後の画像を `/images/pictures` ディレクトリ下に保存する
-    - 保存先レコードへの id を返す
-    - 実行に失敗した場合は、ステータスコード 500 を返す
-
-    Args:
-        requests (InPostPicture): 対象画像の base64image データ
-        db (Session, optional): _description_. Defaults to Depends(get_db).
-        user_token (str|None, optional): ユーザー token. Defaults to Cookie(None).
-
-    Returns:
-        OutPostPicture: 保存先レコードへの id
-    """
-    if user_token is None:
-        raise HTTPException(status_code=500, detail="Invalid user token")
-    db_user = read_user(db=db, user_token=user_token)
-
-    try:
-        # 撮影画像の処理
-        picture = base64image_to_png(requests.base64image)
-        picture = Rembg.extract(picture)
-        picture = binalize_alpha(picture, high=200)
-        picture = filtering_maximum(picture)
-        picture = smoothing(picture)
-
-        # シルエット画像の処理
-        db_silhouette = read_silhouette(db=db, silhouette_id=requests.silhouette_id)
-        silhouette = Image.open(db_silhouette.silhouette_path)
-        if silhouette.mode != "RGBA":
-            raise HTTPException(status_code=500, detail="Invalid image type")
-        silhouette = binalize_alpha(silhouette, high=128)
-        silhouette = cropping_image(
-            silhouette,
-            padding_w=0.25,
-            padding_h=1.00,
-        )
-
-        # 撮影画像をシルエット画像に外接させるようにリサイズ
-        # - CSS の object-fit: "cover" に相当
-        # - ただし、`picture` を `silhouette` のサイズでトリミングしない
-        _, scale = resize_to_contain(picture, silhouette)
-        width, height = picture.size
-        new_width, new_height = round(width * (1 / scale)), round(height * (1 / scale))
-        picture = picture.resize((new_width, new_height))
-
-        # シルエット位置を基準にクロッピング
-        position = get_truth_size(silhouette)
-        shift_x = (picture.size[0] - silhouette.size[0]) // 2
-        shift_y = (picture.size[1] - silhouette.size[1]) // 2
-        position.shift(shift_x, shift_y)
-        picture = cropping_image(
-            picture,
-            position=position,
-            padding_w=0.2,
-            padding_h=0.2,
-        )
-
-        # 画像を保存
-        time = datetime.now(timezone(timedelta(hours=+9))).strftime("%Y%m%d-%H%M%S-%f")
-        picture_path = Path("images/pictures", f"{time}.png")
-        picture.save(picture_path)
-
-        # DB に反映
-        db_picture = Picture(
-            user_id=db_user.id,
-            silhouette_id=requests.silhouette_id,
-            picture_path=str(picture_path),
-        )
-        db_picture = create_picture(db=db, db_picture=db_picture)
-
-        return OutPostPicture(picture_id=db_picture.id)
-    except RuntimeError as e:
-        raise HTTPException(status_code=500) from e

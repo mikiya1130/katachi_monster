@@ -1,17 +1,16 @@
-from .monster import OutGetMonster, OutGetMonsterIds
-from .picture import InPostPicture, OutGetPicture, OutPostPicture
-from .silhouette import OutGetSilhouette
+from .monster import InPostMonster, OutGetMonster, OutGetMonsters, OutPostMonster
+from .picture import OutGetPicture
+from .silhouette import InPostSilhouette, OutGetSilhouette, OutPostSilhouette
 from .user import OutPostUser
-from .user_monster import InPostUserMonster, OutPostUserMonster
 
 __all__ = [
-    "OutGetMonsterIds",
+    "OutGetMonsters",
     "OutGetMonster",
+    "InPostMonster",
+    "OutPostMonster",
     "OutGetPicture",
-    "InPostPicture",
-    "OutPostPicture",
     "OutGetSilhouette",
+    "InPostSilhouette",
+    "OutPostSilhouette",
     "OutPostUser",
-    "InPostUserMonster",
-    "OutPostUserMonster",
 ]
