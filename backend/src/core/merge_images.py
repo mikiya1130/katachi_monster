@@ -1,18 +1,18 @@
-"""monster_image と silhouette_image を貼り合わせて画像を完成させる"""
+"""合成画像の作成"""
 import numpy as np
 from PIL import Image
 
-from src.models import Monster, Silhouette
+from src.models import Monster, Picture, Silhouette
 from src.utils import binalize_alpha, cropping_image, get_alpha, get_truth_size
 
 
 def merge_images(
     db_monster: Monster,
-    user_id: int,
+    silhouette_list: list[tuple[Silhouette, Picture | None]],
 ) -> tuple[Image.Image, list[list[str]]]:
-    """monster_image と silhouette_image を貼り合わせて画像を完成させる
+    """合成画像の作成
 
-    NOTE: silhouette_image の id の小さい順 → monster_image の順で重ねている
+    NOTE: silhouette 画像をリストの昇順 → monster 画像の順で重ねる
     NOTE: セグメント情報は、ピクセルごとに領域を以下の文字列で表した2次元配列
           撮影済み画像は、image_id ではなく元のシルエットの silhouette_id なので注意
             - 背景: ""
@@ -22,7 +22,8 @@ def merge_images(
 
     Args:
         db_monster (Monster): モンスターのレコード
-        user_id (int): ユーザーの id
+        silhouette_list (list[tuple[Silhouette,Picture|None]]):
+            シルエットと画像のレコードのペア
 
     Returns:
         tuple[Image, list[list[str]]]: モンスター画像、セグメント情報
@@ -35,12 +36,10 @@ def merge_images(
     image = Image.new("RGBA", monster.size, (0, 0, 0, 0))
     segment = np.full(image.size, "", dtype=object)
 
-    for db_silhouette in db_monster.silhouette:
+    for db_silhouette, db_picture in silhouette_list:
         # NOTE: DB で global / local 座標を管理するのがよさそう
-        if db_silhouette.picture and db_silhouette.picture[-1].user_id == user_id:
+        if db_picture is not None:
             # 撮影済み画像が存在するとき
-            db_picture = db_silhouette.picture[-1]
-
             silhouette = Image.open(db_picture.picture_path)
             if silhouette.mode != "RGBA":
                 raise ValueError

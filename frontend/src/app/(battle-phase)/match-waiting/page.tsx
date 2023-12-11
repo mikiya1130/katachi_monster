@@ -48,11 +48,11 @@ const MatchWaiting = () => {
     const monsterIdOpponent = searchParams.get("monsterIdOpponent") ?? "2"; // TODO: パラメータない時の処理を実装する
     setMonsterIdOpponent(monsterIdOpponent);
 
-    axios.get(`monster/${monsterIdSelf}`).then((res) => {
+    axios.get(`monster/${monsterIdSelf}/user_monster`).then((res) => {
       setImageSelf(res.data.base64image);
     });
 
-    axios.get(`monster/${monsterIdOpponent}`).then((res) => {
+    axios.get(`monster/${monsterIdOpponent}/user_monster`).then((res) => {
       setImageOpponent(res.data.base64image);
     });
   }, [searchParams]);

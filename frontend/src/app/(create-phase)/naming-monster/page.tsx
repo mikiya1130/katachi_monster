@@ -25,7 +25,7 @@ const NamingMonster = () => {
   useEffect(() => {
     const monsterId = searchParams.get("monsterId") ?? "1"; // TODO: パラメータない時の処理を実装する
     setMonsterId(monsterId);
-    axios.get(`monster/${monsterId}`).then((res) => {
+    axios.get(`monster/${monsterId}/creating`).then((res) => {
       setImage(res.data.base64image);
     });
   }, [searchParams]);

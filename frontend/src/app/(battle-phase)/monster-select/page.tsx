@@ -25,7 +25,7 @@ const MonsterSelect = () => {
   }, [boxRef, ratingRef]);
 
   useEffect(() => {
-    axios.get("monster_ids").then((res) => {
+    axios.get("monsters").then((res) => {
       setMonsterIdsList(res.data.monster_ids);
     });
   }, []);

@@ -269,6 +269,24 @@ def pooling_2d(list_2d: list[list[T]], pool_size: int = 2) -> list[list[T]]:
     ]
 
 
+def calc_iou(image_1: npt.NDArray[np.uint8], image_2: npt.NDArray[np.uint8]) -> int:
+    """2つの画像の IoU を計算する
+
+    Args:
+        image_1 (npt.NDArray[np.uint8]): 画像1
+        image_2 (npt.NDArray[np.uint8]): 画像2
+
+    Returns:
+        int: IoU
+    """
+    if image_1.shape != image_2.shape:
+        raise ValueError
+
+    intersection = np.sum(np.logical_and(image_1, image_2))
+    union = np.sum(np.logical_or(image_1, image_2))
+    return int(100 * intersection / union)
+
+
 def encode_2d_list(
     list_2d: list[list[str]],
     row_sep: str = ",",
