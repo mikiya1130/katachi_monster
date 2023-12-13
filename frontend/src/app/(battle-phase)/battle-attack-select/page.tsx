@@ -36,13 +36,42 @@ const BattleAttackSelect = () => {
     },
   ];
 
-  const hp = 100;
+  const [selfHp, setSelfHp] = useState<number>(50); //NOTE: 自分のHP
+  const [opponentHp, setOpponentHp] = useState<number>(50); //NOTE: 相手ののHP
 
-  const [outcome, setOutcome] = useState<"win" | "lose" | "draw" | null>("win");
+  const [selfGuScore, setSelfGuScore] = useState<number>(50); //NOTE: 自分のグーのスコア
+  const [selfChokiScore, setSelfChokiScore] = useState<number>(50); //NOTE: 自分のチョキのスコア
+  const [selfPaScore, setSelfPaScore] = useState<number>(50); //NOTE: 自分のパーのスコア
+
+  const [opponentGuScore, setOpponentGuScore] = useState<number>(50); //NOTE: 相手のグーのスコア
+  const [opponentChokiScore, setOpponentChokiScore] = useState<number>(50); //NOTE: 相手のチョキのスコア
+  const [opponentPaScore, setOpponentPaScore] = useState<number>(50); //NOTE: 相手のパーのスコア
+
+  const [outcome, setOutcome] = useState<"win" | "lose" | "draw" | null>("win"); // NOTE: 自分の勝敗
+  const [selfHand, setSelfHand] = useState<"gu" | "choki" | "pa">("gu"); // NOTE: 自分の手
+  const [opponentHand, setOpponentHand] = useState<"gu" | "choki" | "pa">("gu"); // NOTE: 相手の手
 
   const [state, setState] = useState<"buttonSelect" | "hpCalculate" | "attack">(
     "buttonSelect",
   );
+
+  //読み込み時にバックエンドからデータを取ってくる
+  useEffect(() => {
+    setSelfHp(100);
+    setOpponentHp(100);
+
+    setSelfGuScore(10);
+    setSelfChokiScore(20);
+    setSelfPaScore(30);
+
+    setOpponentGuScore(11);
+    setOpponentChokiScore(21);
+    setOpponentPaScore(22);
+
+    setOutcome("win");
+    setSelfHand("gu");
+    setOpponentHand("choki");
+  }, []);
 
   useEffect(() => {
     const monsterIdSelf = searchParams.get("monsterIdSelf") ?? "1"; // TODO: パラメータない時の処理を実装する
@@ -85,13 +114,22 @@ const BattleAttackSelect = () => {
         monsterName="Opponent monster name"
         monsterImage={imageOpponent}
         isSelf={false}
+        hp={opponentHp}
+        guSore={opponentGuScore}
+        chokiScore={opponentChokiScore}
+        paScore={opponentPaScore}
       />
 
       <Box sx={{ height: "30%", width: "100%" }}>
         {state === "buttonSelect" && <ButtonSelectCenter />}
         {state === "hpCalculate" && <HpCalculateCenter setState={setState} />}
         {state === "attack" && (
-          <AttackCenter setState={setState} outcome={outcome} />
+          <AttackCenter
+            setState={setState}
+            outcome={outcome}
+            selfHand={selfHand}
+            opponentHand={opponentHand}
+          />
         )}
       </Box>
 
@@ -101,10 +139,19 @@ const BattleAttackSelect = () => {
         monsterName="Self monster name"
         monsterImage={imageSelf}
         isSelf={true}
+        hp={selfHp}
+        guSore={selfGuScore}
+        chokiScore={selfChokiScore}
+        paScore={selfPaScore}
       />
 
       <Box ref={gtpRef} sx={{ height: "10%", width: "100%" }} pt="5px">
-        <GtpButton gtpHeight={gtpHeight} state={state} setState={setState} />
+        <GtpButton
+          gtpHeight={gtpHeight}
+          state={state}
+          setState={setState}
+          setSelfHand={setSelfHand}
+        />
       </Box>
     </Stack>
   );

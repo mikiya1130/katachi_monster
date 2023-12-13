@@ -3,7 +3,7 @@
 import { Button, Stack } from "@mui/material";
 import { Dispatch, SetStateAction, useState } from "react";
 
-const images = [
+const images: { url: string; title: "gu" | "choki" | "pa" }[] = [
   {
     url: "images/gu.png",
     title: "gu",
@@ -22,14 +22,17 @@ type Props = {
   gtpHeight: number;
   state: "buttonSelect" | "hpCalculate" | "attack";
   setState: Dispatch<SetStateAction<"buttonSelect" | "hpCalculate" | "attack">>;
+  setSelfHand: Dispatch<SetStateAction<"gu" | "choki" | "pa">>;
 };
 
-const GtpButton = ({ gtpHeight, state, setState }: Props) => {
+const GtpButton = ({ gtpHeight, state, setState, setSelfHand }: Props) => {
   const [activeButton, setActiveButton] = useState<string | null>(null);
 
-  const buttonHandler = (buttonTitle: string) => {
+  const buttonHandler = (buttonTitle: "gu" | "choki" | "pa") => {
     setActiveButton(buttonTitle);
-    setState("hpCalculate");
+    setSelfHand(buttonTitle);
+    //TODO: バックエンドに出した手を送る
+    setState("hpCalculate"); //送信出来たら別の画面に移る
   };
 
   return (

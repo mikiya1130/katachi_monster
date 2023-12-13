@@ -9,20 +9,29 @@ import Image from "@/components/Image";
 type Props = {
   setState: Dispatch<SetStateAction<"buttonSelect" | "hpCalculate" | "attack">>;
   outcome: "win" | "lose" | "draw" | null;
+  selfHand: "gu" | "choki" | "pa";
+  opponentHand: "gu" | "choki" | "pa";
 };
 
-const AttackCenter = ({ setState, outcome }: Props) => {
+const AttackCenter = ({ setState, outcome, selfHand, opponentHand }: Props) => {
   const [showFirst, setShowFirst] = useState(true);
 
   useEffect(() => {
+    //３秒後に勝敗を表示
     const timer = setTimeout(() => {
       setShowFirst(false);
     }, 3000);
 
+    // 6秒後にsetStateで状態をbuttonSelectに変更
+    const secondTimer = setTimeout(() => {
+      setState("buttonSelect");
+    }, 6000);
+
     return () => {
       clearTimeout(timer);
+      clearTimeout(secondTimer);
     };
-  }, []);
+  }, [setState]);
 
   return (
     <Box height="100%">
@@ -32,23 +41,23 @@ const AttackCenter = ({ setState, outcome }: Props) => {
             <Image
               position="absolute"
               top={0}
-              src="images/choki.png"
-              alt="choki"
+              src={`images/${opponentHand}.png`}
+              alt={`${opponentHand}`}
               objectFit="contain"
               sx={{ borderRadius: "50%", height: "40%" }}
             />
             <Image
               position="absolute"
               bottom={0}
-              src="images/gu.png"
-              alt="gu"
+              src={`images/${selfHand}.png`}
+              alt={`${selfHand}`}
               objectFit="contain"
               sx={{ borderRadius: "50%", height: "40%" }}
             />
           </Centering>
         </Box>
       ) : outcome === "win" ? (
-        <Centering p={2} onClick={() => setState("attack")}>
+        <Centering p={2}>
           <Typography
             fontSize="2rem"
             sx={{
@@ -60,7 +69,7 @@ const AttackCenter = ({ setState, outcome }: Props) => {
           </Typography>
         </Centering>
       ) : outcome === "lose" ? (
-        <Centering p={2} onClick={() => setState("attack")}>
+        <Centering p={2}>
           <Typography
             fontSize="2rem"
             sx={{
@@ -73,7 +82,7 @@ const AttackCenter = ({ setState, outcome }: Props) => {
         </Centering>
       ) : (
         outcome === "draw" && (
-          <Centering p={2} onClick={() => setState("attack")}>
+          <Centering p={2}>
             <Typography
               fontSize="2rem"
               sx={{
