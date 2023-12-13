@@ -146,7 +146,12 @@ const BattleAttackSelect = () => {
       />
 
       <Box ref={gtpRef} sx={{ height: "10%", width: "100%" }} pt="5px">
-        <GtpButton gtpHeight={gtpHeight} state={state} setState={setState} />
+        <GtpButton
+          gtpHeight={gtpHeight}
+          state={state}
+          setState={setState}
+          setSelfHand={setSelfHand}
+        />
       </Box>
     </Stack>
   );
