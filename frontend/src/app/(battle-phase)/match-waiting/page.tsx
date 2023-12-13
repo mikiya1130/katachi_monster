@@ -1,6 +1,6 @@
 "use client";
 import { Box, Stack, Typography } from "@mui/material";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import Field from "@/app/(battle-phase)/battle-attack-select/Field";
@@ -14,6 +14,8 @@ const MatchWaiting = () => {
   const [monsterIdOpponent, setMonsterIdOpponent] = useState<string>("1");
   const [imageSelf, setImageSelf] = useState<string>("");
   const [imageOpponent, setImageOpponent] = useState<string>("");
+  const [inputValueSelf, setInputValueSelf] = useState<string>("");
+  const [inputValueOpponent, setInputValueOpponent] = useState<string>("");
 
   const [selfHp, setSelfHp] = useState<number>(50); //NOTE: 自分のHP
   const [opponentHp, setOpponentHp] = useState<number>(50); //NOTE: 相手ののHP
@@ -28,6 +30,8 @@ const MatchWaiting = () => {
 
   const gtpRef = useRef<HTMLDivElement>(null);
   const [gtpHeight, setGtpHeight] = useState<number>(0);
+
+  const router = useRouter();
 
   const images = [
     {
@@ -62,7 +66,7 @@ const MatchWaiting = () => {
 
       // 6秒後にbattle-attack-selectに遷移
       const secondTimer = setTimeout(() => {
-        //TODO: ページ遷移
+        router.push("/battle-attack-select");
       }, 6000);
 
       return () => {
@@ -70,7 +74,7 @@ const MatchWaiting = () => {
         clearTimeout(secondTimer);
       };
     }
-  }, [matching]);
+  }, [matching, router]);
 
   useEffect(() => {
     const monsterIdSelf = searchParams.get("monsterIdSelf") ?? "1"; // TODO: パラメータない時の処理を実装する
