@@ -11,6 +11,20 @@ services:
     volumes:
       - ./frontend:/app
 
+  websocket:
+    build:
+      context: ./websocket
+      dockerfile: ./Dockerfile
+      args:
+        - USERNAME=${USERNAME}
+        - USER_UID=${USER_UID}
+        - USER_GID=${USER_GID}
+    volumes:
+      - ./websocket:/app
+    ports:
+      - "3333:3333"
+    command: bash -c "yarn && node websocket.js"
+
   backend:
     build:
       context: ./backend
