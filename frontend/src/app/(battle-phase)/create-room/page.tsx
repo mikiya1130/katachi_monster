@@ -9,7 +9,8 @@ const CreateRoom = () => {
 
   const handleConnect = () => {
     console.log("clicked");
-    const socket = io("http://localhost:3333");
+    console.log("WEBSOCKET_ORIGIN:", process.env.NEXT_PUBLIC_WEBSOCKET_ORIGIN);
+    const socket = io(process.env.NEXT_PUBLIC_WEBSOCKET_ORIGIN || "");
     socket.on("connect", () => {
       console.log("client: connected");
     });

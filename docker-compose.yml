@@ -8,6 +8,8 @@ services:
         - USERNAME=${USERNAME}
         - USER_UID=${USER_UID}
         - USER_GID=${USER_GID}
+    env_file:
+      - container.env
     volumes:
       - ./frontend:/app
 
@@ -19,6 +21,8 @@ services:
         - USERNAME=${USERNAME}
         - USER_UID=${USER_UID}
         - USER_GID=${USER_GID}
+    env_file:
+      - container.env
     volumes:
       - ./websocket:/app
     ports:

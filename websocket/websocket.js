@@ -4,10 +4,8 @@ const socketIo = require("socket.io");
 
 const app = express();
 const server = http.Server(app);
-const io = socketIo(server, { cors: { origin: [
-  "https://localhost:3000",
-  // "http://localhost:3030"
-]}});
+console.log("process.env.FRONTEND_ORIGIN", process.env.FRONTEND_ORIGIN);
+const io = socketIo(server, { cors: { origin: process.env.FRONTEND_ORIGIN } });
 
 const PORT = 3333;
 
