@@ -13,6 +13,28 @@ server.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
 });
 
+const rooms = () => io.of("/").adapter.rooms;
+
 io.on("connection", (socket) => {
-  console.log("server: connected");
+  socket.on("createRoom", (callback) => {
+    let roomId = "";
+    const maxRetry = 100;
+    for (let i = 0; i < maxRetry; i++) {
+      roomId = Math.floor(Math.random() * 9999)
+        .toString()
+        .padStart(4, "0");
+      if (!rooms().has(roomId)) {
+        socket.join(roomId);
+        console.log("rooms", rooms());
+        callback("success", roomId);
+        return;
+      }
+    }
+    callback("error", roomId);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("User disconnected: " + socket.id);
+    console.log("rooms", rooms());
+  });
 });

@@ -1,20 +1,32 @@
 "use client";
-import { Stack } from "@mui/material";
+import { CircularProgress, Stack } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { io } from "socket.io-client";
+import { useEffect, useState } from "react";
+import { Socket, io } from "socket.io-client";
 
 const CreateRoom = () => {
   const title = "へやをつくる";
-  const ID = 1234;
+  const [socket, setSocket] = useState<Socket | null>(null);
+  const [roomId, setRoomId] = useState<string>("");
 
-  const handleConnect = () => {
-    console.log("clicked");
-    console.log("WEBSOCKET_ORIGIN:", process.env.NEXT_PUBLIC_WEBSOCKET_ORIGIN);
-    const socket = io(process.env.NEXT_PUBLIC_WEBSOCKET_ORIGIN || "");
-    socket.on("connect", () => {
-      console.log("client: connected");
-    });
-  };
+  useEffect(() => {
+    if (!socket) {
+      setSocket(io(process.env.NEXT_PUBLIC_WEBSOCKET_ORIGIN || ""));
+    }
+
+    if (socket) {
+      socket.on("connect", () => {
+        socket.emit("createRoom", (status: string, roomId: string) => {
+          if (status === "success") {
+            setRoomId(roomId);
+          } else {
+            // TODO: エラー処理実装
+            console.log("error");
+          }
+        });
+      });
+    }
+  }, [socket, roomId]);
 
   return (
     <Stack
@@ -23,15 +35,18 @@ const CreateRoom = () => {
       alignItems="center"
       justifyContent="center"
       height="100%"
-      onClick={handleConnect}
     >
       <Typography fontSize="2rem" align="left">
         {title}
       </Typography>
 
-      <Typography fontSize="2rem" align="left">
-        ID:{ID}
-      </Typography>
+      {roomId ? (
+        <Typography fontSize="2rem" align="left">
+          ID:{roomId}
+        </Typography>
+      ) : (
+        <CircularProgress />
+      )}
     </Stack>
   );
 };
