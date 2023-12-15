@@ -1,11 +1,14 @@
 "use client";
 import { Box, Rating, Stack, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
+import { Socket, io } from "socket.io-client";
 
 import Swiper from "@/app/(battle-phase)/monster-select/Swiper";
 import { axios } from "@/axios";
 
 const MonsterSelect = () => {
+  const [socket, setSocket] = useState<Socket | null>(null);
+
   const [monsterIdsList, setMonsterIdsList] = useState<number[][]>([
     [],
     [],
@@ -15,6 +18,18 @@ const MonsterSelect = () => {
   const boxRef = useRef<HTMLDivElement>(null);
   const ratingRef = useRef<HTMLSpanElement>(null);
   const [swiperHeight, setSwiperHeight] = useState<number>(0);
+
+  useEffect(() => {
+    if (!socket) {
+      setSocket(io(process.env.NEXT_PUBLIC_WEBSOCKET_ORIGIN || ""));
+    }
+
+    if (socket) {
+      socket.on("connect", () => {
+        console.log("connect:", socket.id);
+      });
+    }
+  }, [socket]);
 
   useEffect(() => {
     if (boxRef.current && ratingRef.current) {

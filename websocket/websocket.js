@@ -33,6 +33,19 @@ io.on("connection", (socket) => {
     callback("error", roomId);
   });
 
+  socket.on("enterRoom", (roomId, callback) => {
+    if (!rooms().has(roomId)) {
+      callback("error");
+      return;
+    } else if (rooms().get(roomId).size >= 2) {
+      callback("error");
+      return;
+    }
+    socket.join(roomId);
+    callback("success");
+    console.log("rooms", rooms());
+  });
+
   socket.on("disconnect", () => {
     console.log("User disconnected: " + socket.id);
     console.log("rooms", rooms());

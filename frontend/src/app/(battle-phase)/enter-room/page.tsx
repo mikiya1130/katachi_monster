@@ -1,20 +1,50 @@
 "use client";
-import { Button, Stack, TextField } from "@mui/material";
+import { Button, CircularProgress, Stack, TextField } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Socket, io } from "socket.io-client";
 
 const EnterRoom = () => {
+  const router = useRouter();
   const title = "へやにはいる";
-  const [inputValue, setInputValue] = useState("");
+  const [isButtonRoading, setIsButtonRoading] = useState<boolean>(true);
+  const [socket, setSocket] = useState<Socket | null>(null);
+  const [roomId, setRoomId] = useState<string>("");
+
+  useEffect(() => {
+    if (!socket) {
+      setSocket(io(process.env.NEXT_PUBLIC_WEBSOCKET_ORIGIN || ""));
+    }
+
+    if (socket) {
+      socket.on("connect", () => {
+        setIsButtonRoading(false);
+      });
+    }
+  }, [socket, roomId]);
 
   // テキストフィールドの入力が4桁の数字のみ許可する
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     // 正規表現を使用して4桁の数字のみ許可
     if (/^\d{0,4}$/.test(value)) {
-      setInputValue(value);
+      setRoomId(value);
     }
+  };
+
+  const handleSubmit = () => {
+    if (socket === null) return;
+    setIsButtonRoading(true);
+    socket.emit("enterRoom", roomId, (status: string) => {
+      if (status === "success") {
+        router.push("/monster-select");
+      } else {
+        setIsButtonRoading(false);
+        // TODO: エラー処理実装
+        console.log("error");
+      }
+    });
   };
 
   return (
@@ -33,15 +63,23 @@ const EnterRoom = () => {
         id="room-id"
         label="ID:"
         variant="filled"
-        value={inputValue}
+        value={roomId}
         type="text"
         onChange={handleInputChange}
         sx={{ maxWidth: "10rem" }}
       />
 
-      <Link href={`/対戦部屋`}>
-        <Button variant="contained">けってい</Button>
-      </Link>
+      {isButtonRoading ? (
+        <CircularProgress />
+      ) : (
+        <Button
+          variant="contained"
+          disabled={roomId.length !== 4}
+          onClick={handleSubmit}
+        >
+          けってい
+        </Button>
+      )}
     </Stack>
   );
 };
