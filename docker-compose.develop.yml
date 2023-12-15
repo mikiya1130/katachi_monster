@@ -15,6 +15,9 @@ services:
   frontend:
     command: bash -c "yarn && yarn dev"
 
+  websocket:
+    command: bash -c "yarn && yarn dev"
+
   backend:
     ports:
       - "8000:8000"

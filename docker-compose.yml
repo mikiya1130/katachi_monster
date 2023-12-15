@@ -27,7 +27,6 @@ services:
       - ./websocket:/app
     ports:
       - "3333:3333"
-    command: bash -c "yarn && node websocket.js"
 
   backend:
     build:
