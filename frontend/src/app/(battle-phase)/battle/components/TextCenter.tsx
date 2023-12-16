@@ -3,7 +3,11 @@ import { Typography } from "@mui/material";
 
 import Centering from "@/components/Centering";
 
-const ButtonSelectCenter = () => {
+type Props = {
+  text: string;
+};
+
+const TextCenter = ({ text }: Props) => {
   return (
     <Centering p={2}>
       <Typography
@@ -12,10 +16,10 @@ const ButtonSelectCenter = () => {
           fontWeight: 700,
         }}
       >
-        Choose a button!
+        {text}
       </Typography>
     </Centering>
   );
 };
 
-export default ButtonSelectCenter;
+export default TextCenter;

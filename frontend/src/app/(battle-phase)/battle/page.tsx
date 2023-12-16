@@ -7,9 +7,8 @@ import Field from "@/app/(battle-phase)/battle/Field";
 import GtpButton from "@/app/(battle-phase)/battle/GtpButton";
 import { State } from "@/app/(battle-phase)/battle/State";
 import AttackCenter from "@/app/(battle-phase)/battle/components/AttackCenter";
-import ButtonSelectCenter from "@/app/(battle-phase)/battle/components/ButtonSelectCenter";
-import HpCalculateCenter from "@/app/(battle-phase)/battle/components/HpCalculateCenter";
-import MatchingCenter from "@/app/(battle-phase)/battle/components/MatchingCenter";
+import TextCenter from "@/app/(battle-phase)/battle/components/TextCenter";
+import sleep from "@/app/(battle-phase)/battle/sleep";
 import { TypeMonster } from "@/app/(battle-phase)/battle/types";
 import { axios } from "@/axios";
 import { useSocket } from "@/components/SocketProvider";
@@ -70,6 +69,16 @@ const BattleAttackSelect = () => {
   }, [monsterSelf, socket]);
 
   useEffect(() => {
+    (async () => {
+      if (monsterOpponent) {
+        setState("start");
+        await sleep(3000);
+        setState("buttonSelect");
+      }
+    })();
+  }, [monsterOpponent]);
+
+  useEffect(() => {
     if (gtpRef.current) {
       setGtpHeight(
         Math.min(
@@ -96,9 +105,12 @@ const BattleAttackSelect = () => {
       />
 
       <Box sx={{ height: "30%", width: "100%" }}>
-        {state === "matching" && <MatchingCenter />}
-        {state === "buttonSelect" && <ButtonSelectCenter />}
-        {state === "hpCalculate" && <HpCalculateCenter setState={setState} />}
+        {state === "matching" && <TextCenter text="VS" />}
+        {state === "start" && <TextCenter text="Battle start!!" />}
+        {state === "buttonSelect" && <TextCenter text="Choose a button!" />}
+        {state === "hpCalculate" && (
+          <TextCenter text="Rock!<br />Scissors!<br />Paper!" />
+        )}
         {state === "attack" && (
           <AttackCenter setState={setState} outcome={outcome} />
         )}

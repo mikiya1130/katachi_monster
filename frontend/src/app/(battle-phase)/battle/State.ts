@@ -1,1 +1,6 @@
-export type State = "matching" | "buttonSelect" | "hpCalculate" | "attack";
+export type State =
+  | "matching"
+  | "start"
+  | "buttonSelect"
+  | "hpCalculate"
+  | "attack";
