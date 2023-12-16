@@ -7,7 +7,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-const TextCenter = ({ children }: Props) => {
+const Center = ({ children }: Props) => {
   return (
     <Centering p={2}>
       <Typography
@@ -22,4 +22,4 @@ const TextCenter = ({ children }: Props) => {
   );
 };
 
-export default TextCenter;
+export default Center;

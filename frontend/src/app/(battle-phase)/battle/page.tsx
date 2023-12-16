@@ -3,10 +3,10 @@ import { Box, Stack } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
+import Center from "@/app/(battle-phase)/battle/Center";
 import Field from "@/app/(battle-phase)/battle/Field";
 import GtpButton from "@/app/(battle-phase)/battle/GtpButton";
 import { State } from "@/app/(battle-phase)/battle/State";
-import TextCenter from "@/app/(battle-phase)/battle/components/TextCenter";
 import sleep from "@/app/(battle-phase)/battle/sleep";
 import {
   TypeHand,
@@ -151,13 +151,13 @@ const BattleAttackSelect = () => {
       />
 
       <Box sx={{ height: "30%", width: "100%" }}>
-        {state === "matching" && <TextCenter>VS</TextCenter>}
-        {state === "start" && <TextCenter>Battle start!!</TextCenter>}
-        {state === "buttonSelect" && <TextCenter>Choose a button!</TextCenter>}
+        {state === "matching" && <Center>VS</Center>}
+        {state === "start" && <Center>Battle start!!</Center>}
+        {state === "buttonSelect" && <Center>Choose a button!</Center>}
         {state === "hpCalculate" && (
-          <TextCenter>
+          <Center>
             Rock! <br /> Scissors! <br /> Paper!
-          </TextCenter>
+          </Center>
         )}
         {state === "attack/viewHand" && (
           <Box p={2} height="100%">
@@ -183,11 +183,11 @@ const BattleAttackSelect = () => {
         )}
         {state === "attack/viewText" &&
           (outcome === "win" ? (
-            <TextCenter>Attack successful!</TextCenter>
+            <Center>Attack successful!</Center>
           ) : outcome === "lose" ? (
-            <TextCenter>Attack failed!</TextCenter>
+            <Center>Attack failed!</Center>
           ) : (
-            outcome === "draw" && <TextCenter>It&lsquo;s a draw</TextCenter>
+            outcome === "draw" && <Center>It&lsquo;s a draw</Center>
           ))}
       </Box>
 
