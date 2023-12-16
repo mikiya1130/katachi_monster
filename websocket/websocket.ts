@@ -51,7 +51,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("enterRoom", (roomId: string, callback: enterRoomCallback) => {
-    if (getRoom(roomId).size >= 2) {
+    if (getRoom(roomId).size !== 1) {
       callback("error");
       return;
     }
