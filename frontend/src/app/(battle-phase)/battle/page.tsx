@@ -105,11 +105,13 @@ const BattleAttackSelect = () => {
       />
 
       <Box sx={{ height: "30%", width: "100%" }}>
-        {state === "matching" && <TextCenter text="VS" />}
-        {state === "start" && <TextCenter text="Battle start!!" />}
-        {state === "buttonSelect" && <TextCenter text="Choose a button!" />}
+        {state === "matching" && <TextCenter>VS</TextCenter>}
+        {state === "start" && <TextCenter>Battle start!!</TextCenter>}
+        {state === "buttonSelect" && <TextCenter>Choose a button!</TextCenter>}
         {state === "hpCalculate" && (
-          <TextCenter text="Rock!<br />Scissors!<br />Paper!" />
+          <TextCenter>
+            Rock! <br /> Scissors! <br /> Paper!
+          </TextCenter>
         )}
         {state === "attack" && (
           <AttackCenter setState={setState} outcome={outcome} />

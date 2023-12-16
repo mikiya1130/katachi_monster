@@ -4,10 +4,10 @@ import { Typography } from "@mui/material";
 import Centering from "@/components/Centering";
 
 type Props = {
-  text: string;
+  children: React.ReactNode;
 };
 
-const TextCenter = ({ text }: Props) => {
+const TextCenter = ({ children }: Props) => {
   return (
     <Centering p={2}>
       <Typography
@@ -16,7 +16,7 @@ const TextCenter = ({ text }: Props) => {
           fontWeight: 700,
         }}
       >
-        {text}
+        {children}
       </Typography>
     </Centering>
   );
