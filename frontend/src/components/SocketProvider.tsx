@@ -22,7 +22,7 @@ const SocketProvider = ({ children }: Props) => {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     newSocket.on("connect_error", (err: any) => {
-      console.log(`connect_error: [${err.type || "Unknown"}] ${err.message}`);
+      console.error(`connect_error: [${err.type || "Unknown"}] ${err.message}`);
     });
 
     return () => {

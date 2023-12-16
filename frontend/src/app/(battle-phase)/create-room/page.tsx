@@ -19,7 +19,7 @@ const CreateRoom = () => {
           setRoomId(roomId);
         } else {
           // TODO: エラー処理実装
-          console.log("error: createRoom");
+          console.error("createRoom");
         }
       });
 

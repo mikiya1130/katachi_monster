@@ -33,9 +33,9 @@ const EnterRoom = () => {
       setIsButtonRoading(true);
       socket.emit("enterRoom", roomId, (status: string) => {
         if (status === "success") {
-          console.log("success: enterRoom");
+          console.log("enterRoom");
         } else {
-          console.log("error");
+          console.error("enterRoom");
           setIsButtonRoading(false);
         }
       });
