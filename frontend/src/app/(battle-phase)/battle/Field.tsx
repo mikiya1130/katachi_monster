@@ -2,6 +2,7 @@
 import { Avatar, Box, Chip, Stack, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 
+import Centering from "@/components/Centering";
 import Image from "@/components/Image";
 
 type Props = {
@@ -77,16 +78,22 @@ const Field = ({ height, color, monsterName, monsterImage, isSelf }: Props) => {
         pt="6px"
       >
         <Box sx={{ height: "10%", width: "100%" }}>
-          <Typography fontSize="1rem" align="center">
-            {monsterName}
-          </Typography>
+          {!isSelf && monsterImage === "" ? (
+            <Typography>あいてがモンスターをせんたくしています</Typography>
+          ) : (
+            <Typography fontSize="1rem" align="center">
+              {monsterName}
+            </Typography>
+          )}
         </Box>
-        <Image
-          src={monsterImage}
-          alt="silhouette"
-          objectFit="contain"
-          sx={{ height: "90%", width: "100%" }}
-        />
+        <Centering>
+          <Image
+            src={monsterImage}
+            alt="silhouette"
+            objectFit="contain"
+            sx={{ height: "90%", width: "100%" }}
+          />
+        </Centering>
       </Box>
     </Stack>
   );
