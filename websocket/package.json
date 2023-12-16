@@ -1,13 +1,16 @@
 {
   "scripts": {
-    "dev": "nodemon websocket.js",
-    "start": "node websocket.js"
+    "dev": "nodemon websocket.ts",
+    "start": "ts-node websocket.ts"
   },
   "dependencies": {
     "express": "^4.18.2",
-    "socket.io": "^4.7.2"
+    "socket.io": "^4.7.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
   },
   "devDependencies": {
+    "@types/express": "^4.17.21",
     "nodemon": "^3.0.2"
   }
 }
