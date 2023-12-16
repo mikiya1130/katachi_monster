@@ -74,9 +74,9 @@ io.on("connection", (socket) => {
     if (users[opponentId].monster) {
       // 相手画像の取得
       socket.emit("receiveMonsterOpponent", users[opponentId].monster);
+      // 自身の画像を相手に送信
+      socket.broadcast.to(roomId).emit("receiveMonsterOpponent", monster);
     }
-    // 自身の画像を相手に送信
-    socket.broadcast.to(roomId).emit("receiveMonsterOpponent", monster);
   });
 
   socket.on("disconnect", () => {
