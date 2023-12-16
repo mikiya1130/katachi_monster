@@ -148,8 +148,6 @@ def post_silhouette(
             )
         except ValueError as e:
             raise HTTPException(status_code=500, detail="Process failed") from e
-        picture.save("z_picture.png")
-        silhouette.save("z_silhouette.png")
 
         # DB に反映
         db_picture = Picture(
