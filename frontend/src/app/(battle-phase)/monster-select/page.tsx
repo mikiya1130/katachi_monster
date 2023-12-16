@@ -31,7 +31,7 @@ const MonsterSelect = () => {
   }, [boxRef, ratingRef]);
 
   useEffect(() => {
-    axios.get("monsters").then((res) => {
+    axios.get("monsters?only_user_monsters=true").then((res) => {
       setMonsterIdsList(res.data.monster_ids);
     });
   }, []);
