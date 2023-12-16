@@ -2,7 +2,13 @@ import express from "express";
 import http from "http";
 import { Server, Socket } from "socket.io";
 
-import { Monster, User, createRoomCallback, enterRoomCallback } from "./types";
+import {
+  Hand,
+  Monster,
+  User,
+  createRoomCallback,
+  enterRoomCallback,
+} from "./types";
 
 const app = express();
 const server = http.createServer(app);
@@ -25,10 +31,42 @@ const getRoom = (roomId: string) => rooms().get(roomId) ?? new Set();
 
 const enterRoom = (roomId: string, socket: Socket) => {
   const userId = socket.id;
-  users[userId] = { roomId: roomId, monster: null };
+  users[userId] = { roomId: roomId, monster: null, hand: null };
   socket.join(roomId);
   console.log("rooms", rooms());
   console.log("users", users);
+};
+
+const calculateGTP = (
+  userHand: Hand,
+  opponentHand: Hand,
+  userMonster: Monster,
+  opponentMonster: Monster,
+): [Monster, Monster] => {
+  if (userHand === opponentHand) {
+    return [userMonster, opponentMonster];
+  } else if (userHand === "gu") {
+    if (opponentHand === "choki") {
+      opponentMonster.hp -= userMonster.gu;
+    } else {
+      userMonster.hp -= opponentMonster.pa;
+    }
+  } else if (userHand === "choki") {
+    if (opponentHand === "pa") {
+      opponentMonster.hp -= userMonster.choki;
+    } else {
+      userMonster.hp -= opponentMonster.gu;
+    }
+  } else if (userHand === "pa") {
+    if (opponentHand === "gu") {
+      opponentMonster.hp -= userMonster.pa;
+    } else {
+      userMonster.hp -= opponentMonster.choki;
+    }
+  }
+  userMonster.hp = Math.max(userMonster.hp, 0);
+  opponentMonster.hp = Math.max(opponentMonster.hp, 0);
+  return [userMonster, opponentMonster];
 };
 
 io.on("connection", (socket) => {
@@ -76,6 +114,41 @@ io.on("connection", (socket) => {
       socket.emit("receiveMonsterOpponent", users[opponentId].monster);
       // 自身の画像を相手に送信
       socket.broadcast.to(roomId).emit("receiveMonsterOpponent", monster);
+    }
+  });
+
+  socket.on("sendHandSelf", (hand: Hand) => {
+    const userId = socket.id;
+    const roomId = users[userId].roomId;
+    const opponentId = Array.from(getRoom(roomId)).find((id) => id !== userId);
+    users[userId].hand = hand;
+
+    if (opponentId === undefined) {
+      console.error("opponentId is not found");
+      return;
+    }
+
+    const opponentHand = users[opponentId].hand;
+    const userMonster = users[userId].monster;
+    const opponentMonster = users[opponentId].monster;
+    if (opponentHand && userMonster && opponentMonster) {
+      // じゃんけん計算
+      const [newUserMonster, newOpponentMonster] = calculateGTP(
+        hand,
+        opponentHand,
+        userMonster,
+        opponentMonster,
+      );
+      // 更新
+      users[userId].monster = newUserMonster;
+      users[opponentId].monster = newOpponentMonster;
+      users[userId].hand = null;
+      users[opponentId].hand = null;
+      // 結果を送信
+      io.sockets.in(roomId).emit("updateHp", {
+        [userId]: newUserMonster.hp,
+        [opponentId]: newOpponentMonster.hp,
+      });
     }
   });
 

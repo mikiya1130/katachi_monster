@@ -7,9 +7,12 @@ export type Monster = {
   pa: number;
 };
 
+export type Hand = "gu" | "choki" | "pa";
+
 export type User = {
   roomId: string;
   monster: Monster | null;
+  hand: Hand | null;
 };
 
 export type createRoomCallback = (

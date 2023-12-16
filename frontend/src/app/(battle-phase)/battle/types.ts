@@ -6,3 +6,5 @@ export type TypeMonster = {
   choki: number;
   pa: number;
 };
+
+export type TypeHand = "gu" | "choki" | "pa";

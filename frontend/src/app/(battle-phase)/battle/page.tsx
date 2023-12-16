@@ -9,7 +9,7 @@ import { State } from "@/app/(battle-phase)/battle/State";
 import AttackCenter from "@/app/(battle-phase)/battle/components/AttackCenter";
 import TextCenter from "@/app/(battle-phase)/battle/components/TextCenter";
 import sleep from "@/app/(battle-phase)/battle/sleep";
-import { TypeMonster } from "@/app/(battle-phase)/battle/types";
+import { TypeHand, TypeMonster } from "@/app/(battle-phase)/battle/types";
 import { axios } from "@/axios";
 import { useSocket } from "@/components/SocketProvider";
 
@@ -89,6 +89,34 @@ const BattleAttackSelect = () => {
     })();
   }, [monsterOpponent]);
 
+  const handleButtonSelected = (hand: TypeHand) => {
+    setState("hpCalculate");
+
+    socket?.on("updateHp", async (newHp) => {
+      await sleep(3000);
+      setMonsterSelf((prev) => {
+        if (prev) {
+          return {
+            ...prev,
+            hp: newHp[socket.id],
+          };
+        }
+        return null;
+      });
+      setMonsterOpponent((prev) => {
+        if (prev) {
+          return {
+            ...prev,
+            hp: newHp[Object.keys(newHp).find((id) => id !== socket.id) ?? ""],
+          };
+        }
+        return null;
+      });
+    });
+
+    socket?.emit("sendHandSelf", hand);
+  };
+
   return (
     <Stack
       p={4}
@@ -121,7 +149,11 @@ const BattleAttackSelect = () => {
       <Field height="30%" color="red" monster={monsterSelf} isSelf={true} />
 
       <Box ref={gtpRef} sx={{ height: "10%", width: "100%" }} pt="5px">
-        <GtpButton gtpHeight={gtpHeight} state={state} setState={setState} />
+        <GtpButton
+          gtpHeight={gtpHeight}
+          state={state}
+          callbackButtonSelected={handleButtonSelected}
+        />
       </Box>
     </Stack>
   );

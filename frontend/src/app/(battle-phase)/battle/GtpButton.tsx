@@ -1,11 +1,12 @@
 "use client";
 
 import { Button, Stack } from "@mui/material";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 
 import { State } from "@/app/(battle-phase)/battle/State";
+import { TypeHand } from "@/app/(battle-phase)/battle/types";
 
-const images = [
+const images: { url: string; title: TypeHand }[] = [
   {
     url: "images/gu.png",
     title: "gu",
@@ -23,15 +24,17 @@ const images = [
 type Props = {
   gtpHeight: number;
   state: State;
-  setState: Dispatch<SetStateAction<State>>;
+  callbackButtonSelected: (hand: TypeHand) => void;
 };
 
-const GtpButton = ({ gtpHeight, state, setState }: Props) => {
-  const [activeButton, setActiveButton] = useState<string | null>(null);
+const GtpButton = ({ gtpHeight, state, callbackButtonSelected }: Props) => {
+  const [activeButton, setActiveButton] = useState<TypeHand | null>(null);
 
-  const buttonHandler = (buttonTitle: string) => {
-    setActiveButton(buttonTitle);
-    setState("hpCalculate");
+  const buttonHandler = (buttonTitle: TypeHand) => {
+    if (state === "buttonSelect") {
+      setActiveButton(buttonTitle);
+      callbackButtonSelected(buttonTitle);
+    }
   };
 
   return (
