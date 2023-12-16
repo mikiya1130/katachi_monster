@@ -25,7 +25,7 @@ const SelectSilhouette = () => {
   const [
     includeSilhouettesNotReplacedPicture,
     setIncludeSilhouettesNotReplacedPicture,
-  ] = useState<boolean>(false);
+  ] = useState<boolean>(true);
 
   const decode_2d_list = (str: string) =>
     str.split("|").map((row: string) => row.split(","));
