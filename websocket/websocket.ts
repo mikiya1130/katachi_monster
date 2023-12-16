@@ -2,7 +2,7 @@ import express from "express";
 import http from "http";
 import { Server, Socket } from "socket.io";
 
-import { User, createRoomCallback, enterRoomCallback } from "./types";
+import { Monster, User, createRoomCallback, enterRoomCallback } from "./types";
 
 const app = express();
 const server = http.createServer(app);
@@ -25,17 +25,7 @@ const getRoom = (roomId: string) => rooms().get(roomId) ?? new Set();
 
 const enterRoom = (roomId: string, socket: Socket) => {
   const userId = socket.id;
-  users[userId] = {
-    roomId: roomId,
-    monster: {
-      image: "",
-      name: "",
-      hp: 100,
-      gu: 0,
-      choki: 0,
-      pa: 0,
-    },
-  };
+  users[userId] = { roomId: roomId, monster: null };
   socket.join(roomId);
   console.log("rooms", rooms());
   console.log("users", users);
@@ -70,23 +60,23 @@ io.on("connection", (socket) => {
     io.to(roomId).emit("matching");
   });
 
-  socket.on("sendSelfImage", (image: string) => {
+  socket.on("sendMonsterSelf", (monster: Monster) => {
     const userId = socket.id;
     const roomId = users[userId].roomId;
     const opponentId = Array.from(getRoom(roomId)).find((id) => id !== userId);
-    users[userId].monster.image = image;
+    users[userId].monster = monster;
 
     if (opponentId === undefined) {
       console.error("opponentId is not found");
       return;
     }
 
-    if (users[opponentId].monster.image !== "") {
+    if (users[opponentId].monster) {
       // 相手画像の取得
-      socket.emit("receiveOpponentImage", users[opponentId].monster.image);
+      socket.emit("receiveMonsterOpponent", users[opponentId].monster);
     }
     // 自身の画像を相手に送信
-    socket.broadcast.to(roomId).emit("receiveOpponentImage", image);
+    socket.broadcast.to(roomId).emit("receiveMonsterOpponent", monster);
   });
 
   socket.on("disconnect", () => {

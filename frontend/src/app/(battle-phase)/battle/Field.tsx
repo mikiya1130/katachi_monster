@@ -2,18 +2,18 @@
 import { Avatar, Box, Chip, Stack, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 
+import { TypeMonster } from "@/app/(battle-phase)/battle/types";
 import Centering from "@/components/Centering";
 import Image from "@/components/Image";
 
 type Props = {
   height: string;
   color: string;
-  monsterName: string;
-  monsterImage: string;
+  monster: TypeMonster | null;
   isSelf: boolean;
 };
 
-const Field = ({ height, color, monsterName, monsterImage, isSelf }: Props) => {
+const Field = ({ height, color, monster, isSelf }: Props) => {
   const direction = isSelf ? "column" : "column-reverse";
   const removeBorder = isSelf ? { borderTop: 0 } : { borderBottom: 0 };
 
@@ -43,25 +43,25 @@ const Field = ({ height, color, monsterName, monsterImage, isSelf }: Props) => {
               </Typography>
             </Avatar>
           }
-          label="100"
+          label={monster ? monster.hp : "-"}
           variant="outlined"
           sx={{ borderRadius: "8px", bgcolor: "white" }}
         />
         <Chip
           avatar={<Avatar alt="Gu" src="images/gu.png" />}
-          label="32"
+          label={monster ? monster.gu : "-"}
           variant="outlined"
           sx={{ bgcolor: "white" }}
         />
         <Chip
-          avatar={<Avatar alt="Gu" src="images/choki.png" />}
-          label="10"
+          avatar={<Avatar alt="choki" src="images/choki.png" />}
+          label={monster ? monster.choki : "-"}
           variant="outlined"
           sx={{ bgcolor: "white" }}
         />
         <Chip
-          avatar={<Avatar alt="Gu" src="images/pa.png" />}
-          label="51"
+          avatar={<Avatar alt="pa" src="images/pa.png" />}
+          label={monster ? monster.pa : "-"}
           variant="outlined"
           sx={{ bgcolor: "white" }}
         />
@@ -78,17 +78,17 @@ const Field = ({ height, color, monsterName, monsterImage, isSelf }: Props) => {
         pt="6px"
       >
         <Box sx={{ height: "10%", width: "100%" }}>
-          {!isSelf && monsterImage === "" ? (
+          {!isSelf && !monster ? (
             <Typography>あいてがモンスターをせんたくしています</Typography>
           ) : (
             <Typography fontSize="1rem" align="center">
-              {monsterName}
+              {monster ? monster.name : ""}
             </Typography>
           )}
         </Box>
         <Centering>
           <Image
-            src={monsterImage}
+            src={monster ? monster.base64image : ""}
             alt="silhouette"
             objectFit="contain"
             sx={{ height: "90%", width: "100%" }}

@@ -9,7 +9,7 @@ export type Monster = {
 
 export type User = {
   roomId: string;
-  monster: Monster;
+  monster: Monster | null;
 };
 
 export type createRoomCallback = (

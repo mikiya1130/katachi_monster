@@ -10,6 +10,7 @@ import AttackCenter from "@/app/(battle-phase)/battle/components/AttackCenter";
 import ButtonSelectCenter from "@/app/(battle-phase)/battle/components/ButtonSelectCenter";
 import HpCalculateCenter from "@/app/(battle-phase)/battle/components/HpCalculateCenter";
 import MatchingCenter from "@/app/(battle-phase)/battle/components/MatchingCenter";
+import { TypeMonster } from "@/app/(battle-phase)/battle/types";
 import { axios } from "@/axios";
 import { useSocket } from "@/components/SocketProvider";
 
@@ -17,8 +18,10 @@ const BattleAttackSelect = () => {
   const searchParams = useSearchParams();
   const socket = useSocket();
 
-  const [imageSelf, setImageSelf] = useState<string>("");
-  const [imageOpponent, setImageOpponent] = useState<string>("");
+  const [monsterSelf, setMonsterSelf] = useState<TypeMonster | null>(null);
+  const [monsterOpponent, setMonsterOpponent] = useState<TypeMonster | null>(
+    null,
+  );
 
   const gtpRef = useRef<HTMLDivElement>(null);
   const [gtpHeight, setGtpHeight] = useState<number>(0);
@@ -44,19 +47,27 @@ const BattleAttackSelect = () => {
   useEffect(() => {
     const monsterId = searchParams.get("monsterId") ?? "1"; // TODO: パラメータない時の処理を実装する
     axios.get(`monster/${monsterId}/user_monster`).then((res) => {
-      setImageSelf(res.data.base64image);
+      setMonsterSelf({
+        base64image: res.data.base64image,
+        name: res.data.name,
+        hp: 100,
+        gu: res.data.gu,
+        choki: res.data.choki,
+        pa: res.data.pa,
+      });
     });
   }, [searchParams]);
 
   useEffect(() => {
-    if (imageSelf !== "" && socket) {
-      socket.on("receiveOpponentImage", (imageOpponent: string) => {
-        setImageOpponent(imageOpponent);
+    if (monsterSelf && socket) {
+      console.log("monsterSelf", monsterSelf);
+      socket.on("receiveMonsterOpponent", (monsterOpponent: TypeMonster) => {
+        setMonsterOpponent(monsterOpponent);
       });
 
-      socket.emit("sendSelfImage", imageSelf);
+      socket.emit("sendMonsterSelf", monsterSelf);
     }
-  }, [imageSelf, socket]);
+  }, [monsterSelf, socket]);
 
   useEffect(() => {
     if (gtpRef.current) {
@@ -80,8 +91,7 @@ const BattleAttackSelect = () => {
       <Field
         height="30%"
         color="blue"
-        monsterName="Opponent monster name"
-        monsterImage={imageOpponent}
+        monster={monsterOpponent}
         isSelf={false}
       />
 
@@ -94,13 +104,7 @@ const BattleAttackSelect = () => {
         )}
       </Box>
 
-      <Field
-        height="30%"
-        color="red"
-        monsterName="Self monster name"
-        monsterImage={imageSelf}
-        isSelf={true}
-      />
+      <Field height="30%" color="red" monster={monsterSelf} isSelf={true} />
 
       <Box ref={gtpRef} sx={{ height: "10%", width: "100%" }} pt="5px">
         <GtpButton gtpHeight={gtpHeight} state={state} setState={setState} />
