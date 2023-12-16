@@ -1,7 +1,6 @@
 import { Close } from "@mui/icons-material";
 import {
   Avatar,
-  Box,
   Chip,
   IconButton,
   Modal,
@@ -76,13 +75,11 @@ const ModalContent = ({ monster, handleClose }: Props) => {
             variant="outlined"
             sx={{ borderRadius: "8px", bgcolor: "white" }}
           />
-          <Box>
-            <Chip
-              avatar={<Avatar alt="Gu" src="images/gu.png" />}
-              label={monster.gu}
-              variant="outlined"
-            />
-          </Box>
+          <Chip
+            avatar={<Avatar alt="Gu" src="images/gu.png" />}
+            label={monster.gu}
+            variant="outlined"
+          />
           <Chip
             avatar={<Avatar alt="Gu" src="images/choki.png" />}
             label={monster.choki}
