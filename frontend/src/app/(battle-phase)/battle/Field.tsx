@@ -31,7 +31,7 @@ const Field = ({ height, color, monster, isSelf }: Props) => {
       <Stack
         ref={filedInfoRef}
         direction="row"
-        justifyContent="space-between"
+        justifyContent="space-around"
         sx={{ width: "100%", bgcolor: color }}
         p="5px"
       >
