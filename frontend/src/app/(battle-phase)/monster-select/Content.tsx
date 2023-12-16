@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { TypeMonster } from "@/app/(create-phase)/level-select/types";
+import { TypeMonster } from "@/app/(battle-phase)/monster-select/types";
 import { axios } from "@/axios";
 import Image from "@/components/Image";
 

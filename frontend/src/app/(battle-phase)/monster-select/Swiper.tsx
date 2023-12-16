@@ -1,9 +1,9 @@
 import { Stack } from "@mui/material";
 import { useState } from "react";
 
+import Content from "@/app/(battle-phase)/monster-select/Content";
 import ModalContent from "@/app/(battle-phase)/monster-select/ModalContent";
-import Content from "@/app/(create-phase)/level-select/Content";
-import { TypeMonster } from "@/app/(create-phase)/level-select/types";
+import { TypeMonster } from "@/app/(battle-phase)/monster-select/types";
 type Props = {
   monsterIds: number[];
   height: number | string;
