@@ -183,11 +183,13 @@ const BattleAttackSelect = () => {
         )}
         {state === "attack/viewText" &&
           (outcome === "win" ? (
-            <Center>Attack successful!</Center>
+            <Center color="red">Attack successful!</Center>
           ) : outcome === "lose" ? (
-            <Center>Attack failed!</Center>
+            <Center color="blue">Attack failed!</Center>
           ) : (
-            outcome === "draw" && <Center>It&lsquo;s a draw</Center>
+            outcome === "draw" && (
+              <Center color="black">It&lsquo;s a draw</Center>
+            )
           ))}
       </Box>
 
