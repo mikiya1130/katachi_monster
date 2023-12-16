@@ -60,7 +60,7 @@ const ModalContent = ({ monster, handleClose }: Props) => {
         </IconButton>
 
         <Typography fontSize={24} textAlign="center">
-          モンスター名
+          {monster.name}
         </Typography>
 
         <Stack direction="row" spacing={2}>
@@ -79,18 +79,18 @@ const ModalContent = ({ monster, handleClose }: Props) => {
           <Box>
             <Chip
               avatar={<Avatar alt="Gu" src="images/gu.png" />}
-              label="32"
+              label={monster.gu}
               variant="outlined"
             />
           </Box>
           <Chip
             avatar={<Avatar alt="Gu" src="images/choki.png" />}
-            label="10"
+            label={monster.choki}
             variant="outlined"
           />
           <Chip
             avatar={<Avatar alt="Gu" src="images/pa.png" />}
-            label="51"
+            label={monster.pa}
             variant="outlined"
           />
         </Stack>
