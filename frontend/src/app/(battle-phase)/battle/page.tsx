@@ -44,6 +44,17 @@ const BattleAttackSelect = () => {
   ];
 
   useEffect(() => {
+    if (gtpRef.current) {
+      setGtpHeight(
+        Math.min(
+          gtpRef.current.clientHeight,
+          (gtpRef.current.clientWidth - 10) / images.length,
+        ),
+      );
+    }
+  }, [gtpRef, images.length]);
+
+  useEffect(() => {
     const monsterId = searchParams.get("monsterId") ?? "1"; // TODO: パラメータない時の処理を実装する
     axios.get(`monster/${monsterId}/user_monster`).then((res) => {
       setMonsterSelf({
@@ -77,17 +88,6 @@ const BattleAttackSelect = () => {
       }
     })();
   }, [monsterOpponent]);
-
-  useEffect(() => {
-    if (gtpRef.current) {
-      setGtpHeight(
-        Math.min(
-          gtpRef.current.clientHeight,
-          (gtpRef.current.clientWidth - 10) / images.length,
-        ),
-      );
-    }
-  }, [gtpRef, images.length]);
 
   return (
     <Stack
