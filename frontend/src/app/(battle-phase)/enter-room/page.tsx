@@ -3,26 +3,21 @@ import { Button, CircularProgress, Stack, TextField } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Socket, io } from "socket.io-client";
+
+import { useSocket } from "@/components/SocketProvider";
 
 const EnterRoom = () => {
   const router = useRouter();
+  const socket = useSocket();
   const title = "へやにはいる";
   const [isButtonRoading, setIsButtonRoading] = useState<boolean>(true);
-  const [socket, setSocket] = useState<Socket | null>(null);
   const [roomId, setRoomId] = useState<string>("");
 
   useEffect(() => {
-    if (!socket) {
-      setSocket(io(process.env.NEXT_PUBLIC_WEBSOCKET_ORIGIN || ""));
-    }
-
     if (socket) {
-      socket.on("connect", () => {
-        setIsButtonRoading(false);
-      });
+      setIsButtonRoading(false);
     }
-  }, [socket, roomId]);
+  }, [socket]);
 
   // テキストフィールドの入力が4桁の数字のみ許可する
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,17 +29,18 @@ const EnterRoom = () => {
   };
 
   const handleSubmit = () => {
-    if (socket === null) return;
-    setIsButtonRoading(true);
-    socket.emit("enterRoom", roomId, (status: string) => {
-      if (status === "success") {
-        router.push("/monster-select");
-      } else {
-        setIsButtonRoading(false);
-        // TODO: エラー処理実装
-        console.log("error");
-      }
-    });
+    if (socket) {
+      setIsButtonRoading(true);
+      socket.emit("enterRoom", roomId, (status: string) => {
+        if (status === "success") {
+          router.push("/monster-select");
+        } else {
+          setIsButtonRoading(false);
+          // TODO: エラー処理実装
+          console.log("error: enterRoom");
+        }
+      });
+    }
   };
 
   return (

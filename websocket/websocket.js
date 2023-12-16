@@ -16,6 +16,8 @@ server.listen(PORT, () => {
 const rooms = () => io.of("/").adapter.rooms;
 
 io.on("connection", (socket) => {
+  console.log("User connected: " + socket.id);
+
   socket.on("createRoom", (callback) => {
     let roomId = "";
     const maxRetry = 100;
