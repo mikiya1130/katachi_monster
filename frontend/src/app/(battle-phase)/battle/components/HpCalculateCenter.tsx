@@ -2,10 +2,11 @@
 import { Typography } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
 
+import { State } from "@/app/(battle-phase)/battle/State";
 import Centering from "@/components/Centering";
 
 type Props = {
-  setState: Dispatch<SetStateAction<"buttonSelect" | "hpCalculate" | "attack">>;
+  setState: Dispatch<SetStateAction<State>>;
 };
 
 const HpCalculateCenter = ({ setState }: Props) => {

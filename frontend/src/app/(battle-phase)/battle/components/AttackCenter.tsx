@@ -3,11 +3,12 @@
 import { Box, Typography } from "@mui/material";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
+import { State } from "@/app/(battle-phase)/battle/State";
 import Centering from "@/components/Centering";
 import Image from "@/components/Image";
 
 type Props = {
-  setState: Dispatch<SetStateAction<"buttonSelect" | "hpCalculate" | "attack">>;
+  setState: Dispatch<SetStateAction<State>>;
   outcome: "win" | "lose" | "draw" | null;
 };
 

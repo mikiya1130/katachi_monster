@@ -3,6 +3,8 @@
 import { Button, Stack } from "@mui/material";
 import { Dispatch, SetStateAction, useState } from "react";
 
+import { State } from "@/app/(battle-phase)/battle/State";
+
 const images = [
   {
     url: "images/gu.png",
@@ -20,8 +22,8 @@ const images = [
 
 type Props = {
   gtpHeight: number;
-  state: "buttonSelect" | "hpCalculate" | "attack";
-  setState: Dispatch<SetStateAction<"buttonSelect" | "hpCalculate" | "attack">>;
+  state: State;
+  setState: Dispatch<SetStateAction<State>>;
 };
 
 const GtpButton = ({ gtpHeight, state, setState }: Props) => {

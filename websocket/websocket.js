@@ -14,6 +14,23 @@ server.listen(PORT, () => {
 });
 
 const rooms = () => io.of("/").adapter.rooms;
+const users = {};
+
+const enterRoom = (roomId, socket) => {
+  const userId = socket.id;
+  users[userId] = {
+    roomId: roomId,
+    image: "",
+    name: "",
+    hp: 100,
+    gu: 0,
+    choki: 0,
+    pa: 0,
+  };
+  socket.join(roomId);
+  console.log("rooms", rooms());
+  console.log("users", users);
+};
 
 io.on("connection", (socket) => {
   console.log("User connected: " + socket.id);
@@ -26,8 +43,7 @@ io.on("connection", (socket) => {
         .toString()
         .padStart(4, "0");
       if (!rooms().has(roomId)) {
-        socket.join(roomId);
-        console.log("rooms", rooms());
+        enterRoom(roomId, socket);
         callback("success", roomId);
         return;
       }
@@ -43,10 +59,25 @@ io.on("connection", (socket) => {
       callback("error");
       return;
     }
-    socket.join(roomId);
+    enterRoom(roomId, socket);
     callback("success");
     io.to(roomId).emit("matching");
-    console.log("rooms", rooms());
+  });
+
+  socket.on("sendSelfImage", (image) => {
+    const userId = socket.id;
+    const roomId = users[userId]["roomId"];
+    const opponentId = Array.from(rooms().get(roomId)).find(
+      (id) => id !== userId,
+    );
+    users[userId]["image"] = image;
+
+    if (users[opponentId]["image"] !== "") {
+      // 相手画像の取得
+      socket.emit("receiveOpponentImage", users[opponentId]["image"]);
+    }
+    // 自身の画像を相手に送信
+    socket.broadcast.to(roomId).emit("receiveOpponentImage", image);
   });
 
   socket.on("disconnect", () => {

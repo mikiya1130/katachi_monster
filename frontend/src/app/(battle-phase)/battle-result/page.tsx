@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-import Field from "@/app/(battle-phase)/battle-attack-select/Field";
+import Field from "@/app/(battle-phase)/battle/Field";
 import { axios } from "@/axios";
 import Centering from "@/components/Centering";
 

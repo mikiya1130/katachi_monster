@@ -3,23 +3,29 @@ import { Box, Stack } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-import AttackCenter from "@/app/(battle-phase)/battle-attack-select/AttackCenter";
-import ButtonSelectCenter from "@/app/(battle-phase)/battle-attack-select/ButtonSelectCenter";
-import Field from "@/app/(battle-phase)/battle-attack-select/Field";
-import GtpButton from "@/app/(battle-phase)/battle-attack-select/GtpButton";
-import HpCalculateCenter from "@/app/(battle-phase)/battle-attack-select/HpCalculateCenter";
+import Field from "@/app/(battle-phase)/battle/Field";
+import GtpButton from "@/app/(battle-phase)/battle/GtpButton";
+import { State } from "@/app/(battle-phase)/battle/State";
+import AttackCenter from "@/app/(battle-phase)/battle/components/AttackCenter";
+import ButtonSelectCenter from "@/app/(battle-phase)/battle/components/ButtonSelectCenter";
+import HpCalculateCenter from "@/app/(battle-phase)/battle/components/HpCalculateCenter";
+import MatchingCenter from "@/app/(battle-phase)/battle/components/MatchingCenter";
 import { axios } from "@/axios";
+import { useSocket } from "@/components/SocketProvider";
 
 const BattleAttackSelect = () => {
   const searchParams = useSearchParams();
+  const socket = useSocket();
 
-  const [monsterIdSelf, setMonsterIdSelf] = useState<string>("1");
-  const [monsterIdOpponent, setMonsterIdOpponent] = useState<string>("1");
+  const [monsterId, setMonsterId] = useState<string>("1");
   const [imageSelf, setImageSelf] = useState<string>("");
   const [imageOpponent, setImageOpponent] = useState<string>("");
 
   const gtpRef = useRef<HTMLDivElement>(null);
   const [gtpHeight, setGtpHeight] = useState<number>(0);
+
+  const [outcome, setOutcome] = useState<"win" | "lose" | "draw" | null>("win");
+  const [state, setState] = useState<State>("matching");
 
   const images = [
     {
@@ -36,29 +42,24 @@ const BattleAttackSelect = () => {
     },
   ];
 
-  const hp = 100;
-
-  const [outcome, setOutcome] = useState<"win" | "lose" | "draw" | null>("win");
-
-  const [state, setState] = useState<"buttonSelect" | "hpCalculate" | "attack">(
-    "buttonSelect",
-  );
-
   useEffect(() => {
-    const monsterIdSelf = searchParams.get("monsterIdSelf") ?? "1"; // TODO: パラメータない時の処理を実装する
-    setMonsterIdSelf(monsterIdSelf);
+    const monsterId = searchParams.get("monsterId") ?? "1"; // TODO: パラメータない時の処理を実装する
+    setMonsterId(monsterId);
 
-    const monsterIdOpponent = searchParams.get("monsterIdOpponent") ?? "2"; // TODO: パラメータない時の処理を実装する
-    setMonsterIdOpponent(monsterIdOpponent);
-
-    axios.get(`monster/${monsterIdSelf}/user_monster`).then((res) => {
+    axios.get(`monster/${monsterId}/user_monster`).then((res) => {
       setImageSelf(res.data.base64image);
     });
-
-    axios.get(`monster/${monsterIdOpponent}/user_monster`).then((res) => {
-      setImageOpponent(res.data.base64image);
-    });
   }, [searchParams]);
+
+  useEffect(() => {
+    if (imageSelf !== "" && socket) {
+      socket.on("receiveOpponentImage", (imageOpponent: string) => {
+        setImageOpponent(imageOpponent);
+      });
+
+      socket.emit("sendSelfImage", imageSelf);
+    }
+  }, [imageSelf, socket]);
 
   useEffect(() => {
     if (gtpRef.current) {
@@ -88,6 +89,7 @@ const BattleAttackSelect = () => {
       />
 
       <Box sx={{ height: "30%", width: "100%" }}>
+        {state === "matching" && <MatchingCenter />}
         {state === "buttonSelect" && <ButtonSelectCenter />}
         {state === "hpCalculate" && <HpCalculateCenter setState={setState} />}
         {state === "attack" && (
