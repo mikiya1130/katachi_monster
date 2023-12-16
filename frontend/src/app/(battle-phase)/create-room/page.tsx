@@ -1,11 +1,13 @@
 "use client";
 import { CircularProgress, Stack } from "@mui/material";
 import Typography from "@mui/material/Typography";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { useSocket } from "@/components/SocketProvider";
 
 const CreateRoom = () => {
+  const router = useRouter();
   const socket = useSocket();
   const title = "へやをつくる";
   const [roomId, setRoomId] = useState<string>("");
@@ -20,8 +22,12 @@ const CreateRoom = () => {
           console.log("error: createRoom");
         }
       });
+
+      socket.on("matching", () => {
+        router.push("/monster-select");
+      });
     }
-  }, [socket, roomId]);
+  }, [socket, roomId, router]);
 
   return (
     <Stack

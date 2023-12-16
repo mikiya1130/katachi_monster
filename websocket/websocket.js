@@ -45,6 +45,7 @@ io.on("connection", (socket) => {
     }
     socket.join(roomId);
     callback("success");
+    io.to(roomId).emit("matching");
     console.log("rooms", rooms());
   });
 

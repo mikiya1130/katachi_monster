@@ -33,12 +33,15 @@ const EnterRoom = () => {
       setIsButtonRoading(true);
       socket.emit("enterRoom", roomId, (status: string) => {
         if (status === "success") {
-          router.push("/monster-select");
+          console.log("success: enterRoom");
         } else {
+          console.log("error");
           setIsButtonRoading(false);
-          // TODO: エラー処理実装
-          console.log("error: enterRoom");
         }
+      });
+
+      socket.on("matching", () => {
+        router.push("/monster-select");
       });
     }
   };
