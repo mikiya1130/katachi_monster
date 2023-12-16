@@ -17,7 +17,6 @@ const BattleAttackSelect = () => {
   const searchParams = useSearchParams();
   const socket = useSocket();
 
-  const [monsterId, setMonsterId] = useState<string>("1");
   const [imageSelf, setImageSelf] = useState<string>("");
   const [imageOpponent, setImageOpponent] = useState<string>("");
 
@@ -44,8 +43,6 @@ const BattleAttackSelect = () => {
 
   useEffect(() => {
     const monsterId = searchParams.get("monsterId") ?? "1"; // TODO: パラメータない時の処理を実装する
-    setMonsterId(monsterId);
-
     axios.get(`monster/${monsterId}/user_monster`).then((res) => {
       setImageSelf(res.data.base64image);
     });
