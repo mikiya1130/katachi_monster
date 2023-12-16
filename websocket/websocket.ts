@@ -27,12 +27,14 @@ const enterRoom = (roomId: string, socket: Socket) => {
   const userId = socket.id;
   users[userId] = {
     roomId: roomId,
-    image: "",
-    name: "",
-    hp: 100,
-    gu: 0,
-    choki: 0,
-    pa: 0,
+    monster: {
+      image: "",
+      name: "",
+      hp: 100,
+      gu: 0,
+      choki: 0,
+      pa: 0,
+    },
   };
   socket.join(roomId);
   console.log("rooms", rooms());
@@ -70,18 +72,18 @@ io.on("connection", (socket) => {
 
   socket.on("sendSelfImage", (image: string) => {
     const userId = socket.id;
-    const roomId = users[userId]["roomId"];
+    const roomId = users[userId].roomId;
     const opponentId = Array.from(getRoom(roomId)).find((id) => id !== userId);
-    users[userId]["image"] = image;
+    users[userId].monster.image = image;
 
     if (opponentId === undefined) {
       console.error("opponentId is not found");
       return;
     }
 
-    if (users[opponentId]["image"] !== "") {
+    if (users[opponentId].monster.image !== "") {
       // 相手画像の取得
-      socket.emit("receiveOpponentImage", users[opponentId]["image"]);
+      socket.emit("receiveOpponentImage", users[opponentId].monster.image);
     }
     // 自身の画像を相手に送信
     socket.broadcast.to(roomId).emit("receiveOpponentImage", image);

@@ -1,11 +1,15 @@
-export type User = {
-  roomId: string;
+export type Monster = {
   image: string;
   name: string;
   hp: number;
   gu: number;
   choki: number;
   pa: number;
+};
+
+export type User = {
+  roomId: string;
+  monster: Monster;
 };
 
 export type createRoomCallback = (
