@@ -1,18 +1,19 @@
 "use client";
 import { Box, Stack } from "@mui/material";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useContext, useEffect, useRef, useState } from "react";
 
-import Center from "@/app/(battle-phase)/battle/Center";
-import Field from "@/app/(battle-phase)/battle/Field";
-import GtpButton from "@/app/(battle-phase)/battle/GtpButton";
-import { State } from "@/app/(battle-phase)/battle/State";
-import sleep from "@/app/(battle-phase)/battle/sleep";
+import Center from "@/app/(battle-phase)/(battle)/battle/Center";
+import Field from "@/app/(battle-phase)/(battle)/battle/Field";
+import GtpButton from "@/app/(battle-phase)/(battle)/battle/GtpButton";
+import { State } from "@/app/(battle-phase)/(battle)/battle/State";
+import sleep from "@/app/(battle-phase)/(battle)/battle/sleep";
 import {
   TypeHand,
   TypeMonster,
   TypeOutcome,
-} from "@/app/(battle-phase)/battle/types";
+} from "@/app/(battle-phase)/(battle)/battle/types";
+import { BattleContext } from "@/app/(battle-phase)/(battle)/layout";
 import { axios } from "@/axios";
 import Centering from "@/components/Centering";
 import Image from "@/components/Image";
@@ -20,7 +21,10 @@ import { useSocket } from "@/components/SocketProvider";
 
 const BattleAttackSelect = () => {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const socket = useSocket();
+
+  const [state, setState] = useState<State>("matching");
 
   const [monsterSelf, setMonsterSelf] = useState<TypeMonster | null>(null);
   const [monsterOpponent, setMonsterOpponent] = useState<TypeMonster | null>(
@@ -33,7 +37,8 @@ const BattleAttackSelect = () => {
   const [selfHand, setSelfHand] = useState<TypeHand>("gu");
   const [opponentHand, setOpponentHand] = useState<TypeHand>("gu");
   const [outcome, setOutcome] = useState<TypeOutcome>("win");
-  const [state, setState] = useState<State>("matching");
+
+  const { setWinner } = useContext(BattleContext);
 
   const images = [
     {
@@ -130,7 +135,15 @@ const BattleAttackSelect = () => {
       });
       await sleep(3000);
 
-      setState("buttonSelect");
+      if (selfResult.hp > 0 && opponentResult.hp > 0) {
+        setState("buttonSelect");
+      } else {
+        setWinner({
+          isSelf: selfResult.hp > 0,
+          monster: selfResult.hp > 0 ? monsterSelf : monsterOpponent,
+        });
+        router.push("/battle-result");
+      }
     });
 
     socket?.emit("sendHandSelf", hand);

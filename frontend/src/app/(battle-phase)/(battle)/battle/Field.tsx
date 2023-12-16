@@ -2,7 +2,7 @@
 import { Avatar, Box, Chip, Stack, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 
-import { TypeMonster } from "@/app/(battle-phase)/battle/types";
+import { TypeMonster } from "@/app/(battle-phase)/(battle)/battle/types";
 import Centering from "@/components/Centering";
 import Image from "@/components/Image";
 

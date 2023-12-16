@@ -3,8 +3,8 @@
 import { Button, Stack } from "@mui/material";
 import { useState } from "react";
 
-import { State } from "@/app/(battle-phase)/battle/State";
-import { TypeHand } from "@/app/(battle-phase)/battle/types";
+import { State } from "@/app/(battle-phase)/(battle)/battle/State";
+import { TypeHand } from "@/app/(battle-phase)/(battle)/battle/types";
 
 const images: { url: string; title: TypeHand }[] = [
   {
