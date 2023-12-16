@@ -93,15 +93,16 @@ const BattleAttackSelect = () => {
       (async () => {
         if (monsterOpponent) {
           setState("start");
-          await sleep(3000);
+          await sleep(2000);
           setState("buttonSelect");
         }
       })();
     }
   }, [monsterOpponent, state]);
 
-  const handleButtonSelected = (hand: TypeHand) => {
+  const handleButtonSelected = async (hand: TypeHand) => {
     setState("hpCalculate");
+    await sleep(1000);
 
     socket?.on("updateHp", async (results) => {
       const selfResult = results[socket.id];
