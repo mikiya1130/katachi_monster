@@ -114,7 +114,7 @@ const ModalContent = ({ monster, handleClose }: Props) => {
           </LinkButton>
 
           <LinkButton
-            href={`/monster-battle?monsterId=${monster.id}`}
+            href={`/match-waiting?monsterId=${monster.id}`}
             variant="contained"
           >
             けってい
