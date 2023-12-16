@@ -6,11 +6,16 @@ import { useEffect, useRef, useState } from "react";
 import Field from "@/app/(battle-phase)/battle/Field";
 import GtpButton from "@/app/(battle-phase)/battle/GtpButton";
 import { State } from "@/app/(battle-phase)/battle/State";
-import AttackCenter from "@/app/(battle-phase)/battle/components/AttackCenter";
 import TextCenter from "@/app/(battle-phase)/battle/components/TextCenter";
 import sleep from "@/app/(battle-phase)/battle/sleep";
-import { TypeHand, TypeMonster } from "@/app/(battle-phase)/battle/types";
+import {
+  TypeHand,
+  TypeMonster,
+  TypeOutcome,
+} from "@/app/(battle-phase)/battle/types";
 import { axios } from "@/axios";
+import Centering from "@/components/Centering";
+import Image from "@/components/Image";
 import { useSocket } from "@/components/SocketProvider";
 
 const BattleAttackSelect = () => {
@@ -25,7 +30,9 @@ const BattleAttackSelect = () => {
   const gtpRef = useRef<HTMLDivElement>(null);
   const [gtpHeight, setGtpHeight] = useState<number>(0);
 
-  const [outcome, setOutcome] = useState<"win" | "lose" | "draw" | null>("win");
+  const [selfHand, setSelfHand] = useState<TypeHand>("gu");
+  const [opponentHand, setOpponentHand] = useState<TypeHand>("gu");
+  const [outcome, setOutcome] = useState<TypeOutcome>("win");
   const [state, setState] = useState<State>("matching");
 
   const images = [
@@ -69,49 +76,60 @@ const BattleAttackSelect = () => {
   }, [searchParams]);
 
   useEffect(() => {
-    if (monsterSelf && socket) {
-      console.log("monsterSelf", monsterSelf);
-      socket.on("receiveMonsterOpponent", (monsterOpponent: TypeMonster) => {
-        setMonsterOpponent(monsterOpponent);
-      });
+    if (state === "matching") {
+      if (monsterSelf && socket) {
+        console.log("monsterSelf", monsterSelf);
+        socket.on("receiveMonsterOpponent", (monsterOpponent: TypeMonster) => {
+          setMonsterOpponent(monsterOpponent);
+        });
 
-      socket.emit("sendMonsterSelf", monsterSelf);
+        socket.emit("sendMonsterSelf", monsterSelf);
+      }
     }
-  }, [monsterSelf, socket]);
+  }, [monsterSelf, socket, state]);
 
   useEffect(() => {
-    (async () => {
-      if (monsterOpponent) {
-        setState("start");
-        await sleep(3000);
-        setState("buttonSelect");
-      }
-    })();
-  }, [monsterOpponent]);
+    if (state === "matching") {
+      (async () => {
+        if (monsterOpponent) {
+          setState("start");
+          await sleep(3000);
+          setState("buttonSelect");
+        }
+      })();
+    }
+  }, [monsterOpponent, state]);
 
   const handleButtonSelected = (hand: TypeHand) => {
     setState("hpCalculate");
 
-    socket?.on("updateHp", async (newHp) => {
+    socket?.on("updateHp", async (results) => {
+      const selfResult = results[socket.id];
+      const opponentResult =
+        results[Object.keys(results).find((id) => id !== socket.id) ?? ""];
+
+      setSelfHand(selfResult.hand);
+      setOpponentHand(opponentResult.hand);
+      setState("attack/viewHand");
       await sleep(3000);
+
+      setOutcome(selfResult.outcome);
+      setState("attack/viewText");
       setMonsterSelf((prev) => {
         if (prev) {
-          return {
-            ...prev,
-            hp: newHp[socket.id],
-          };
+          return { ...prev, hp: selfResult.hp };
         }
         return null;
       });
       setMonsterOpponent((prev) => {
         if (prev) {
-          return {
-            ...prev,
-            hp: newHp[Object.keys(newHp).find((id) => id !== socket.id) ?? ""],
-          };
+          return { ...prev, hp: opponentResult.hp };
         }
         return null;
       });
+      await sleep(3000);
+
+      setState("buttonSelect");
     });
 
     socket?.emit("sendHandSelf", hand);
@@ -141,9 +159,36 @@ const BattleAttackSelect = () => {
             Rock! <br /> Scissors! <br /> Paper!
           </TextCenter>
         )}
-        {state === "attack" && (
-          <AttackCenter setState={setState} outcome={outcome} />
+        {state === "attack/viewHand" && (
+          <Box p={2} height="100%">
+            <Centering position="relative">
+              <Image
+                position="absolute"
+                top={0}
+                src={`images/${opponentHand}.png`}
+                alt={opponentHand}
+                objectFit="contain"
+                sx={{ borderRadius: "50%", height: "40%" }}
+              />
+              <Image
+                position="absolute"
+                bottom={0}
+                src={`images/${selfHand}.png`}
+                alt={selfHand}
+                objectFit="contain"
+                sx={{ borderRadius: "50%", height: "40%" }}
+              />
+            </Centering>
+          </Box>
         )}
+        {state === "attack/viewText" &&
+          (outcome === "win" ? (
+            <TextCenter>Attack successful!</TextCenter>
+          ) : outcome === "lose" ? (
+            <TextCenter>Attack failed!</TextCenter>
+          ) : (
+            outcome === "draw" && <TextCenter>It&lsquo;s a draw</TextCenter>
+          ))}
       </Box>
 
       <Field height="30%" color="red" monster={monsterSelf} isSelf={true} />

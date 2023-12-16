@@ -3,4 +3,5 @@ export type State =
   | "start"
   | "buttonSelect"
   | "hpCalculate"
-  | "attack";
+  | "attack/viewHand"
+  | "attack/viewText";

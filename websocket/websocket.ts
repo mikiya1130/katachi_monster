@@ -5,6 +5,7 @@ import { Server, Socket } from "socket.io";
 import {
   Hand,
   Monster,
+  Outcome,
   User,
   createRoomCallback,
   enterRoomCallback,
@@ -42,31 +43,45 @@ const calculateGTP = (
   opponentHand: Hand,
   userMonster: Monster,
   opponentMonster: Monster,
-): [Monster, Monster] => {
+): [Monster, Monster, Outcome, Outcome] => {
+  let userOutCome: Outcome = "draw";
+  let opponentOutCome: Outcome = "draw";
   if (userHand === opponentHand) {
-    return [userMonster, opponentMonster];
+    return [userMonster, opponentMonster, userOutCome, opponentOutCome];
   } else if (userHand === "gu") {
     if (opponentHand === "choki") {
+      userOutCome = "win";
+      opponentOutCome = "lose";
       opponentMonster.hp -= userMonster.gu;
     } else {
+      userOutCome = "lose";
+      opponentOutCome = "win";
       userMonster.hp -= opponentMonster.pa;
     }
   } else if (userHand === "choki") {
     if (opponentHand === "pa") {
+      userOutCome = "win";
+      opponentOutCome = "lose";
       opponentMonster.hp -= userMonster.choki;
     } else {
+      userOutCome = "lose";
+      opponentOutCome = "win";
       userMonster.hp -= opponentMonster.gu;
     }
   } else if (userHand === "pa") {
     if (opponentHand === "gu") {
+      userOutCome = "win";
+      opponentOutCome = "lose";
       opponentMonster.hp -= userMonster.pa;
     } else {
+      userOutCome = "lose";
+      opponentOutCome = "win";
       userMonster.hp -= opponentMonster.choki;
     }
   }
   userMonster.hp = Math.max(userMonster.hp, 0);
   opponentMonster.hp = Math.max(opponentMonster.hp, 0);
-  return [userMonster, opponentMonster];
+  return [userMonster, opponentMonster, userOutCome, opponentOutCome];
 };
 
 io.on("connection", (socket) => {
@@ -133,12 +148,8 @@ io.on("connection", (socket) => {
     const opponentMonster = users[opponentId].monster;
     if (opponentHand && userMonster && opponentMonster) {
       // じゃんけん計算
-      const [newUserMonster, newOpponentMonster] = calculateGTP(
-        hand,
-        opponentHand,
-        userMonster,
-        opponentMonster,
-      );
+      const [newUserMonster, newOpponentMonster, userOutCome, opponentOutCome] =
+        calculateGTP(hand, opponentHand, userMonster, opponentMonster);
       // 更新
       users[userId].monster = newUserMonster;
       users[opponentId].monster = newOpponentMonster;
@@ -146,8 +157,12 @@ io.on("connection", (socket) => {
       users[opponentId].hand = null;
       // 結果を送信
       io.sockets.in(roomId).emit("updateHp", {
-        [userId]: newUserMonster.hp,
-        [opponentId]: newOpponentMonster.hp,
+        [userId]: { hp: newUserMonster.hp, hand: hand, outcome: userOutCome },
+        [opponentId]: {
+          hp: newOpponentMonster.hp,
+          hand: opponentHand,
+          outcome: opponentOutCome,
+        },
       });
     }
   });

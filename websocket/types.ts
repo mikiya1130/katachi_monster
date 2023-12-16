@@ -15,6 +15,8 @@ export type User = {
   hand: Hand | null;
 };
 
+export type Outcome = "win" | "lose" | "draw";
+
 export type createRoomCallback = (
   status: "success" | "error",
   roomId: string,
