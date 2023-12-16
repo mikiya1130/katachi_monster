@@ -107,6 +107,15 @@ def get_monster(  # noqa: C901, PLR0912
                 if picture.user_id == user_id:
                     silhouette_list[-1] = (silhouette, picture)
                     break
+        elif monster_type == "user_monster":
+            silhouette_list.append((silhouette, None))
+            if db_user_monster is not None:
+                for picture in db_user_monster.picture:
+                    if picture.silhouette_id == silhouette.id:
+                        silhouette_list[-1] = (silhouette, picture)
+                        break
+            if silhouette_list[-1][1] is None:
+                raise HTTPException(status_code=500, detail="Picture not found")
         else:
             raise HTTPException(status_code=500, detail="Picture not found")
 
