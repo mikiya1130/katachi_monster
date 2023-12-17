@@ -1,7 +1,6 @@
 import { Close } from "@mui/icons-material";
 import {
   Avatar,
-  Box,
   Chip,
   IconButton,
   Modal,
@@ -60,7 +59,7 @@ const ModalContent = ({ monster, handleClose }: Props) => {
         </IconButton>
 
         <Typography fontSize={24} textAlign="center">
-          モンスター名
+          {monster.name}
         </Typography>
 
         <Stack direction="row" spacing={2}>
@@ -76,21 +75,19 @@ const ModalContent = ({ monster, handleClose }: Props) => {
             variant="outlined"
             sx={{ borderRadius: "8px", bgcolor: "white" }}
           />
-          <Box>
-            <Chip
-              avatar={<Avatar alt="Gu" src="images/gu.png" />}
-              label="32"
-              variant="outlined"
-            />
-          </Box>
+          <Chip
+            avatar={<Avatar alt="Gu" src="images/gu.png" />}
+            label={monster.gu}
+            variant="outlined"
+          />
           <Chip
             avatar={<Avatar alt="Gu" src="images/choki.png" />}
-            label="10"
+            label={monster.choki}
             variant="outlined"
           />
           <Chip
             avatar={<Avatar alt="Gu" src="images/pa.png" />}
-            label="51"
+            label={monster.pa}
             variant="outlined"
           />
         </Stack>
@@ -114,7 +111,7 @@ const ModalContent = ({ monster, handleClose }: Props) => {
           </LinkButton>
 
           <LinkButton
-            href={`/monster-battle?monsterId=${monster.id}`}
+            href={`/battle?monsterId=${monster.id}`}
             variant="contained"
           >
             けってい

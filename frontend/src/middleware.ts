@@ -12,6 +12,15 @@ export const config = {
 };
 
 export async function middleware(request: NextRequest) {
+  if (request.nextUrl.pathname === "/reset") {
+    // token を削除してトップページにリダイレクト(トップページで token を再作成する)
+    const response = NextResponse.redirect(new URL("/", request.url));
+    if (request.cookies.has("user_token")) {
+      response.cookies.delete("user_token");
+    }
+    return response;
+  }
+
   if (!request.cookies.has("user_token")) {
     // ユーザー識別用の token が cookie に保存されていない場合
     if (request.nextUrl.pathname === "/") {

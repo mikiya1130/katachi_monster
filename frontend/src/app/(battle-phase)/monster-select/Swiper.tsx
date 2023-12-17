@@ -1,9 +1,11 @@
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { useState } from "react";
 
+import Content from "@/app/(battle-phase)/monster-select/Content";
 import ModalContent from "@/app/(battle-phase)/monster-select/ModalContent";
-import Content from "@/app/(create-phase)/level-select/Content";
-import { TypeMonster } from "@/app/(create-phase)/level-select/types";
+import { TypeMonster } from "@/app/(battle-phase)/monster-select/types";
+import Centering from "@/components/Centering";
+import LinkButton from "@/components/LinkButton";
 type Props = {
   monsterIds: number[];
   height: number | string;
@@ -30,13 +32,22 @@ const Swiper = ({ monsterIds, height }: Props) => {
         overflowX: "scroll",
       }}
     >
-      {monsterIds.map((monsterId) => (
-        <Content
-          key={monsterId}
-          monsterId={monsterId}
-          handleOpen={handleOpen}
-        />
-      ))}
+      {monsterIds.length !== 0 ? (
+        monsterIds.map((monsterId) => (
+          <Content
+            key={monsterId}
+            monsterId={monsterId}
+            handleOpen={handleOpen}
+          />
+        ))
+      ) : (
+        <Centering>
+          <Typography>このレベルのモンスターはいません</Typography>
+          <LinkButton href="/level-select" variant="outlined">
+            さくさいしにいく
+          </LinkButton>
+        </Centering>
+      )}
       {monster && <ModalContent monster={monster} handleClose={handleClose} />}
     </Stack>
   );

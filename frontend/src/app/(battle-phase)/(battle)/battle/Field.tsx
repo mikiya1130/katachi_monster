@@ -2,13 +2,14 @@
 import { Avatar, Box, Chip, Stack, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 
+import { TypeMonster } from "@/app/(battle-phase)/(battle)/battle/types";
+import Centering from "@/components/Centering";
 import Image from "@/components/Image";
 
 type Props = {
   height: string;
   color: string;
-  monsterName: string;
-  monsterImage: string;
+  monster: TypeMonster | null;
   isSelf: boolean;
   hp: number;
   guSore: number;
@@ -16,17 +17,7 @@ type Props = {
   paScore: number;
 };
 
-const Field = ({
-  height,
-  color,
-  monsterName,
-  monsterImage,
-  isSelf,
-  hp,
-  guSore,
-  chokiScore,
-  paScore,
-}: Props) => {
+const Field = ({ height, color, monster, isSelf }: Props) => {
   const direction = isSelf ? "column" : "column-reverse";
   const removeBorder = isSelf ? { borderTop: 0 } : { borderBottom: 0 };
 
@@ -44,7 +35,7 @@ const Field = ({
       <Stack
         ref={filedInfoRef}
         direction="row"
-        justifyContent="space-between"
+        justifyContent="space-around"
         sx={{ width: "100%", bgcolor: color }}
         p="5px"
       >
@@ -56,25 +47,25 @@ const Field = ({
               </Typography>
             </Avatar>
           }
-          label={`${hp}`}
+          label={monster ? monster.hp : "-"}
           variant="outlined"
           sx={{ borderRadius: "8px", bgcolor: "white" }}
         />
         <Chip
           avatar={<Avatar alt="Gu" src="images/gu.png" />}
-          label={`${guSore}`}
+          label={monster ? monster.gu : "-"}
           variant="outlined"
           sx={{ bgcolor: "white" }}
         />
         <Chip
           avatar={<Avatar alt="choki" src="images/choki.png" />}
-          label={`${chokiScore}`}
+          label={monster ? monster.choki : "-"}
           variant="outlined"
           sx={{ bgcolor: "white" }}
         />
         <Chip
-          avatar={<Avatar alt="Pu" src="images/pa.png" />}
-          label={`${paScore}`}
+          avatar={<Avatar alt="pa" src="images/pa.png" />}
+          label={monster ? monster.pa : "-"}
           variant="outlined"
           sx={{ bgcolor: "white" }}
         />
@@ -91,16 +82,22 @@ const Field = ({
         pt="6px"
       >
         <Box sx={{ height: "10%", width: "100%" }}>
-          <Typography fontSize="1rem" align="center">
-            {monsterName}
-          </Typography>
+          {!isSelf && !monster ? (
+            <Typography>あいてがモンスターをせんたくしています</Typography>
+          ) : (
+            <Typography fontSize="1rem" align="center">
+              {monster ? monster.name : ""}
+            </Typography>
+          )}
         </Box>
-        <Image
-          src={monsterImage}
-          alt="silhouette"
-          objectFit="contain"
-          sx={{ height: "90%", width: "100%" }}
-        />
+        <Centering>
+          <Image
+            src={monster ? monster.base64image : ""}
+            alt="silhouette"
+            objectFit="contain"
+            sx={{ height: "90%", width: "100%" }}
+          />
+        </Centering>
       </Box>
     </Stack>
   );

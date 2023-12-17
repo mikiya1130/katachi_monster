@@ -4,8 +4,10 @@ import { useEffect, useRef, useState } from "react";
 
 import Swiper from "@/app/(battle-phase)/monster-select/Swiper";
 import { axios } from "@/axios";
+import { useSocket } from "@/components/SocketProvider";
 
 const MonsterSelect = () => {
+  const socket = useSocket();
   const [monsterIdsList, setMonsterIdsList] = useState<number[][]>([
     [],
     [],
@@ -17,6 +19,10 @@ const MonsterSelect = () => {
   const [swiperHeight, setSwiperHeight] = useState<number>(0);
 
   useEffect(() => {
+    console.log(socket);
+  }, [socket]);
+
+  useEffect(() => {
     if (boxRef.current && ratingRef.current) {
       const boxHeight = boxRef.current.clientHeight;
       const ratingHeight = ratingRef.current.clientHeight;
@@ -25,7 +31,7 @@ const MonsterSelect = () => {
   }, [boxRef, ratingRef]);
 
   useEffect(() => {
-    axios.get("monsters").then((res) => {
+    axios.get("monsters?only_user_monsters=true").then((res) => {
       setMonsterIdsList(res.data.monster_ids);
     });
   }, []);

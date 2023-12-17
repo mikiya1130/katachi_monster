@@ -1,0 +1,11 @@
+FROM node:20-slim
+
+ARG USERNAME=${USERNAME}
+ARG USER_UID=${USER_UID}
+ARG USER_GID=${USER_GID}
+
+RUN groupadd -o --gid $USER_GID $USERNAME && \
+    useradd -o --uid $USER_UID --gid $USER_GID -m $USERNAME
+
+USER $USERNAME
+WORKDIR /app

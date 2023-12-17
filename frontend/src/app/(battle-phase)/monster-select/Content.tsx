@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { TypeMonster } from "@/app/(create-phase)/level-select/types";
+import { TypeMonster } from "@/app/(battle-phase)/monster-select/types";
 import { axios } from "@/axios";
 import Image from "@/components/Image";
 
@@ -13,6 +13,10 @@ const Content = ({ monsterId, handleOpen }: Props) => {
   const [monster, setMonster] = useState<TypeMonster>({
     id: monsterId,
     base64image: "",
+    name: "",
+    gu: 0,
+    choki: 0,
+    pa: 0,
   });
 
   useEffect(() => {
@@ -20,6 +24,10 @@ const Content = ({ monsterId, handleOpen }: Props) => {
       setMonster({
         id: monsterId,
         base64image: res.data.base64image,
+        name: res.data.name,
+        gu: res.data.gu,
+        choki: res.data.choki,
+        pa: res.data.pa,
       });
     });
   }, [monsterId]);

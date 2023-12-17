@@ -1,9 +1,12 @@
 "use client";
 
 import { Button, Stack } from "@mui/material";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 
-const images: { url: string; title: "gu" | "choki" | "pa" }[] = [
+import { State } from "@/app/(battle-phase)/(battle)/battle/State";
+import { TypeHand } from "@/app/(battle-phase)/(battle)/battle/types";
+
+const images: { url: string; title: TypeHand }[] = [
   {
     url: "images/gu.png",
     title: "gu",
@@ -20,23 +23,22 @@ const images: { url: string; title: "gu" | "choki" | "pa" }[] = [
 
 type Props = {
   gtpHeight: number;
-  state: "buttonSelect" | "hpCalculate" | "attack";
-  setState: Dispatch<SetStateAction<"buttonSelect" | "hpCalculate" | "attack">>;
-  setSelfHand: Dispatch<SetStateAction<"gu" | "choki" | "pa">>;
+  state: State;
+  callbackButtonSelected: (hand: TypeHand) => void;
 };
 
-const GtpButton = ({ gtpHeight, state, setState, setSelfHand }: Props) => {
-  const [activeButton, setActiveButton] = useState<string | null>(null);
+const GtpButton = ({ gtpHeight, state, callbackButtonSelected }: Props) => {
+  const [activeButton, setActiveButton] = useState<TypeHand | null>(null);
 
-  const buttonHandler = (buttonTitle: "gu" | "choki" | "pa") => {
-    setActiveButton(buttonTitle);
-    setSelfHand(buttonTitle);
-    //TODO: バックエンドに出した手を送る
-    setState("hpCalculate"); //送信出来たら別の画面に移る
+  const buttonHandler = (buttonTitle: TypeHand) => {
+    if (state === "buttonSelect") {
+      setActiveButton(buttonTitle);
+      callbackButtonSelected(buttonTitle);
+    }
   };
 
   return (
-    <Stack direction="row" justifyContent="space-between" pt={1}>
+    <Stack direction="row" justifyContent="space-around" pt={1}>
       {images.map((image) => (
         <Button
           key={image.title}

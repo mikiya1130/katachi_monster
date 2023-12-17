@@ -8,8 +8,25 @@ services:
         - USERNAME=${USERNAME}
         - USER_UID=${USER_UID}
         - USER_GID=${USER_GID}
+    env_file:
+      - container.env
     volumes:
       - ./frontend:/app
+
+  websocket:
+    build:
+      context: ./websocket
+      dockerfile: ./Dockerfile
+      args:
+        - USERNAME=${USERNAME}
+        - USER_UID=${USER_UID}
+        - USER_GID=${USER_GID}
+    env_file:
+      - container.env
+    volumes:
+      - ./websocket:/app
+    ports:
+      - "3333:3333"
 
   backend:
     build:
