@@ -9,6 +9,11 @@ const theme = createTheme({
     mode: "light",
     // mode: "dark",
   },
+  typography: {
+    button: {
+      textTransform: "none",
+    },
+  },
 });
 
 export const titleFont = createTheme({
