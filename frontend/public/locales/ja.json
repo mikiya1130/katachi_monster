@@ -1,6 +1,11 @@
 {
-    "Home": {
-        "title": "カタチモンスター",
-        "titleMessage": "タッチしてスタート"
-    }
+  "Home": {
+    "title": "カタチモンスター",
+    "titleMessage": "タッチしてスタート"
+  },
+  "ModeSelect": {
+    "title": "モードせんたく",
+    "labelLevelSelect": "モンスターをつくる",
+    "labelPlayerLobby": "たたかう"
+  }
 }

@@ -6,6 +6,11 @@ export const defaultLocaleData = {
     title: "",
     titleMessage: "",
   },
+  ModeSelect: {
+    title: "",
+    labelLevelSelect: "",
+    labelPlayerLobby: "",
+  },
 };
 
 export const maxWidth = "sm";
