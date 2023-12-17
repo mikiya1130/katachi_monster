@@ -20,7 +20,9 @@ const LocaleProvider = ({ children }: Props) => {
       cookie = defaultLocale;
     }
     const data = fetch(`locales/${cookie}.json`);
-    data.then((res) => res.json()).then((res) => setLocale(res));
+    data
+      .then((res) => res.json())
+      .then((res) => setLocale({ locale: cookie, ...res }));
   }, []);
 
   return (
