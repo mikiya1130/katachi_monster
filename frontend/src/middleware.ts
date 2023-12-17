@@ -1,5 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 
+import { defaultLocale, localeList } from "@/consts";
+
 export const config = {
   matcher: [
     // 以下のパスを除く
@@ -13,28 +15,45 @@ export const config = {
 
 export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname === "/reset") {
-    // token を削除してトップページにリダイレクト(トップページで token を再作成する)
+    // cookie を削除してトップページにリダイレクト(トップページで再作成する)
     const response = NextResponse.redirect(new URL("/", request.url));
     if (request.cookies.has("user_token")) {
       response.cookies.delete("user_token");
     }
+    if (request.cookies.has("locale")) {
+      response.cookies.delete("locale");
+    }
     return response;
   }
 
-  if (!request.cookies.has("user_token")) {
+  // locale の変更
+  if (localeList.includes(request.nextUrl.pathname.slice(1))) {
+    const response = NextResponse.redirect(new URL("/", request.url));
+    response.cookies.set("locale", request.nextUrl.pathname.slice(1));
+    return response;
+  }
+
+  if (!request.cookies.has("user_token") || !request.cookies.has("locale")) {
     // ユーザー識別用の token が cookie に保存されていない場合
+    // もしくは、locale が cookie に保存されていない場合
+    // トップページにリダイレクトし、新規作成する
     if (request.nextUrl.pathname === "/") {
       // トップページの場合
-      // token を新規作成
-      const res = await fetch("http://backend:8000/user", {
-        method: "post",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({}),
-      });
-      const data = await res.json();
-      // cookie に保存
       const response = NextResponse.next();
-      response.cookies.set("user_token", data.user_token);
+      if (!request.cookies.has("user_token")) {
+        // token を新規作成
+        const res = await fetch("http://backend:8000/user", {
+          method: "post",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({}),
+        });
+        const data = await res.json();
+        // cookie に保存
+        response.cookies.set("user_token", data.user_token);
+      }
+      if (!request.cookies.has("locale")) {
+        response.cookies.set("locale", defaultLocale);
+      }
       return response;
     } else {
       // トップページ以外の場合

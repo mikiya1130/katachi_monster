@@ -4,12 +4,14 @@ import Typography from "@mui/material/Typography";
 import Link from "next/link";
 
 import Centering from "@/components/Centering";
+import { useLocale } from "@/components/LocaleProvider";
 import { maxWidth } from "@/consts";
 import { titleFont } from "@/theme";
 
 const Home = () => {
-  const title = "カタチモンスター";
-  const titleMessage = "タッチしてスタート";
+  const locale = useLocale();
+  const title = locale.Home.title;
+  const titleMessage = locale.Home.titleMessage;
   const width = useMediaQuery(titleFont.breakpoints.up(maxWidth))
     ? `${titleFont.breakpoints.values[maxWidth]}px`
     : "100vw";
