@@ -9,7 +9,6 @@ import GtpButton from "@/app/(battle-phase)/(battle)/battle/GtpButton";
 import { State } from "@/app/(battle-phase)/(battle)/battle/State";
 import sleep from "@/app/(battle-phase)/(battle)/battle/sleep";
 import {
-  TypeHand,
   TypeMonster,
   TypeOutcome,
 } from "@/app/(battle-phase)/(battle)/battle/types";
@@ -18,13 +17,17 @@ import { axios } from "@/axios";
 import Centering from "@/components/Centering";
 import Image from "@/components/Image";
 import { useLocale } from "@/components/LocaleProvider";
+import Message, { MessageRef } from "@/components/Message";
 import { useSocket } from "@/components/SocketProvider";
+import { images } from "@/consts";
+import { TypeHand } from "@/types";
 
 const BattleAttackSelect = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const socket = useSocket();
   const locale = useLocale();
+  const messageRef = useRef<MessageRef>(null);
 
   const [state, setState] = useState<State>("matching");
 
@@ -39,23 +42,9 @@ const BattleAttackSelect = () => {
   const [selfHand, setSelfHand] = useState<TypeHand>("gu");
   const [opponentHand, setOpponentHand] = useState<TypeHand>("gu");
   const [outcome, setOutcome] = useState<TypeOutcome>("win");
+  const [isComplete, setIsComplete] = useState<boolean>(false);
 
   const { setWinner } = useContext(BattleContext);
-
-  const images = [
-    {
-      url: "images/gu.png",
-      title: "gu",
-    },
-    {
-      url: "images/choki.png",
-      title: "choki",
-    },
-    {
-      url: "images/pa.png",
-      title: "pa",
-    },
-  ];
 
   useEffect(() => {
     if (gtpRef.current) {
@@ -66,7 +55,7 @@ const BattleAttackSelect = () => {
         ),
       );
     }
-  }, [gtpRef, images.length]);
+  }, [gtpRef]);
 
   useEffect(() => {
     const monsterId = searchParams.get("monsterId") ?? "1"; // TODO: パラメータない時の処理を実装する
@@ -81,6 +70,26 @@ const BattleAttackSelect = () => {
       });
     });
   }, [searchParams]);
+
+  useEffect(() => {
+    const error = async () => {
+      console.error("battle-interrupt");
+      messageRef.current?.call({
+        type: "error",
+        message: "つうしんエラーがはっせいしました",
+      });
+      await sleep(3000);
+    };
+    if (socket) {
+      socket.on("battle-interrupt", () => {
+        if (!isComplete) {
+          error().then(() => {
+            router.push("/mode-select");
+          });
+        }
+      });
+    }
+  }, [isComplete, router, socket]);
 
   useEffect(() => {
     if (state === "matching") {
@@ -116,6 +125,15 @@ const BattleAttackSelect = () => {
       const opponentResult =
         results[Object.keys(results).find((id) => id !== socket.id) ?? ""];
 
+      const isComplete = selfResult.hp <= 0 || opponentResult.hp <= 0;
+      setIsComplete(isComplete);
+      if (isComplete) {
+        setWinner({
+          isSelf: selfResult.hp > 0,
+          monster: selfResult.hp > 0 ? monsterSelf : monsterOpponent,
+        });
+      }
+
       setSelfHand(selfResult.hand);
       setOpponentHand(opponentResult.hand);
       setState("attack/viewHand");
@@ -137,14 +155,11 @@ const BattleAttackSelect = () => {
       });
       await sleep(3000);
 
-      if (selfResult.hp > 0 && opponentResult.hp > 0) {
-        setState("buttonSelect");
-      } else {
-        setWinner({
-          isSelf: selfResult.hp > 0,
-          monster: selfResult.hp > 0 ? monsterSelf : monsterOpponent,
-        });
+      if (isComplete) {
+        socket?.disconnect();
         router.push("/battle-result");
+      } else {
+        setState("buttonSelect");
       }
     });
 
@@ -152,81 +167,84 @@ const BattleAttackSelect = () => {
   };
 
   return (
-    <Stack
-      p={4}
-      spacing={0}
-      alignItems="center"
-      justifyContent="center"
-      height="100%"
-    >
-      <Field
-        height="30%"
-        color="blue"
-        monster={monsterOpponent}
-        isSelf={false}
-      />
-
-      <Box sx={{ height: "30%", width: "100%" }}>
-        {state === "matching" && <Center>VS</Center>}
-        {state === "start" && (
-          <Center>{locale.BattleAttackSelect.startMessage}</Center>
-        )}
-        {state === "buttonSelect" && (
-          <Center>{locale.BattleAttackSelect.buttonSelectMessage}</Center>
-        )}
-        {state === "hpCalculate" && (
-          <Center>{locale.BattleAttackSelect.battleCry}</Center>
-        )}
-        {state === "attack/viewHand" && (
-          <Box p={2} height="100%">
-            <Centering position="relative">
-              <Image
-                position="absolute"
-                top={0}
-                src={`images/${opponentHand}.png`}
-                alt={opponentHand}
-                objectFit="contain"
-                sx={{ borderRadius: "50%", height: "40%" }}
-              />
-              <Image
-                position="absolute"
-                bottom={0}
-                src={`images/${selfHand}.png`}
-                alt={selfHand}
-                objectFit="contain"
-                sx={{ borderRadius: "50%", height: "40%" }}
-              />
-            </Centering>
-          </Box>
-        )}
-        {state === "attack/viewText" &&
-          (outcome === "win" ? (
-            <Center color="red">
-              {locale.BattleAttackSelect.succsessfulMessage}
-            </Center>
-          ) : outcome === "lose" ? (
-            <Center color="blue">
-              {locale.BattleAttackSelect.failedMessage}
-            </Center>
-          ) : (
-            outcome === "draw" && (
-              <Center color="black">
-                {locale.BattleAttackSelect.drawMessage}
-              </Center>
-            )
-          ))}
-      </Box>
-
-      <Field height="30%" color="red" monster={monsterSelf} isSelf={true} />
-
-      <Box ref={gtpRef} sx={{ height: "10%", width: "100%" }} pt="5px">
-        <GtpButton
-          gtpHeight={gtpHeight}
-          state={state}
-          callbackButtonSelected={handleButtonSelected}
+    <>
+      <Stack
+        p={4}
+        spacing={0}
+        alignItems="center"
+        justifyContent="center"
+        height="100%"
+      >
+        <Field
+          height="30%"
+          color="blue"
+          monster={monsterOpponent}
+          isSelf={false}
         />
-      </Box>
-    </Stack>
+
+        <Box sx={{ height: "30%", width: "100%" }}>
+          {state === "matching" && <Center>VS</Center>}
+          {state === "start" && (
+            <Center>{locale.BattleAttackSelect.startMessage}</Center>
+          )}
+          {state === "buttonSelect" && (
+            <Center>{locale.BattleAttackSelect.buttonSelectMessage}</Center>
+          )}
+          {state === "hpCalculate" && (
+            <Center>{locale.BattleAttackSelect.battleCry}</Center>
+          )}
+          {state === "attack/viewHand" && (
+            <Box p={2} height="100%">
+              <Centering position="relative">
+                <Image
+                  position="absolute"
+                  top={0}
+                  src={`images/${opponentHand}.png`}
+                  alt={opponentHand}
+                  objectFit="contain"
+                  sx={{ borderRadius: "50%", height: "40%" }}
+                />
+                <Image
+                  position="absolute"
+                  bottom={0}
+                  src={`images/${selfHand}.png`}
+                  alt={selfHand}
+                  objectFit="contain"
+                  sx={{ borderRadius: "50%", height: "40%" }}
+                />
+              </Centering>
+            </Box>
+          )}
+          {state === "attack/viewText" &&
+            (outcome === "win" ? (
+              <Center color="red">
+                {locale.BattleAttackSelect.succsessfulMessage}
+              </Center>
+            ) : outcome === "lose" ? (
+              <Center color="blue">
+                {locale.BattleAttackSelect.failedMessage}
+              </Center>
+            ) : (
+              outcome === "draw" && (
+                <Center color="black">
+                  {locale.BattleAttackSelect.drawMessage}
+                </Center>
+              )
+            ))}
+        </Box>
+
+        <Field height="30%" color="red" monster={monsterSelf} isSelf={true} />
+
+        <Box ref={gtpRef} sx={{ height: "10%", width: "100%" }} pt="5px">
+          <GtpButton
+            gtpHeight={gtpHeight}
+            state={state}
+            callbackButtonSelected={handleButtonSelected}
+          />
+        </Box>
+      </Stack>
+      <Message ref={messageRef} />
+    </>
   );
 };
 

@@ -3,12 +3,12 @@ import http from "http";
 import { Server, Socket } from "socket.io";
 
 import {
-  Hand,
-  Monster,
-  Outcome,
-  User,
-  createRoomCallback,
-  enterRoomCallback,
+  TypeHand,
+  TypeMonster,
+  TypeOutcome,
+  TypeUser,
+  TypeCreateRoomCallback,
+  TypeEnterRoomCallback,
 } from "./types";
 
 const app = express();
@@ -24,7 +24,7 @@ server.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
 });
 
-const users: { [userId: string]: User } = {};
+const users: { [userId: string]: TypeUser } = {};
 
 const rooms = () => io.of("/").adapter.rooms;
 
@@ -39,13 +39,13 @@ const enterRoom = (roomId: string, socket: Socket) => {
 };
 
 const calculateGTP = (
-  userHand: Hand,
-  opponentHand: Hand,
-  userMonster: Monster,
-  opponentMonster: Monster,
-): [Monster, Monster, Outcome, Outcome] => {
-  let userOutCome: Outcome = "draw";
-  let opponentOutCome: Outcome = "draw";
+  userHand: TypeHand,
+  opponentHand: TypeHand,
+  userMonster: TypeMonster,
+  opponentMonster: TypeMonster,
+): [TypeMonster, TypeMonster, TypeOutcome, TypeOutcome] => {
+  let userOutCome: TypeOutcome = "draw";
+  let opponentOutCome: TypeOutcome = "draw";
   if (userHand === opponentHand) {
     return [userMonster, opponentMonster, userOutCome, opponentOutCome];
   } else if (userHand === "gu") {
@@ -87,7 +87,7 @@ const calculateGTP = (
 io.on("connection", (socket) => {
   console.log("User connected: " + socket.id);
 
-  socket.on("createRoom", (callback: createRoomCallback) => {
+  socket.on("createRoom", (callback: TypeCreateRoomCallback) => {
     let roomId = "";
     const maxRetry = 100;
     for (let i = 0; i < maxRetry; i++) {
@@ -103,7 +103,7 @@ io.on("connection", (socket) => {
     callback("error", roomId);
   });
 
-  socket.on("enterRoom", (roomId: string, callback: enterRoomCallback) => {
+  socket.on("enterRoom", (roomId: string, callback: TypeEnterRoomCallback) => {
     if (getRoom(roomId).size !== 1) {
       callback("error");
       return;
@@ -113,14 +113,20 @@ io.on("connection", (socket) => {
     io.to(roomId).emit("matching");
   });
 
-  socket.on("sendMonsterSelf", (monster: Monster) => {
+  socket.on("sendMonsterSelf", (monster: TypeMonster) => {
     const userId = socket.id;
+    if (users[userId] === undefined) {
+      console.error("user is not found");
+      socket.emit("battle-interrupt");
+      return;
+    }
     const roomId = users[userId].roomId;
     const opponentId = Array.from(getRoom(roomId)).find((id) => id !== userId);
     users[userId].monster = monster;
 
     if (opponentId === undefined) {
       console.error("opponentId is not found");
+      socket.emit("battle-interrupt");
       return;
     }
 
@@ -132,14 +138,20 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("sendHandSelf", (hand: Hand) => {
+  socket.on("sendHandSelf", (hand: TypeHand) => {
     const userId = socket.id;
+    if (users[userId] === undefined) {
+      console.error("user is not found");
+      socket.emit("battle-interrupt");
+      return;
+    }
     const roomId = users[userId].roomId;
     const opponentId = Array.from(getRoom(roomId)).find((id) => id !== userId);
     users[userId].hand = hand;
 
     if (opponentId === undefined) {
       console.error("opponentId is not found");
+      socket.emit("battle-interrupt");
       return;
     }
 
@@ -165,6 +177,15 @@ io.on("connection", (socket) => {
         },
       });
     }
+  });
+
+  socket.on("disconnecting", () => {
+    const userId = socket.id;
+    if (users[userId] !== undefined) {
+      const roomId = users[userId].roomId;
+      io.sockets.in(roomId).emit("battle-interrupt");
+    }
+    delete users[userId];
   });
 
   socket.on("disconnect", () => {

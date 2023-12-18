@@ -6,6 +6,8 @@ import { TypeMonster } from "@/app/(battle-phase)/(battle)/battle/types";
 import Centering from "@/components/Centering";
 import Image from "@/components/Image";
 import { useLocale } from "@/components/LocaleProvider";
+import { images } from "@/consts";
+import { TypeImage } from "@/types";
 
 type Props = {
   height: string;
@@ -49,24 +51,27 @@ const Field = ({ height, color, monster, isSelf }: Props) => {
           variant="outlined"
           sx={{ borderRadius: "8px", bgcolor: "white" }}
         />
-        <Chip
-          avatar={<Avatar alt="Gu" src="images/gu.png" />}
-          label={monster ? monster.gu : "-"}
-          variant="outlined"
-          sx={{ bgcolor: "white" }}
-        />
-        <Chip
-          avatar={<Avatar alt="choki" src="images/choki.png" />}
-          label={monster ? monster.choki : "-"}
-          variant="outlined"
-          sx={{ bgcolor: "white" }}
-        />
-        <Chip
-          avatar={<Avatar alt="pa" src="images/pa.png" />}
-          label={monster ? monster.pa : "-"}
-          variant="outlined"
-          sx={{ bgcolor: "white" }}
-        />
+        {images.map(({ url, hand }: TypeImage) => {
+          return (
+            <Chip
+              key={hand}
+              avatar={<Avatar alt={hand} src={url} />}
+              label={
+                !monster
+                  ? "-"
+                  : hand === "gu"
+                    ? monster.gu
+                    : hand === "choki"
+                      ? monster.choki
+                      : hand === "pa"
+                        ? monster.pa
+                        : "-"
+              }
+              variant="outlined"
+              sx={{ bgcolor: "white" }}
+            />
+          );
+        })}
       </Stack>
       <Box
         sx={{
