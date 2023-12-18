@@ -24,7 +24,7 @@ const BattleAttackSelect = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const socket = useSocket();
-  const local = useLocale();
+  const locale = useLocale();
 
   const [state, setState] = useState<State>("matching");
 
@@ -169,13 +169,13 @@ const BattleAttackSelect = () => {
       <Box sx={{ height: "30%", width: "100%" }}>
         {state === "matching" && <Center>VS</Center>}
         {state === "start" && (
-          <Center>{local.BattleAttackSelect.startMessage}</Center>
+          <Center>{locale.BattleAttackSelect.startMessage}</Center>
         )}
         {state === "buttonSelect" && (
-          <Center>{local.BattleAttackSelect.buttonSelectMessage}</Center>
+          <Center>{locale.BattleAttackSelect.buttonSelectMessage}</Center>
         )}
         {state === "hpCalculate" && (
-          <Center>{local.BattleAttackSelect.battleCry}</Center>
+          <Center>{locale.BattleAttackSelect.battleCry}</Center>
         )}
         {state === "attack/viewHand" && (
           <Box p={2} height="100%">
@@ -202,17 +202,17 @@ const BattleAttackSelect = () => {
         {state === "attack/viewText" &&
           (outcome === "win" ? (
             <Center color="red">
-              {local.BattleAttackSelect.succsessfulMessage}
+              {locale.BattleAttackSelect.succsessfulMessage}
             </Center>
           ) : outcome === "lose" ? (
             <Center color="blue">
-              {local.BattleAttackSelect.failedMessage}
+              {locale.BattleAttackSelect.failedMessage}
             </Center>
           ) : (
             outcome === "draw" && (
               <Center color="black">
                 {" "}
-                {local.BattleAttackSelect.drawMessage}
+                {locale.BattleAttackSelect.drawMessage}
               </Center>
             )
           ))}

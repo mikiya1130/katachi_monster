@@ -24,7 +24,7 @@ const ModalContent = ({ monster, handleClose }: Props) => {
     ? `${theme.breakpoints.values[maxWidth]}px`
     : "100vw";
 
-  const local = useLocale();
+  const locale = useLocale();
   return (
     <Modal
       open={true}
@@ -59,7 +59,7 @@ const ModalContent = ({ monster, handleClose }: Props) => {
         </IconButton>
 
         <Typography fontSize={24} textAlign="center">
-          {local.ModalContent.comment}
+          {locale.ModalContent.comment}
         </Typography>
 
         <Image
@@ -77,14 +77,14 @@ const ModalContent = ({ monster, handleClose }: Props) => {
             href={`/view-details?monsterId=${monster.id}`}
             variant="outlined"
           >
-            {local.ModalContent.viewDetailsbutton}
+            {locale.ModalContent.viewDetailsbutton}
           </LinkButton>
 
           <LinkButton
             href={`/select-silhouette?monsterId=${monster.id}`}
             variant="contained"
           >
-            {local.ModalContent.confirmbutton}
+            {locale.ModalContent.confirmbutton}
           </LinkButton>
         </Stack>
       </Stack>

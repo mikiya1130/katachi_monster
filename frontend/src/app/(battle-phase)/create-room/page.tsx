@@ -10,8 +10,8 @@ import { useSocket } from "@/components/SocketProvider";
 const CreateRoom = () => {
   const router = useRouter();
   const socket = useSocket();
-  const local = useLocale();
-  const title = local.CreateRoom.message;
+  const locale = useLocale();
+  const title = locale.CreateRoom.message;
   const [roomId, setRoomId] = useState<string>("");
 
   useEffect(() => {

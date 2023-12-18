@@ -20,7 +20,7 @@ const Field = ({ height, color, monster, isSelf }: Props) => {
 
   const filedInfoRef = useRef<HTMLDivElement>(null);
   const [fieldInfoHeight, setFieldInfoHeight] = useState<number>(0);
-  const local = useLocale();
+  const locale = useLocale();
 
   useEffect(() => {
     if (filedInfoRef.current) {
@@ -81,7 +81,7 @@ const Field = ({ height, color, monster, isSelf }: Props) => {
       >
         <Box sx={{ height: "10%", width: "100%" }}>
           {!isSelf && !monster ? (
-            <Typography>{local.Field.message}</Typography>
+            <Typography>{locale.Field.message}</Typography>
           ) : (
             <Typography fontSize="1rem" align="center">
               {monster ? monster.name : ""}

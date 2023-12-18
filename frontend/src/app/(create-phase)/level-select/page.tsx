@@ -16,7 +16,7 @@ const LevelSelect = () => {
   const boxRef = useRef<HTMLDivElement>(null);
   const ratingRef = useRef<HTMLSpanElement>(null);
   const [swiperHeight, setSwiperHeight] = useState<number>(0);
-  const local = useLocale();
+  const locale = useLocale();
 
   useEffect(() => {
     if (boxRef.current && ratingRef.current) {
@@ -34,7 +34,7 @@ const LevelSelect = () => {
 
   return (
     <Stack py={5} height="100%">
-      <Typography fontSize="2rem">{local.LevelSelect.level}</Typography>
+      <Typography fontSize="2rem">{locale.LevelSelect.level}</Typography>
       <Stack direction="column" spacing={3} flexGrow={1}>
         {monsterIdsList.map((monsterIds, level) => {
           return (

@@ -28,7 +28,7 @@ const SelectSilhouette = () => {
     setIncludeSilhouettesNotReplacedPicture,
   ] = useState<boolean>(true);
 
-  const local = useLocale();
+  const locale = useLocale();
 
   const decode_2d_list = (str: string) =>
     str.split("|").map((row: string) => row.split(","));
@@ -92,14 +92,14 @@ const SelectSilhouette = () => {
       />
       <Stack direction="row" spacing={4}>
         <LinkButton href="/level-select" variant="outlined">
-          {local.SelectSilhouette.backButton}
+          {locale.SelectSilhouette.backButton}
         </LinkButton>
         <LinkButton
           href={`/naming-monster?monsterId=${monsterId}`}
           variant="contained"
           disabled={includeSilhouettesNotReplacedPicture}
         >
-          {local.SelectSilhouette.nextButton}
+          {locale.SelectSilhouette.nextButton}
         </LinkButton>
       </Stack>
     </Centering>

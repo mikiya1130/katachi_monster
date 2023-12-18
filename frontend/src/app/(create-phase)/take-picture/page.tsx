@@ -35,7 +35,7 @@ const TakePicture = () => {
     ? `${theme.breakpoints.values[maxWidth]}px`
     : "100vw";
 
-  const local = useLocale();
+  const locale = useLocale();
 
   useEffect(() => {
     const monsterId = searchParams.get("monsterId") ?? "1"; // TODO: パラメータない時の処理を実装する
@@ -54,7 +54,7 @@ const TakePicture = () => {
     if (cameraState == "error") {
       messageRef.current?.call({
         type: "error",
-        message: `${local.TakePicture.errorMessage1}`,
+        message: `${locale.TakePicture.errorMessage1}`,
       });
     }
   };
@@ -63,14 +63,14 @@ const TakePicture = () => {
     if (base64image === "") {
       messageRef.current?.call({
         type: "error",
-        message: `${local.TakePicture.errorMessage2}`,
+        message: `${locale.TakePicture.errorMessage2}`,
       });
       return;
     }
 
     messageRef.current?.call({
       type: "info",
-      message: `${local.TakePicture.infoMessage}`,
+      message: `${locale.TakePicture.infoMessage}`,
     });
 
     axios
@@ -117,7 +117,7 @@ const TakePicture = () => {
             {cameraState === "loading" && (
               <>
                 <CircularProgress />
-                <Typography>{local.TakePicture.loadingMessage}</Typography>
+                <Typography>{locale.TakePicture.loadingMessage}</Typography>
               </>
             )}
             {cameraState === "loaded" && (
@@ -140,7 +140,7 @@ const TakePicture = () => {
             startIcon={<Cached />}
             onClick={() => window.location.reload()}
           >
-            {local.TakePicture.reloadMessage}
+            {locale.TakePicture.reloadMessage}
           </Button>
         </Centering>
       )}

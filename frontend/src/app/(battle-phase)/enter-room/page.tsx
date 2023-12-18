@@ -10,8 +10,8 @@ import { useSocket } from "@/components/SocketProvider";
 const EnterRoom = () => {
   const router = useRouter();
   const socket = useSocket();
-  const local = useLocale();
-  const title = local.EnterRoom.message;
+  const locale = useLocale();
+  const title = locale.EnterRoom.message;
   const [isButtonRoading, setIsButtonRoading] = useState<boolean>(true);
   const [roomId, setRoomId] = useState<string>("");
 
@@ -78,7 +78,7 @@ const EnterRoom = () => {
           disabled={roomId.length !== 4}
           onClick={handleSubmit}
         >
-          {local.EnterRoom.confirmButton}
+          {locale.EnterRoom.confirmButton}
         </Button>
       )}
     </Stack>

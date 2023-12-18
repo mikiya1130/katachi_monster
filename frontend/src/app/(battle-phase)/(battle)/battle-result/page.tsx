@@ -10,7 +10,7 @@ import { useLocale } from "@/components/LocaleProvider";
 
 const BattleResult = () => {
   const { winner } = useContext(BattleContext);
-  const local = useLocale();
+  const locale = useLocale();
 
   return (
     <Link href="/mode-select" style={{ textDecoration: "none" }}>
@@ -31,7 +31,7 @@ const BattleResult = () => {
                   fontWeight: 700,
                 }}
               >
-                {local.BattleResult.winner}
+                {locale.BattleResult.winner}
               </Typography>
             </Centering>
           </Box>
@@ -53,8 +53,8 @@ const BattleResult = () => {
                 }}
               >
                 {winner.isSelf
-                  ? `${local.BattleResult.messageWinner}`
-                  : `${local.BattleResult.massageLoser}`}
+                  ? `${locale.BattleResult.messageWinner}`
+                  : `${locale.BattleResult.massageLoser}`}
               </Typography>
             </Centering>
           </Box>
@@ -67,7 +67,7 @@ const BattleResult = () => {
                   fontWeight: 700,
                 }}
               >
-                {local.BattleResult.touchMassage}
+                {locale.BattleResult.touchMassage}
               </Typography>
             </Centering>
           </Box>

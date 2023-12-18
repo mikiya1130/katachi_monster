@@ -23,7 +23,7 @@ const Swiper = ({ monsterIds, height }: Props) => {
     setMonster(null);
   };
 
-  const local = useLocale();
+  const locale = useLocale();
 
   return (
     <Stack
@@ -45,9 +45,9 @@ const Swiper = ({ monsterIds, height }: Props) => {
         ))
       ) : (
         <Centering>
-          <Typography>{local.Swiper.message}</Typography>
+          <Typography>{locale.Swiper.message}</Typography>
           <LinkButton href="/level-select" variant="outlined">
-            {local.Swiper.makeMonster}
+            {locale.Swiper.makeMonster}
           </LinkButton>
         </Centering>
       )}

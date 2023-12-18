@@ -19,9 +19,9 @@ const NamingMonster = () => {
   const router = useRouter();
   const [inputValue, setInputValue] = useState<string>("");
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
-  const local = useLocale();
+  const locale = useLocale();
 
-  const message = local.NamingMonster.message;
+  const message = locale.NamingMonster.message;
   const invalidInputValue = inputValue.length < 1 || inputValue.length > 10;
 
   useEffect(() => {
@@ -63,7 +63,7 @@ const NamingMonster = () => {
       />
       <TextField
         id="filled-basic"
-        label={local.NamingMonster.monsterName}
+        label={locale.NamingMonster.monsterName}
         variant="filled"
         value={inputValue}
         sx={{ maxWidth: "13rem" }} // NOTE: Max10文字が入る大きさ
@@ -74,7 +74,7 @@ const NamingMonster = () => {
         disabled={isButtonDisabled}
         onClick={handleNextClick}
       >
-        {local.NamingMonster.next}
+        {locale.NamingMonster.next}
       </Button>
     </Centering>
   );

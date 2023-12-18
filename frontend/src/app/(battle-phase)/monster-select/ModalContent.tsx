@@ -26,7 +26,7 @@ const ModalContent = ({ monster, handleClose }: Props) => {
     ? `${theme.breakpoints.values[maxWidth]}px`
     : "100vw";
 
-  const local = useLocale();
+  const locale = useLocale();
 
   return (
     <Modal
@@ -110,14 +110,14 @@ const ModalContent = ({ monster, handleClose }: Props) => {
             href={`/view-details?monsterId=${monster.id}`}
             variant="outlined"
           >
-            {local.ModalContent.viewDetailsButton}
+            {locale.ModalContent.viewDetailsButton}
           </LinkButton>
 
           <LinkButton
             href={`/battle?monsterId=${monster.id}`}
             variant="contained"
           >
-            {local.ModalContent.confirmButton}
+            {locale.ModalContent.confirmButton}
           </LinkButton>
         </Stack>
       </Stack>

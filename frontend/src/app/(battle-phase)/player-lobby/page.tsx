@@ -6,8 +6,8 @@ import Link from "next/link";
 import { useLocale } from "@/components/LocaleProvider";
 
 const PlayerLobby = () => {
-  const local = useLocale();
-  const title = local.PlayerLobby.title;
+  const locale = useLocale();
+  const title = locale.PlayerLobby.title;
 
   return (
     <Stack
@@ -21,11 +21,11 @@ const PlayerLobby = () => {
         {title}
       </Typography>
       <Link href={`/create-room`}>
-        <Button variant="outlined">{local.PlayerLobby.createRoom}</Button>
+        <Button variant="outlined">{locale.PlayerLobby.createRoom}</Button>
       </Link>
 
       <Link href={`/enter-room`}>
-        <Button variant="contained">{local.PlayerLobby.enterRoom}</Button>
+        <Button variant="contained">{locale.PlayerLobby.enterRoom}</Button>
       </Link>
     </Stack>
   );
