@@ -7,6 +7,7 @@ class OutGetPicture(BaseModel):
 
     id: int = Field(ge=1)  # id >= 1
     base64image: bytes
+    match_rate: int = Field(ge=0, le=100)  # 0 <= match_rate <= 100
 
     @validator("base64image")
     def check_base64image(cls, v: bytes) -> bytes:  # noqa: N805

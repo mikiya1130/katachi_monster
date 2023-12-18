@@ -3,7 +3,7 @@
  */
 "use client";
 
-import { Stack } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -17,6 +17,7 @@ const ConfirmSilhouette = () => {
   const [monsterId, setMonsterId] = useState<string>("1");
   const [silhouetteId, setSilhouetteId] = useState<string>("1");
   const [image, setImage] = useState<string>("");
+  const [matchRate, setMatchRate] = useState<number>(0);
 
   useEffect(() => {
     const monsterId = searchParams.get("monsterId") ?? "1"; // TODO: パラメータない時の処理を実装する
@@ -28,6 +29,7 @@ const ConfirmSilhouette = () => {
     if (pictureId) {
       axios.get(`/picture/${pictureId}?overlap_silhouette=true`).then((res) => {
         setImage(res.data.base64image);
+        setMatchRate(res.data.match_rate);
       });
     }
   }, [searchParams]);
@@ -35,6 +37,14 @@ const ConfirmSilhouette = () => {
   return (
     <Centering spacing={4} padding={4}>
       <Image src={image} alt="silhouette" width="100%" />
+      <Box>
+        <Typography variant="h5" align="center">
+          Match Rate & Power
+        </Typography>
+        <Typography variant="h3" align="center">
+          {matchRate}%
+        </Typography>
+      </Box>
       <Stack direction="row" spacing={4}>
         <LinkButton
           href={`/take-picture?monsterId=${monsterId}&silhouetteId=${silhouetteId}`}
