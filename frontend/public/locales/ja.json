@@ -27,6 +27,7 @@
     "next": "つぎへ"
   },
   "SelectSilhouette": {
+    "message": "シルエットをえらんでね",
     "backButton": "もどる",
     "nextButton": "つぎへ"
   },
@@ -56,6 +57,7 @@
     "enterRoom": "たいせんするへやにはいる"
   },
   "BattleAttackSelect": {
+    "errorMessage": "つうしんエラーがはっせいしました",
     "startMessage":"たいせんスタート！！",
     "buttonSelectMessage":"ボタンをえらぼう！",
     "battleCry":"じゃん！ <br /> けん！ <br /> ぽん！",

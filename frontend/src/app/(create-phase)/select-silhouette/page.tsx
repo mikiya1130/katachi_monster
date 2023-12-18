@@ -85,7 +85,7 @@ const SelectSilhouette = () => {
   return (
     <Centering height="inherit" spacing={4} padding={4}>
       {image !== "" && includeSilhouettesNotReplacedPicture && (
-        <Typography variant="h5">シルエットをえらんでね</Typography>
+        <Typography variant="h5">{locale.SelectSilhouette.message}</Typography>
       )}
       <Image
         src={image}

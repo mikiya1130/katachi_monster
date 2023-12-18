@@ -27,6 +27,7 @@
     "next": "Next"
   },
   "SelectSilhouette": {
+    "message": "Choose a silhouette",
     "backButton": "Back",
     "nextButton": "Next"
   },
@@ -56,6 +57,7 @@
     "enterRoom": "Enter a Battle Room"
   },
   "BattleAttackSelect": {
+    "errorMessage": "Connection error has occurred",
     "startMessage":"Battle start!!",
     "buttonSelectMessage":"Choose a button!",
     "battleCry":"Rock! <br /> Scissors! <br /> Paper!",

@@ -76,7 +76,7 @@ const BattleAttackSelect = () => {
       console.error("battle-interrupt");
       messageRef.current?.call({
         type: "error",
-        message: "つうしんエラーがはっせいしました",
+        message: locale.BattleAttackSelect.errorMessage,
       });
       await sleep(3000);
     };
@@ -89,7 +89,7 @@ const BattleAttackSelect = () => {
         }
       });
     }
-  }, [isComplete, router, socket]);
+  }, [isComplete, locale.BattleAttackSelect.errorMessage, router, socket]);
 
   useEffect(() => {
     if (state === "matching") {

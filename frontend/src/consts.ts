@@ -49,6 +49,7 @@ export const defaultLocaleData = {
     next: "",
   },
   SelectSilhouette: {
+    message: "",
     backButton: "",
     nextButton: "",
   },
@@ -78,6 +79,7 @@ export const defaultLocaleData = {
     enterRoom: "",
   },
   BattleAttackSelect: {
+    errorMessage: "",
     startMessage: "",
     buttonSelectMessage: "",
     battleCry: "",
