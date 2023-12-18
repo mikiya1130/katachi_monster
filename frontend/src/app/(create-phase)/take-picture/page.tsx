@@ -18,6 +18,7 @@ import Camera, { CameraState } from "@/app/(create-phase)/take-picture/Camera";
 import { axios } from "@/axios";
 import Centering from "@/components/Centering";
 import Image from "@/components/Image";
+import { useLocale } from "@/components/LocaleProvider";
 import Message, { MessageRef } from "@/components/Message";
 import { maxWidth } from "@/consts";
 import theme from "@/theme";
@@ -33,6 +34,8 @@ const TakePicture = () => {
   const width = useMediaQuery(theme.breakpoints.up(maxWidth))
     ? `${theme.breakpoints.values[maxWidth]}px`
     : "100vw";
+
+  const locale = useLocale();
 
   useEffect(() => {
     const monsterId = searchParams.get("monsterId") ?? "1"; // TODO: パラメータない時の処理を実装する
@@ -51,7 +54,7 @@ const TakePicture = () => {
     if (cameraState == "error") {
       messageRef.current?.call({
         type: "error",
-        message: "カメラにアクセスできません",
+        message: locale.TakePicture.errorMessage1,
       });
     }
   };
@@ -60,14 +63,14 @@ const TakePicture = () => {
     if (base64image === "") {
       messageRef.current?.call({
         type: "error",
-        message: "撮影に失敗しました",
+        message: locale.TakePicture.errorMessage2,
       });
       return;
     }
 
     messageRef.current?.call({
       type: "info",
-      message: "画像を処理しています……",
+      message: locale.TakePicture.infoMessage,
     });
 
     axios
@@ -114,7 +117,7 @@ const TakePicture = () => {
             {cameraState === "loading" && (
               <>
                 <CircularProgress />
-                <Typography>{"カメラ読み込み中……"}</Typography>
+                <Typography>{locale.TakePicture.loadingMessage}</Typography>
               </>
             )}
             {cameraState === "loaded" && (
@@ -137,7 +140,7 @@ const TakePicture = () => {
             startIcon={<Cached />}
             onClick={() => window.location.reload()}
           >
-            {"再読み込み"}
+            {locale.TakePicture.reloadMessage}
           </Button>
         </Centering>
       )}

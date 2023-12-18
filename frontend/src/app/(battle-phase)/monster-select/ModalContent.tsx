@@ -12,6 +12,7 @@ import {
 import { TypeMonster } from "@/app/(battle-phase)/monster-select/types";
 import Image from "@/components/Image";
 import LinkButton from "@/components/LinkButton";
+import { useLocale } from "@/components/LocaleProvider";
 import { images, maxWidth } from "@/consts";
 import theme from "@/theme";
 import { TypeImage } from "@/types";
@@ -25,6 +26,8 @@ const ModalContent = ({ monster, handleClose }: Props) => {
   const width = useMediaQuery(theme.breakpoints.up(maxWidth))
     ? `${theme.breakpoints.values[maxWidth]}px`
     : "100vw";
+
+  const locale = useLocale();
 
   return (
     <Modal
@@ -111,14 +114,14 @@ const ModalContent = ({ monster, handleClose }: Props) => {
             href={`/view-details?monsterId=${monster.id}`}
             variant="outlined"
           >
-            くわしくみる
+            {locale.ModalContent.viewDetailsButton}
           </LinkButton> */}
 
           <LinkButton
             href={`/battle?monsterId=${monster.id}`}
             variant="contained"
           >
-            けってい
+            {locale.ModalContent.confirmButton}
           </LinkButton>
         </Stack>
       </Stack>

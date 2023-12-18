@@ -1,0 +1,75 @@
+{
+  "Home": {
+    "title": "Shape Monster",
+    "titleMessage": "Tap to start"
+  },
+  "ModeSelect": {
+    "title": "Select Mode",
+    "labelLevelSelect": "Create Monster",
+    "labelPlayerLobby": "Battle"
+  },
+  "LevelSelect": {
+    "level": "Level"
+  },
+  "ModalContent": {
+    "comment": "Yes, is this okay?",
+    "viewDetailsButton": "View Details",
+    "confirmButton": "Confirm"
+  },
+  "ConfirmSilhouette": {
+   "retakeButton": "Retake",
+   "confirmButton": "Confirm",
+   "message": "Match Rate & Power"
+  },
+  "NamingMonster": {
+    "message": "Name monster",
+    "monsterName": "Monster's Name",
+    "next": "Next"
+  },
+  "SelectSilhouette": {
+    "message": "Choose a silhouette",
+    "backButton": "Back",
+    "nextButton": "Next"
+  },
+  "Field": {
+    "message": "The opponent is selecting a monster"
+  },
+  "CreateRoom": {
+    "message": "Create the room"
+  },
+  "EnterRoom": {
+    "message": "Enter the room",
+    "confirmButton": "Confirm"
+  },
+  "BattleResult": {
+    "winner": "Winner!",
+    "messageWinner": "You played exceptionally well!",
+    "messageLoser": "Your time will come for victory!",
+    "touchMassage": "Touch to Play Again"
+  },
+  "Swiper": {
+    "message": "There are no monsters at this level",
+    "makeMonster": "Create a monster"
+  },
+  "PlayerLobby": {
+    "title": "Prepare for Battle",
+    "createRoom": "Create a Battle Room",
+    "enterRoom": "Enter a Battle Room"
+  },
+  "BattleAttackSelect": {
+    "errorMessage": "Connection error has occurred",
+    "startMessage":"Battle start!!",
+    "buttonSelectMessage":"Choose a button!",
+    "battleCry":"Rock!\nScissors!\nPaper!",
+    "succsessfulMessage": "Attack successful!",
+    "drawMessage": "It's a draw",
+    "failedMessage": "Attack failed!"
+  },
+  "TakePicture": {
+    "errorMessage1": "Cannot access the camera",
+    "errorMessage2": "Failed to take a picture",
+    "infoMessage": "Processing the image...",
+    "loadingMessage": "Loading the camera...",
+    "reloadMessage": "Reload"
+  }
+}

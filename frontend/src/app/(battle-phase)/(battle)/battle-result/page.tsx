@@ -6,9 +6,11 @@ import { useContext } from "react";
 import Field from "@/app/(battle-phase)/(battle)/battle/Field";
 import { BattleContext } from "@/app/(battle-phase)/(battle)/layout";
 import Centering from "@/components/Centering";
+import { useLocale } from "@/components/LocaleProvider";
 
 const BattleResult = () => {
   const { winner } = useContext(BattleContext);
+  const locale = useLocale();
 
   return (
     <Link href="/mode-select" style={{ textDecoration: "none" }}>
@@ -29,7 +31,7 @@ const BattleResult = () => {
                   fontWeight: 700,
                 }}
               >
-                Winner!
+                {locale.BattleResult.winner}
               </Typography>
             </Centering>
           </Box>
@@ -51,8 +53,8 @@ const BattleResult = () => {
                 }}
               >
                 {winner.isSelf
-                  ? "You played exceptionally well!"
-                  : "Your time will come for victory!"}
+                  ? locale.BattleResult.messageWinner
+                  : locale.BattleResult.messageLoser}
               </Typography>
             </Centering>
           </Box>
@@ -65,7 +67,7 @@ const BattleResult = () => {
                   fontWeight: 700,
                 }}
               >
-                Touch to Play Again
+                {locale.BattleResult.touchMassage}
               </Typography>
             </Centering>
           </Box>

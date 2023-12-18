@@ -1,0 +1,75 @@
+{
+  "Home": {
+    "title": "カタチモンスター",
+    "titleMessage": "タッチしてスタート"
+  },
+  "ModeSelect": {
+    "title": "モードせんたく",
+    "labelLevelSelect": "モンスターをつくる",
+    "labelPlayerLobby": "たたかう"
+  },
+  "LevelSelect": {
+    "level": "レベル"
+  },
+  "ModalContent": {
+    "comment": "これでいい？",
+    "viewDetailsButton": "くわしくみる",
+    "confirmButton": "けってい"
+  },
+  "ConfirmSilhouette": {
+    "retakeButton": "とりなおし",
+    "confirmButton": "けってい",
+    "message": "Match Rate & Power"
+  },
+   "NamingMonster": {
+    "message": "なまえをつけよう",
+    "monsterName": "モンスターのなまえ",
+    "next": "つぎへ"
+  },
+  "SelectSilhouette": {
+    "message": "シルエットをえらんでね",
+    "backButton": "もどる",
+    "nextButton": "つぎへ"
+  },
+  "Field": {
+    "message": "あいてがモンスターをせんたくしています"
+  },
+  "CreateRoom": {
+    "message": "へやをつくる"
+  },
+  "EnterRoom": {
+    "message": "へやにはいる",
+    "confirmButton": "けってい"
+  },
+  "BattleResult": {
+    "winner": "勝者！",
+    "messageWinner": "つぎもがんばろう",
+    "messageLoser": "つぎはがんばろう",
+    "touchMassage": "タッチしてもういっかいはじめる"
+  },
+  "Swiper": {
+    "message": "このレベルのモンスターはいません",
+    "makeMonster": "さくせいしにいく"
+  },
+  "PlayerLobby": {
+    "title": "たたかうじゅんび",
+    "createRoom": "たいせんするへやをつくる",
+    "enterRoom": "たいせんするへやにはいる"
+  },
+  "BattleAttackSelect": {
+    "errorMessage": "つうしんエラーがはっせいしました",
+    "startMessage":"たいせんスタート！！",
+    "buttonSelectMessage":"ボタンをえらぼう！",
+    "battleCry":"じゃん！\nけん！\nぽん！",
+    "succsessfulMessage": "こうげき せいこう！",
+    "drawMessage": "あいこ",
+    "failedMessage": "こうげき しっぱい！"
+  },
+  "TakePicture": {
+    "errorMessage1": "カメラにアクセスできません",
+    "errorMessage2": "撮影に失敗しました",
+    "infoMessage": "画像を処理しています……",
+    "loadingMessage": "カメラ読み込み中……",
+    "reloadMessage": "再読み込み"
+  }
+}

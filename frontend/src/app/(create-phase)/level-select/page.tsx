@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 import Swiper from "@/app/(create-phase)/level-select/Swiper";
 import { axios } from "@/axios";
+import { useLocale } from "@/components/LocaleProvider";
 
 const LevelSelect = () => {
   const [monsterIdsList, setMonsterIdsList] = useState<number[][]>([
@@ -15,6 +16,7 @@ const LevelSelect = () => {
   const boxRef = useRef<HTMLDivElement>(null);
   const ratingRef = useRef<HTMLSpanElement>(null);
   const [swiperHeight, setSwiperHeight] = useState<number>(0);
+  const locale = useLocale();
 
   useEffect(() => {
     if (boxRef.current && ratingRef.current) {
@@ -32,7 +34,7 @@ const LevelSelect = () => {
 
   return (
     <Stack py={5} height="100%">
-      <Typography fontSize="2rem">レベル</Typography>
+      <Typography fontSize="2rem">{locale.LevelSelect.level}</Typography>
       <Stack direction="column" spacing={3} flexGrow={1}>
         {monsterIdsList.map((monsterIds, level) => {
           return (

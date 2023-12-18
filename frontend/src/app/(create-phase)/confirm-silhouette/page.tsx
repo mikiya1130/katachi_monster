@@ -11,6 +11,7 @@ import { axios } from "@/axios";
 import Centering from "@/components/Centering";
 import Image from "@/components/Image";
 import LinkButton from "@/components/LinkButton";
+import { useLocale } from "@/components/LocaleProvider";
 
 const ConfirmSilhouette = () => {
   const searchParams = useSearchParams();
@@ -18,6 +19,7 @@ const ConfirmSilhouette = () => {
   const [silhouetteId, setSilhouetteId] = useState<string>("1");
   const [image, setImage] = useState<string>("");
   const [matchRate, setMatchRate] = useState<number>(0);
+  const locale = useLocale();
 
   useEffect(() => {
     const monsterId = searchParams.get("monsterId") ?? "1"; // TODO: パラメータない時の処理を実装する
@@ -39,7 +41,7 @@ const ConfirmSilhouette = () => {
       <Image src={image} alt="silhouette" width="100%" />
       <Box>
         <Typography variant="h5" align="center">
-          Match Rate & Power
+          {locale.ConfirmSilhouette.message}
         </Typography>
         <Typography variant="h3" align="center">
           {matchRate}%
@@ -50,13 +52,13 @@ const ConfirmSilhouette = () => {
           href={`/take-picture?monsterId=${monsterId}&silhouetteId=${silhouetteId}`}
           variant="outlined"
         >
-          とりなおし
+          {locale.ConfirmSilhouette.retakeButton}
         </LinkButton>
         <LinkButton
           href={`/select-silhouette?monsterId=${monsterId}`}
           variant="contained"
         >
-          けってい
+          {locale.ConfirmSilhouette.confirmButton}
         </LinkButton>
       </Stack>
     </Centering>

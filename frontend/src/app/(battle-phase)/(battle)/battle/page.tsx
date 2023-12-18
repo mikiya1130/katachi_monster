@@ -16,6 +16,7 @@ import { BattleContext } from "@/app/(battle-phase)/(battle)/layout";
 import { axios } from "@/axios";
 import Centering from "@/components/Centering";
 import Image from "@/components/Image";
+import { useLocale } from "@/components/LocaleProvider";
 import Message, { MessageRef } from "@/components/Message";
 import { useSocket } from "@/components/SocketProvider";
 import { images } from "@/consts";
@@ -25,6 +26,7 @@ const BattleAttackSelect = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const socket = useSocket();
+  const locale = useLocale();
   const messageRef = useRef<MessageRef>(null);
 
   const [state, setState] = useState<State>("matching");
@@ -74,7 +76,7 @@ const BattleAttackSelect = () => {
       console.error("battle-interrupt");
       messageRef.current?.call({
         type: "error",
-        message: "つうしんエラーがはっせいしました",
+        message: locale.BattleAttackSelect.errorMessage,
       });
       await sleep(3000);
     };
@@ -87,7 +89,7 @@ const BattleAttackSelect = () => {
         }
       });
     }
-  }, [isComplete, router, socket]);
+  }, [isComplete, locale.BattleAttackSelect.errorMessage, router, socket]);
 
   useEffect(() => {
     if (state === "matching") {
@@ -182,11 +184,15 @@ const BattleAttackSelect = () => {
 
         <Box sx={{ height: "30%", width: "100%" }}>
           {state === "matching" && <Center>VS</Center>}
-          {state === "start" && <Center>Battle start!!</Center>}
-          {state === "buttonSelect" && <Center>Choose a button!</Center>}
+          {state === "start" && (
+            <Center>{locale.BattleAttackSelect.startMessage}</Center>
+          )}
+          {state === "buttonSelect" && (
+            <Center>{locale.BattleAttackSelect.buttonSelectMessage}</Center>
+          )}
           {state === "hpCalculate" && (
-            <Center>
-              Rock! <br /> Scissors! <br /> Paper!
+            <Center style={{ whiteSpace: "pre-wrap" }}>
+              {locale.BattleAttackSelect.battleCry}
             </Center>
           )}
           {state === "attack/viewHand" && (
@@ -213,12 +219,18 @@ const BattleAttackSelect = () => {
           )}
           {state === "attack/viewText" &&
             (outcome === "win" ? (
-              <Center color="red">Attack successful!</Center>
+              <Center color="red">
+                {locale.BattleAttackSelect.succsessfulMessage}
+              </Center>
             ) : outcome === "lose" ? (
-              <Center color="blue">Attack failed!</Center>
+              <Center color="blue">
+                {locale.BattleAttackSelect.failedMessage}
+              </Center>
             ) : (
               outcome === "draw" && (
-                <Center color="black">It&lsquo;s a draw</Center>
+                <Center color="black">
+                  {locale.BattleAttackSelect.drawMessage}
+                </Center>
               )
             ))}
         </Box>

@@ -13,6 +13,7 @@ import { axios } from "@/axios";
 import Centering from "@/components/Centering";
 import Image from "@/components/Image";
 import LinkButton from "@/components/LinkButton";
+import { useLocale } from "@/components/LocaleProvider";
 
 const SelectSilhouette = () => {
   const searchParams = useSearchParams();
@@ -26,6 +27,8 @@ const SelectSilhouette = () => {
     includeSilhouettesNotReplacedPicture,
     setIncludeSilhouettesNotReplacedPicture,
   ] = useState<boolean>(true);
+
+  const locale = useLocale();
 
   const decode_2d_list = (str: string) =>
     str.split("|").map((row: string) => row.split(","));
@@ -82,7 +85,7 @@ const SelectSilhouette = () => {
   return (
     <Centering height="inherit" spacing={4} padding={4}>
       {image !== "" && includeSilhouettesNotReplacedPicture && (
-        <Typography variant="h5">シルエットをえらんでね</Typography>
+        <Typography variant="h5">{locale.SelectSilhouette.message}</Typography>
       )}
       <Image
         src={image}
@@ -92,14 +95,14 @@ const SelectSilhouette = () => {
       />
       <Stack direction="row" spacing={4}>
         <LinkButton href="/level-select" variant="outlined">
-          もどる
+          {locale.SelectSilhouette.backButton}
         </LinkButton>
         <LinkButton
           href={`/naming-monster?monsterId=${monsterId}`}
           variant="contained"
           disabled={includeSilhouettesNotReplacedPicture}
         >
-          つぎへ
+          {locale.SelectSilhouette.nextButton}
         </LinkButton>
       </Stack>
     </Centering>

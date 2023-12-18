@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { TypeMonster } from "@/app/(battle-phase)/(battle)/battle/types";
 import Centering from "@/components/Centering";
 import Image from "@/components/Image";
+import { useLocale } from "@/components/LocaleProvider";
 import { images } from "@/consts";
 import { TypeImage } from "@/types";
 
@@ -21,6 +22,7 @@ const Field = ({ height, color, monster, isSelf }: Props) => {
 
   const filedInfoRef = useRef<HTMLDivElement>(null);
   const [fieldInfoHeight, setFieldInfoHeight] = useState<number>(0);
+  const locale = useLocale();
 
   useEffect(() => {
     if (filedInfoRef.current) {
@@ -84,7 +86,7 @@ const Field = ({ height, color, monster, isSelf }: Props) => {
       >
         <Box sx={{ height: "10%", width: "100%" }}>
           {!isSelf && !monster ? (
-            <Typography>あいてがモンスターをせんたくしています</Typography>
+            <Typography>{locale.Field.message}</Typography>
           ) : (
             <Typography fontSize="1rem" align="center">
               {monster ? monster.name : ""}

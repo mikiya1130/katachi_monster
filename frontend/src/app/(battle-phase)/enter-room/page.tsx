@@ -4,12 +4,13 @@ import Typography from "@mui/material/Typography";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { useLocale } from "@/components/LocaleProvider";
 import { useSocket } from "@/components/SocketProvider";
 
 const EnterRoom = () => {
   const router = useRouter();
   const socket = useSocket();
-  const title = "へやにはいる";
+  const locale = useLocale();
   const [isButtonRoading, setIsButtonRoading] = useState<boolean>(true);
   const [roomId, setRoomId] = useState<string>("");
 
@@ -55,7 +56,7 @@ const EnterRoom = () => {
       height="100%"
     >
       <Typography fontSize="2rem" align="left">
-        {title}
+        {locale.EnterRoom.message}
       </Typography>
 
       <TextField
@@ -76,7 +77,7 @@ const EnterRoom = () => {
           disabled={roomId.length !== 4}
           onClick={handleSubmit}
         >
-          けってい
+          {locale.EnterRoom.confirmButton}
         </Button>
       )}
     </Stack>

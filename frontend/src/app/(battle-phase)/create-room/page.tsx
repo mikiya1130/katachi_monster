@@ -4,12 +4,13 @@ import Typography from "@mui/material/Typography";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { useLocale } from "@/components/LocaleProvider";
 import { useSocket } from "@/components/SocketProvider";
 
 const CreateRoom = () => {
   const router = useRouter();
   const socket = useSocket();
-  const title = "へやをつくる";
+  const locale = useLocale();
   const [roomId, setRoomId] = useState<string>("");
 
   useEffect(() => {
@@ -38,7 +39,7 @@ const CreateRoom = () => {
       height="100%"
     >
       <Typography fontSize="2rem" align="left">
-        {title}
+        {locale.CreateRoom.message}
       </Typography>
 
       {roomId ? (

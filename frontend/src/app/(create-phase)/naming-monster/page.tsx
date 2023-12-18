@@ -10,6 +10,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { axios } from "@/axios";
 import Centering from "@/components/Centering";
 import Image from "@/components/Image";
+import { useLocale } from "@/components/LocaleProvider";
 
 const NamingMonster = () => {
   const searchParams = useSearchParams();
@@ -18,8 +19,8 @@ const NamingMonster = () => {
   const router = useRouter();
   const [inputValue, setInputValue] = useState<string>("");
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
+  const locale = useLocale();
 
-  const message = "なまえをつけよう";
   const invalidInputValue = inputValue.length < 1 || inputValue.length > 10;
 
   useEffect(() => {
@@ -52,7 +53,7 @@ const NamingMonster = () => {
 
   return (
     <Centering p={4} spacing={4}>
-      <Typography fontSize="2rem">{message}</Typography>
+      <Typography fontSize="2rem">{locale.NamingMonster.message}</Typography>
       <Image
         src={image}
         alt="monster"
@@ -61,7 +62,7 @@ const NamingMonster = () => {
       />
       <TextField
         id="filled-basic"
-        label="モンスターのなまえ"
+        label={locale.NamingMonster.monsterName}
         variant="filled"
         value={inputValue}
         sx={{ maxWidth: "13rem" }} // NOTE: Max10文字が入る大きさ
@@ -72,7 +73,7 @@ const NamingMonster = () => {
         disabled={isButtonDisabled}
         onClick={handleNextClick}
       >
-        つぎへ
+        {locale.NamingMonster.next}
       </Button>
     </Centering>
   );

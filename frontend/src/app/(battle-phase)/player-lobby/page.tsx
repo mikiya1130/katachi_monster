@@ -3,8 +3,10 @@ import { Button, Stack } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
 
+import { useLocale } from "@/components/LocaleProvider";
+
 const PlayerLobby = () => {
-  const title = "たたかうじゅんび";
+  const locale = useLocale();
 
   return (
     <Stack
@@ -15,14 +17,14 @@ const PlayerLobby = () => {
       height="100%"
     >
       <Typography fontSize="2rem" align="left">
-        {title}
+        {locale.PlayerLobby.title}
       </Typography>
       <Link href={`/create-room`}>
-        <Button variant="outlined">たいせんするへやをつくる</Button>
+        <Button variant="outlined">{locale.PlayerLobby.createRoom}</Button>
       </Link>
 
       <Link href={`/enter-room`}>
-        <Button variant="contained">たいせんするへやにはいる</Button>
+        <Button variant="contained">{locale.PlayerLobby.enterRoom}</Button>
       </Link>
     </Stack>
   );
