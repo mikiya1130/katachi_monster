@@ -60,7 +60,7 @@
     "errorMessage": "つうしんエラーがはっせいしました",
     "startMessage":"たいせんスタート！！",
     "buttonSelectMessage":"ボタンをえらぼう！",
-    "battleCry":"じゃん！ <br /> けん！ <br /> ぽん！",
+    "battleCry":"じゃん！\nけん！\nぽん！",
     "succsessfulMessage": "こうげき せいこう！",
     "drawMessage": "あいこ",
     "failedMessage": "こうげき しっぱい！"

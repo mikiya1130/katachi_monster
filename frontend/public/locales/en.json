@@ -60,7 +60,7 @@
     "errorMessage": "Connection error has occurred",
     "startMessage":"Battle start!!",
     "buttonSelectMessage":"Choose a button!",
-    "battleCry":"Rock! <br /> Scissors! <br /> Paper!",
+    "battleCry":"Rock!\nScissors!\nPaper!",
     "succsessfulMessage": "Attack successful!",
     "drawMessage": "It's a draw",
     "failedMessage": "Attack failed!"

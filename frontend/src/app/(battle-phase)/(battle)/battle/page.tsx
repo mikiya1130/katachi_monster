@@ -191,7 +191,9 @@ const BattleAttackSelect = () => {
             <Center>{locale.BattleAttackSelect.buttonSelectMessage}</Center>
           )}
           {state === "hpCalculate" && (
-            <Center>{locale.BattleAttackSelect.battleCry}</Center>
+            <Center style={{ whiteSpace: "pre-wrap" }}>
+              {locale.BattleAttackSelect.battleCry}
+            </Center>
           )}
           {state === "attack/viewHand" && (
             <Box p={2} height="100%">
