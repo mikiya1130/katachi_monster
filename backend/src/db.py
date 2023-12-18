@@ -29,7 +29,7 @@ def get_db() -> Generator[Session, None, None]:
         db.commit()
     except Exception as e:  # noqa: BLE001
         db.rollback()
-        raise HTTPException(status_code=500, detail="DB error") from e
+        raise
     finally:
         db.close()
 
