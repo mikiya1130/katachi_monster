@@ -78,7 +78,7 @@ const EnterRoom = () => {
           disabled={roomId.length !== 4}
           onClick={handleSubmit}
         >
-          けってい
+          {local.EnterRoom.confirmButton}
         </Button>
       )}
     </Stack>

@@ -210,7 +210,10 @@ const BattleAttackSelect = () => {
             </Center>
           ) : (
             outcome === "draw" && (
-              <Center color="black">It&lsquo;s a draw</Center>
+              <Center color="black">
+                {" "}
+                {local.BattleAttackSelect.drawMessage}
+              </Center>
             )
           ))}
       </Box>

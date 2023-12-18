@@ -41,7 +41,7 @@ const ConfirmSilhouette = () => {
       <Image src={image} alt="silhouette" width="100%" />
       <Box>
         <Typography variant="h5" align="center">
-          Match Rate & Power
+          {local.ConfirmSilhouette.message}
         </Typography>
         <Typography variant="h3" align="center">
           {matchRate}%

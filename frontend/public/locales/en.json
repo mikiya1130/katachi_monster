@@ -18,7 +18,8 @@
   },
   "ConfirmSilhouette": {
    "retakeButton": "Retake",
-   "confirmButton": "Confirm"
+   "confirmButton": "Confirm",
+   "message": "Match Rate & Power"
   },
   "NamingMonster": {
     "message": "Name monster",
@@ -33,10 +34,11 @@
     "message": "The opponent is selecting a monster"
   },
   "CreateRoom": {
-    "message": "Create a room"
+    "message": "Create the room"
   },
   "EnterRoom": {
-    "message": "Enter the room"
+    "message": "Enter the room",
+    "confirmButton": "Confirm"
   },
   "BattleResult": {
     "winner": "Winner!",
@@ -58,6 +60,15 @@
     "buttonSelectMessage":"Choose a button!",
     "battleCry":"Rock! <br /> Scissors! <br /> Paper!",
     "succsessfulMessage": "Attack successful!",
+    "drawMessage": "It's a draw",
     "failedMessage": "Attack failed!"
+  },
+  "TakePicture": {
+    "errorMessage1": "Cannot access the camera",
+    "errorMessage2": "Failed to take a picture",
+    "infoMessage": "Processing the image...",
+    "loadingMessage": "Loading the camera...",
+    "reloadMessage": "Reload"
   }
+
 }

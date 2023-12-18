@@ -18,7 +18,8 @@
   },
   "ConfirmSilhouette": {
     "retakeButton": "とりなおし",
-    "confirmButton": "けってい"
+    "confirmButton": "けってい",
+    "message": "Match Rate & Power"
   },
    "NamingMonster": {
     "message": "なまえをつけよう",
@@ -36,10 +37,11 @@
     "message": "へやをつくる"
   },
   "EnterRoom": {
-    "message": "へやにはいる"
+    "message": "へやにはいる",
+    "confirmButton": "けってい"
   },
   "BattleResult": {
-    "winner": "勝者!",
+    "winner": "勝者！",
     "messageWinner": "つぎもがんばろう",
     "messageLoser": "つぎはがんばろう",
     "touchMassage": "タッチしてもういっかいはじめる"
@@ -55,9 +57,17 @@
   },
   "BattleAttackSelect": {
     "startMessage":"たいせんスタート！！",
-    "buttonSelectMessage":"ボタンをえらぼう!",
-    "battleCry":"じゃん! <br /> けん! <br /> ぽん!",
-    "succsessfulMessage": "こうげき せいこう!",
-    "failedMessage": "こうげき しっぱい!"
+    "buttonSelectMessage":"ボタンをえらぼう！",
+    "battleCry":"じゃん！ <br /> けん！ <br /> ぽん！",
+    "succsessfulMessage": "こうげき せいこう！",
+    "drawMessage": "あいこ",
+    "failedMessage": "こうげき しっぱい！"
+  },
+  "TakePicture": {
+    "errorMessage1": "カメラにアクセスできません",
+    "errorMessage2": "撮影に失敗しました",
+    "infoMessage": "画像を処理しています……",
+    "loadingMessage": "カメラ読み込み中……",
+    "reloadMessage": "再読み込み"
   }
 }

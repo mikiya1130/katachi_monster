@@ -22,6 +22,7 @@ export const defaultLocaleData = {
   ConfirmSilhouette: {
     retakeButton: "",
     confirmButton: "",
+    message: "",
   },
   NamingMonster: {
     message: "",
@@ -40,6 +41,7 @@ export const defaultLocaleData = {
   },
   EnterRoom: {
     message: "",
+    confirmButton: "",
   },
   BattleResult: {
     winner: "",
@@ -61,7 +63,15 @@ export const defaultLocaleData = {
     buttonSelectMessage: "",
     battleCry: "",
     succsessfulMessage: "",
+    drawMessage: "",
     failedMessage: "",
+  },
+  TakePicture: {
+    errorMessage1: "",
+    errorMessage2: "",
+    infoMessage: "",
+    loadingMessage: "",
+    reloadMessage: "",
   },
 };
 
