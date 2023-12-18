@@ -9,13 +9,14 @@ import { ThemeProvider } from "@mui/material/styles";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
+import LocaleProvider from "@/components/LocaleProvider";
 import { maxWidth } from "@/consts";
 import theme from "@/theme";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "カタチモンスター",
+  title: "Shape Monster",
   description: "",
 };
 
@@ -29,13 +30,15 @@ const RootLayout = ({ children }: Props) => {
       <body className={inter.className}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <Container
-            maxWidth={maxWidth}
-            disableGutters
-            sx={{ height: "100svh", overflow: "clip" }}
-          >
-            {children}
-          </Container>
+          <LocaleProvider>
+            <Container
+              maxWidth={maxWidth}
+              disableGutters
+              sx={{ height: "100svh", overflow: "clip" }}
+            >
+              {children}
+            </Container>
+          </LocaleProvider>
         </ThemeProvider>
       </body>
     </html>

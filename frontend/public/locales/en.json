@@ -1,0 +1,11 @@
+{
+  "Home": {
+    "title": "Shape Monster",
+    "titleMessage": "Tap to start"
+  },
+  "ModeSelect": {
+    "title": "Select Mode",
+    "labelLevelSelect": "Create Monster",
+    "labelPlayerLobby": "Battle"
+  }
+}
