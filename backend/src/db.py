@@ -5,7 +5,6 @@ import time
 from collections.abc import Generator
 from pathlib import Path
 
-from fastapi import HTTPException
 from sqlalchemy import create_engine
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.ext.declarative import declarative_base
@@ -27,7 +26,7 @@ def get_db() -> Generator[Session, None, None]:
     try:
         yield db
         db.commit()
-    except Exception as e:  # noqa: BLE001
+    except Exception:
         db.rollback()
         raise
     finally:
