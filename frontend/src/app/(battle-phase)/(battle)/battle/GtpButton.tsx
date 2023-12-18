@@ -4,22 +4,8 @@ import { Button, Stack } from "@mui/material";
 import { useState } from "react";
 
 import { State } from "@/app/(battle-phase)/(battle)/battle/State";
-import { TypeHand } from "@/app/(battle-phase)/(battle)/battle/types";
-
-const images: { url: string; title: TypeHand }[] = [
-  {
-    url: "images/gu.png",
-    title: "gu",
-  },
-  {
-    url: "images/choki.png",
-    title: "choki",
-  },
-  {
-    url: "images/pa.png",
-    title: "pa",
-  },
-];
+import { images } from "@/consts";
+import { TypeHand, TypeImage } from "@/types";
 
 type Props = {
   gtpHeight: number;
@@ -39,20 +25,20 @@ const GtpButton = ({ gtpHeight, state, callbackButtonSelected }: Props) => {
 
   return (
     <Stack direction="row" justifyContent="space-around" pt={1}>
-      {images.map((image) => (
+      {images.map(({ url, hand }: TypeImage) => (
         <Button
-          key={image.title}
-          onClick={() => buttonHandler(image.title)}
+          key={hand}
+          onClick={() => buttonHandler(hand)}
           sx={{
             height: gtpHeight,
             width: gtpHeight,
-            backgroundImage: `url(${image.url})`,
+            backgroundImage: `url(${url})`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "contain",
             borderRadius: "50%",
             visibility:
               state === "buttonSelect" ||
-              (state === "hpCalculate" && activeButton === image.title)
+              (state === "hpCalculate" && activeButton === hand)
                 ? "visible"
                 : "hidden",
           }}

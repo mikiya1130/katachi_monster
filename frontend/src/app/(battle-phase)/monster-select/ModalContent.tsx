@@ -12,8 +12,9 @@ import {
 import { TypeMonster } from "@/app/(battle-phase)/monster-select/types";
 import Image from "@/components/Image";
 import LinkButton from "@/components/LinkButton";
-import { maxWidth } from "@/consts";
+import { images, maxWidth } from "@/consts";
 import theme from "@/theme";
+import { TypeImage } from "@/types";
 
 type Props = {
   monster: TypeMonster;
@@ -75,21 +76,24 @@ const ModalContent = ({ monster, handleClose }: Props) => {
             variant="outlined"
             sx={{ borderRadius: "8px", bgcolor: "white" }}
           />
-          <Chip
-            avatar={<Avatar alt="Gu" src="images/gu.png" />}
-            label={monster.gu}
-            variant="outlined"
-          />
-          <Chip
-            avatar={<Avatar alt="Gu" src="images/choki.png" />}
-            label={monster.choki}
-            variant="outlined"
-          />
-          <Chip
-            avatar={<Avatar alt="Gu" src="images/pa.png" />}
-            label={monster.pa}
-            variant="outlined"
-          />
+          {images.map(({ url, hand }: TypeImage) => {
+            return (
+              <Chip
+                key={hand}
+                avatar={<Avatar alt={hand} src={url} />}
+                label={
+                  hand === "gu"
+                    ? monster.gu
+                    : hand === "choki"
+                      ? monster.choki
+                      : hand === "pa"
+                        ? monster.pa
+                        : "-"
+                }
+                variant="outlined"
+              />
+            );
+          })}
         </Stack>
 
         <Image
