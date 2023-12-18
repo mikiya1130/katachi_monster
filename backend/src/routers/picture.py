@@ -65,4 +65,8 @@ def get_picture(
     # png => base64
     base64image = png_to_base64image(picture)
 
-    return OutGetPicture(id=db_picture.id, base64image=base64image)
+    return OutGetPicture(
+        id=db_picture.id,
+        base64image=base64image,
+        match_rate=db_picture.match_rate,
+    )
