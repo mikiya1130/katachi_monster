@@ -87,7 +87,7 @@ const BattleAttackSelect = () => {
         }
       });
     }
-  }, [isComplete, socket]);
+  }, [isComplete, router, socket]);
 
   useEffect(() => {
     if (state === "matching") {
