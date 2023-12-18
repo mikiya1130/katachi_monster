@@ -1,4 +1,4 @@
-export type Monster = {
+export type TypeMonster = {
   image: string;
   name: string;
   hp: number;
@@ -7,19 +7,19 @@ export type Monster = {
   pa: number;
 };
 
-export type Hand = "gu" | "choki" | "pa";
+export type TypeHand = "gu" | "choki" | "pa";
 
-export type User = {
+export type TypeUser = {
   roomId: string;
-  monster: Monster | null;
-  hand: Hand | null;
+  monster: TypeMonster | null;
+  hand: TypeHand | null;
 };
 
-export type Outcome = "win" | "lose" | "draw";
+export type TypeOutcome = "win" | "lose" | "draw";
 
-export type createRoomCallback = (
+export type TypeCreateRoomCallback = (
   status: "success" | "error",
   roomId: string,
 ) => void;
 
-export type enterRoomCallback = (status: "success" | "error") => void;
+export type TypeEnterRoomCallback = (status: "success" | "error") => void;

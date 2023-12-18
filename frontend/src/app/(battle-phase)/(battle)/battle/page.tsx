@@ -9,7 +9,6 @@ import GtpButton from "@/app/(battle-phase)/(battle)/battle/GtpButton";
 import { State } from "@/app/(battle-phase)/(battle)/battle/State";
 import sleep from "@/app/(battle-phase)/(battle)/battle/sleep";
 import {
-  TypeHand,
   TypeMonster,
   TypeOutcome,
 } from "@/app/(battle-phase)/(battle)/battle/types";
@@ -18,6 +17,8 @@ import { axios } from "@/axios";
 import Centering from "@/components/Centering";
 import Image from "@/components/Image";
 import { useSocket } from "@/components/SocketProvider";
+import { images } from "@/consts";
+import { TypeHand } from "@/types";
 
 const BattleAttackSelect = () => {
   const searchParams = useSearchParams();
@@ -40,21 +41,6 @@ const BattleAttackSelect = () => {
 
   const { setWinner } = useContext(BattleContext);
 
-  const images = [
-    {
-      url: "images/gu.png",
-      title: "gu",
-    },
-    {
-      url: "images/choki.png",
-      title: "choki",
-    },
-    {
-      url: "images/pa.png",
-      title: "pa",
-    },
-  ];
-
   useEffect(() => {
     if (gtpRef.current) {
       setGtpHeight(
@@ -64,7 +50,7 @@ const BattleAttackSelect = () => {
         ),
       );
     }
-  }, [gtpRef, images.length]);
+  }, [gtpRef]);
 
   useEffect(() => {
     const monsterId = searchParams.get("monsterId") ?? "1"; // TODO: パラメータない時の処理を実装する

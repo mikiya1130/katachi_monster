@@ -7,6 +7,4 @@ export type TypeMonster = {
   pa: number;
 };
 
-export type TypeHand = "gu" | "choki" | "pa";
-
 export type TypeOutcome = "win" | "lose" | "draw";
