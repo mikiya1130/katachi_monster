@@ -3,7 +3,7 @@
  */
 "use client";
 
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -81,6 +81,9 @@ const SelectSilhouette = () => {
 
   return (
     <Centering height="inherit" spacing={4} padding={4}>
+      {image !== "" && includeSilhouettesNotReplacedPicture && (
+        <Typography variant="h5">シルエットをえらんでね</Typography>
+      )}
       <Image
         src={image}
         alt="silhouette"
