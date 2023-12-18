@@ -107,12 +107,12 @@ const ModalContent = ({ monster, handleClose }: Props) => {
         />
 
         <Stack direction="row" spacing={4}>
-          <LinkButton
+          {/* <LinkButton
             href={`/view-details?monsterId=${monster.id}`}
             variant="outlined"
           >
             くわしくみる
-          </LinkButton>
+          </LinkButton> */}
 
           <LinkButton
             href={`/battle?monsterId=${monster.id}`}
