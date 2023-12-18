@@ -83,7 +83,7 @@ const TakePicture = () => {
       .catch((error) => {
         messageRef.current?.call({
           type: "error",
-          message: error.message,
+          message: error.response.data.detail,
         });
       });
   };

@@ -148,6 +148,8 @@ def post_silhouette(
             )
         except ValueError as e:
             raise HTTPException(status_code=500, detail="Process failed") from e
+        if iou < 10:  # 一致率10％未満は弾く
+            raise HTTPException(status_code=500, detail="Object not found")
 
         # DB に反映
         db_picture = Picture(
