@@ -167,6 +167,10 @@ io.on("connection", (socket) => {
     }
   });
 
+  socket.on("disconnecting", () => {
+    delete users[socket.id];
+  });
+
   socket.on("disconnect", () => {
     console.log("User disconnected: " + socket.id);
     console.log("rooms", rooms());
