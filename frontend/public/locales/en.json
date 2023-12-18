@@ -7,5 +7,50 @@
     "title": "Select Mode",
     "labelLevelSelect": "Create Monster",
     "labelPlayerLobby": "Battle"
+  },
+  "LevelSelect": {
+    "level": "Level"
+  },
+  "ModalContent": {
+    "comment": "Yes, is this okay?",
+    "viewDetailsButton": "View Details",
+    "confirmButton": "Confirm"
+  },
+  "ConfirmSilhouette": {
+   "retakeButton": "Retake",
+   "confirmButton": "Confirm"
+  },
+  "NamingMonster": {
+    "message": "Name monster",
+    "monsterName": "Monster's Name",
+    "next": "Next"
+  },
+  "SelectSilhouette": {
+    "backButton": "Back",
+    "nextButton": "Next"
+  },
+  "Field": {
+    "message": "The opponent is selecting a monster"
+  },
+  "CreateRoom": {
+    "message": "Create a room"
+  },
+  "EnterRoom": {
+    "message": "Enter the room"
+  },
+  "BattleResult": {
+    "winner": "Winner!",
+    "messageWinner": "You played exceptionally well!",
+    "messageLoser": "Your time will come for victory!",
+    "touchMassage": "Touch to Play Again"
+  },
+  "Swiper": {
+    "message": "There are no monsters at this level",
+    "makeMonster": "Create a monster"
+  },
+  "PlayerLobby": {
+    "title": "Prepare for Battle",
+    "createRoom": "Create a Battle Room",
+    "enterRoom": "Enter a Battle Room"
   }
 }

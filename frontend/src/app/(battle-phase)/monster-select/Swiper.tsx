@@ -6,6 +6,7 @@ import ModalContent from "@/app/(battle-phase)/monster-select/ModalContent";
 import { TypeMonster } from "@/app/(battle-phase)/monster-select/types";
 import Centering from "@/components/Centering";
 import LinkButton from "@/components/LinkButton";
+import { useLocale } from "@/components/LocaleProvider";
 type Props = {
   monsterIds: number[];
   height: number | string;
@@ -21,6 +22,8 @@ const Swiper = ({ monsterIds, height }: Props) => {
   const handleClose = () => {
     setMonster(null);
   };
+
+  const local = useLocale();
 
   return (
     <Stack
@@ -42,9 +45,9 @@ const Swiper = ({ monsterIds, height }: Props) => {
         ))
       ) : (
         <Centering>
-          <Typography>このレベルのモンスターはいません</Typography>
+          <Typography>{local.Swiper.message}</Typography>
           <LinkButton href="/level-select" variant="outlined">
-            さくさいしにいく
+            {local.Swiper.makeMonster}
           </LinkButton>
         </Centering>
       )}

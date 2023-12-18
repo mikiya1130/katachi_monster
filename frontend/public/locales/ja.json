@@ -7,5 +7,50 @@
     "title": "モードせんたく",
     "labelLevelSelect": "モンスターをつくる",
     "labelPlayerLobby": "たたかう"
+  },
+  "LevelSelect": {
+    "level": "レベル"
+  },
+  "ModalContent": {
+    "comment": "これでいい？",
+    "viewDetailsButton": "くわしくみる",
+    "confirmButton": "けってい"
+  },
+  "ConfirmSilhouette": {
+    "retakeButton": "とりなおし",
+    "confirmButton": "けってい"
+  },
+   "NamingMonster": {
+    "message": "なまえをつけよう",
+    "monsterName": "モンスターのなまえ",
+    "next": "つぎへ"
+  },
+  "SelectSilhouette": {
+    "backButton": "もどる",
+    "nextButton": "つぎへ"
+  },
+  "Field": {
+    "message": "あいてがモンスターをせんたくしています"
+  },
+  "CreateRoom": {
+    "message": "へやをつくる"
+  },
+  "EnterRoom": {
+    "message": "へやにはいる"
+  },
+  "BattleResult": {
+    "winner": "勝者!",
+    "messageWinner": "つぎもがんばろう",
+    "messageLoser": "つぎはがんばろう",
+    "touchMassage": "タッチしてもういっかいはじめる"
+  },
+  "Swiper": {
+    "message": "このレベルのモンスターはいません",
+    "makeMonster": "さくせいしにいく"
+  },
+  "PlayerLobby": {
+    "title": "たたかうじゅんび",
+    "createRoom": "たいせんするへやをつくる",
+    "enterRoom": "たいせんするへやにはいる"
   }
 }

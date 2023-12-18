@@ -4,12 +4,14 @@ import Typography from "@mui/material/Typography";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { useLocale } from "@/components/LocaleProvider";
 import { useSocket } from "@/components/SocketProvider";
 
 const CreateRoom = () => {
   const router = useRouter();
   const socket = useSocket();
-  const title = "へやをつくる";
+  const local = useLocale();
+  const title = local.CreateRoom.message;
   const [roomId, setRoomId] = useState<string>("");
 
   useEffect(() => {

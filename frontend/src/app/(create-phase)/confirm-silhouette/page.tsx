@@ -11,6 +11,7 @@ import { axios } from "@/axios";
 import Centering from "@/components/Centering";
 import Image from "@/components/Image";
 import LinkButton from "@/components/LinkButton";
+import { useLocale } from "@/components/LocaleProvider";
 
 const ConfirmSilhouette = () => {
   const searchParams = useSearchParams();
@@ -18,6 +19,7 @@ const ConfirmSilhouette = () => {
   const [silhouetteId, setSilhouetteId] = useState<string>("1");
   const [image, setImage] = useState<string>("");
   const [matchRate, setMatchRate] = useState<number>(0);
+  const local = useLocale();
 
   useEffect(() => {
     const monsterId = searchParams.get("monsterId") ?? "1"; // TODO: パラメータない時の処理を実装する
@@ -50,13 +52,13 @@ const ConfirmSilhouette = () => {
           href={`/take-picture?monsterId=${monsterId}&silhouetteId=${silhouetteId}`}
           variant="outlined"
         >
-          とりなおし
+          {local.ConfirmSilhouette.retakeButton}
         </LinkButton>
         <LinkButton
           href={`/select-silhouette?monsterId=${monsterId}`}
           variant="contained"
         >
-          けってい
+          {local.ConfirmSilhouette.confirmButton}
         </LinkButton>
       </Stack>
     </Centering>

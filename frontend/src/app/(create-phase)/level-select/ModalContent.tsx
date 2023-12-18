@@ -10,6 +10,7 @@ import {
 import { TypeMonster } from "@/app/(create-phase)/level-select/types";
 import Image from "@/components/Image";
 import LinkButton from "@/components/LinkButton";
+import { useLocale } from "@/components/LocaleProvider";
 import { maxWidth } from "@/consts";
 import theme from "@/theme";
 
@@ -23,6 +24,7 @@ const ModalContent = ({ monster, handleClose }: Props) => {
     ? `${theme.breakpoints.values[maxWidth]}px`
     : "100vw";
 
+  const local = useLocale();
   return (
     <Modal
       open={true}
@@ -57,7 +59,7 @@ const ModalContent = ({ monster, handleClose }: Props) => {
         </IconButton>
 
         <Typography fontSize={24} textAlign="center">
-          これでいい？
+          {local.ModalContent.comment}
         </Typography>
 
         <Image
@@ -75,14 +77,14 @@ const ModalContent = ({ monster, handleClose }: Props) => {
             href={`/view-details?monsterId=${monster.id}`}
             variant="outlined"
           >
-            くわしくみる
+            {local.ModalContent.viewDetailsbutton}
           </LinkButton>
 
           <LinkButton
             href={`/select-silhouette?monsterId=${monster.id}`}
             variant="contained"
           >
-            けってい
+            {local.ModalContent.confirmbutton}
           </LinkButton>
         </Stack>
       </Stack>

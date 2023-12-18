@@ -11,6 +11,51 @@ export const defaultLocaleData = {
     labelLevelSelect: "",
     labelPlayerLobby: "",
   },
+  LevelSelect: {
+    level: "",
+  },
+  ModalContent: {
+    comment: "",
+    viewDetailsButton: "",
+    confirmButton: "",
+  },
+  ConfirmSilhouette: {
+    retakeButton: "",
+    confirmButton: "",
+  },
+  NamingMonster: {
+    message: "",
+    monsterName: "",
+    next: "",
+  },
+  SelectSilhouette: {
+    backButton: "",
+    nextButton: "",
+  },
+  Field: {
+    message: "",
+  },
+  CreateRoom: {
+    message: "",
+  },
+  EnterRoom: {
+    message: "",
+  },
+  BattleResult: {
+    winner: "",
+    messageWinner: "",
+    massageLoser: "",
+    touchMassage: "",
+  },
+  Swiper: {
+    message: "",
+    makeMonster: "",
+  },
+  PlayerLobby: {
+    title: "",
+    createRoom: "",
+    enterRoom: "",
+  },
 };
 
 export const maxWidth = "sm";

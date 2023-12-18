@@ -4,12 +4,14 @@ import Typography from "@mui/material/Typography";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { useLocale } from "@/components/LocaleProvider";
 import { useSocket } from "@/components/SocketProvider";
 
 const EnterRoom = () => {
   const router = useRouter();
   const socket = useSocket();
-  const title = "へやにはいる";
+  const local = useLocale();
+  const title = local.EnterRoom.message;
   const [isButtonRoading, setIsButtonRoading] = useState<boolean>(true);
   const [roomId, setRoomId] = useState<string>("");
 
