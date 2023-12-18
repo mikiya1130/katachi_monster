@@ -78,14 +78,14 @@ const ModalContent = ({ monster, handleClose }: Props) => {
             href={`/view-details?monsterId=${monster.id}`}
             variant="outlined"
           >
-            {locale.ModalContent.viewDetailsbutton}
+            {locale.ModalContent.viewDetailsButton}
           </LinkButton>
 
           <LinkButton
             href={`/select-silhouette?monsterId=${monster.id}`}
             variant="contained"
           >
-            {locale.ModalContent.confirmbutton}
+            {locale.ModalContent.confirmButton}
           </LinkButton>
         </Stack>
       </Stack>

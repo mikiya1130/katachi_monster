@@ -46,7 +46,7 @@ export const defaultLocaleData = {
   BattleResult: {
     winner: "",
     messageWinner: "",
-    massageLoser: "",
+    messageLoser: "",
     touchMassage: "",
   },
   Swiper: {

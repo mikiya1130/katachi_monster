@@ -54,7 +54,7 @@ const BattleResult = () => {
               >
                 {winner.isSelf
                   ? locale.BattleResult.messageWinner
-                  : locale.BattleResult.massageLoser}
+                  : locale.BattleResult.messageLoser}
               </Typography>
             </Centering>
           </Box>
