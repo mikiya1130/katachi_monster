@@ -54,7 +54,7 @@ const TakePicture = () => {
     if (cameraState == "error") {
       messageRef.current?.call({
         type: "error",
-        message: `${locale.TakePicture.errorMessage1}`,
+        message: locale.TakePicture.errorMessage1,
       });
     }
   };
@@ -63,14 +63,14 @@ const TakePicture = () => {
     if (base64image === "") {
       messageRef.current?.call({
         type: "error",
-        message: `${locale.TakePicture.errorMessage2}`,
+        message: locale.TakePicture.errorMessage2,
       });
       return;
     }
 
     messageRef.current?.call({
       type: "info",
-      message: `${locale.TakePicture.infoMessage}`,
+      message: locale.TakePicture.infoMessage,
     });
 
     axios

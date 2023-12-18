@@ -25,6 +25,7 @@ const ModalContent = ({ monster, handleClose }: Props) => {
     : "100vw";
 
   const locale = useLocale();
+
   return (
     <Modal
       open={true}

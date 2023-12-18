@@ -11,7 +11,6 @@ const EnterRoom = () => {
   const router = useRouter();
   const socket = useSocket();
   const locale = useLocale();
-  const title = locale.EnterRoom.message;
   const [isButtonRoading, setIsButtonRoading] = useState<boolean>(true);
   const [roomId, setRoomId] = useState<string>("");
 
@@ -57,7 +56,7 @@ const EnterRoom = () => {
       height="100%"
     >
       <Typography fontSize="2rem" align="left">
-        {title}
+        {locale.EnterRoom.message}
       </Typography>
 
       <TextField

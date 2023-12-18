@@ -11,7 +11,6 @@ const CreateRoom = () => {
   const router = useRouter();
   const socket = useSocket();
   const locale = useLocale();
-  const title = locale.CreateRoom.message;
   const [roomId, setRoomId] = useState<string>("");
 
   useEffect(() => {
@@ -40,7 +39,7 @@ const CreateRoom = () => {
       height="100%"
     >
       <Typography fontSize="2rem" align="left">
-        {title}
+        {locale.CreateRoom.message}
       </Typography>
 
       {roomId ? (

@@ -21,7 +21,6 @@ const NamingMonster = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
   const locale = useLocale();
 
-  const message = locale.NamingMonster.message;
   const invalidInputValue = inputValue.length < 1 || inputValue.length > 10;
 
   useEffect(() => {
@@ -54,7 +53,7 @@ const NamingMonster = () => {
 
   return (
     <Centering p={4} spacing={4}>
-      <Typography fontSize="2rem">{message}</Typography>
+      <Typography fontSize="2rem">{locale.NamingMonster.message}</Typography>
       <Image
         src={image}
         alt="monster"

@@ -211,7 +211,6 @@ const BattleAttackSelect = () => {
           ) : (
             outcome === "draw" && (
               <Center color="black">
-                {" "}
                 {locale.BattleAttackSelect.drawMessage}
               </Center>
             )

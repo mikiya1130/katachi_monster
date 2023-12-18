@@ -7,7 +7,6 @@ import { useLocale } from "@/components/LocaleProvider";
 
 const PlayerLobby = () => {
   const locale = useLocale();
-  const title = locale.PlayerLobby.title;
 
   return (
     <Stack
@@ -18,7 +17,7 @@ const PlayerLobby = () => {
       height="100%"
     >
       <Typography fontSize="2rem" align="left">
-        {title}
+        {locale.PlayerLobby.title}
       </Typography>
       <Link href={`/create-room`}>
         <Button variant="outlined">{locale.PlayerLobby.createRoom}</Button>

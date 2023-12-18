@@ -53,8 +53,8 @@ const BattleResult = () => {
                 }}
               >
                 {winner.isSelf
-                  ? `${locale.BattleResult.messageWinner}`
-                  : `${locale.BattleResult.massageLoser}`}
+                  ? locale.BattleResult.messageWinner
+                  : locale.BattleResult.massageLoser}
               </Typography>
             </Centering>
           </Box>
