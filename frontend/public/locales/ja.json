@@ -52,5 +52,12 @@
     "title": "たたかうじゅんび",
     "createRoom": "たいせんするへやをつくる",
     "enterRoom": "たいせんするへやにはいる"
+  },
+  "BattleAttackSelect": {
+    "startMessage":"たいせんスタート！！",
+    "buttonSelectMessage":"ボタンをえらぼう!",
+    "battleCry":"じゃん! <br /> けん! <br /> ぽん!",
+    "succsessfulMessage": "こうげき せいこう!",
+    "failedMessage": "こうげき しっぱい!"
   }
 }

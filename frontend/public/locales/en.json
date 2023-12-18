@@ -52,5 +52,12 @@
     "title": "Prepare for Battle",
     "createRoom": "Create a Battle Room",
     "enterRoom": "Enter a Battle Room"
+  },
+  "BattleAttackSelect": {
+    "startMessage":"Battle start!!",
+    "buttonSelectMessage":"Choose a button!",
+    "battleCry":"Rock! <br /> Scissors! <br /> Paper!",
+    "succsessfulMessage": "Attack successful!",
+    "failedMessage": "Attack failed!"
   }
 }

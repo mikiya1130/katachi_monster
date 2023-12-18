@@ -17,12 +17,14 @@ import { BattleContext } from "@/app/(battle-phase)/(battle)/layout";
 import { axios } from "@/axios";
 import Centering from "@/components/Centering";
 import Image from "@/components/Image";
+import { useLocale } from "@/components/LocaleProvider";
 import { useSocket } from "@/components/SocketProvider";
 
 const BattleAttackSelect = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const socket = useSocket();
+  const local = useLocale();
 
   const [state, setState] = useState<State>("matching");
 
@@ -166,12 +168,14 @@ const BattleAttackSelect = () => {
 
       <Box sx={{ height: "30%", width: "100%" }}>
         {state === "matching" && <Center>VS</Center>}
-        {state === "start" && <Center>Battle start!!</Center>}
-        {state === "buttonSelect" && <Center>Choose a button!</Center>}
+        {state === "start" && (
+          <Center>{local.BattleAttackSelect.startMessage}</Center>
+        )}
+        {state === "buttonSelect" && (
+          <Center>{local.BattleAttackSelect.buttonSelectMessage}</Center>
+        )}
         {state === "hpCalculate" && (
-          <Center>
-            Rock! <br /> Scissors! <br /> Paper!
-          </Center>
+          <Center>{local.BattleAttackSelect.battleCry}</Center>
         )}
         {state === "attack/viewHand" && (
           <Box p={2} height="100%">
@@ -197,9 +201,13 @@ const BattleAttackSelect = () => {
         )}
         {state === "attack/viewText" &&
           (outcome === "win" ? (
-            <Center color="red">Attack successful!</Center>
+            <Center color="red">
+              {local.BattleAttackSelect.succsessfulMessage}
+            </Center>
           ) : outcome === "lose" ? (
-            <Center color="blue">Attack failed!</Center>
+            <Center color="blue">
+              {local.BattleAttackSelect.failedMessage}
+            </Center>
           ) : (
             outcome === "draw" && (
               <Center color="black">It&lsquo;s a draw</Center>

@@ -56,6 +56,13 @@ export const defaultLocaleData = {
     createRoom: "",
     enterRoom: "",
   },
+  BattleAttackSelect: {
+    startMessage: "",
+    buttonSelectMessage: "",
+    battleCry: "",
+    succsessfulMessage: "",
+    failedMessage: "",
+  },
 };
 
 export const maxWidth = "sm";
