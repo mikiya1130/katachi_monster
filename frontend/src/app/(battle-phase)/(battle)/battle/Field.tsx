@@ -13,10 +13,6 @@ type Props = {
   color: string;
   monster: TypeMonster | null;
   isSelf: boolean;
-  hp: number;
-  guSore: number;
-  chokiScore: number;
-  paScore: number;
 };
 
 const Field = ({ height, color, monster, isSelf }: Props) => {
