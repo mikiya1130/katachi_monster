@@ -115,12 +115,18 @@ io.on("connection", (socket) => {
 
   socket.on("sendMonsterSelf", (monster: TypeMonster) => {
     const userId = socket.id;
+    if (users[userId] === undefined) {
+      console.error("user is not found");
+      socket.emit("battle-interrupt");
+      return;
+    }
     const roomId = users[userId].roomId;
     const opponentId = Array.from(getRoom(roomId)).find((id) => id !== userId);
     users[userId].monster = monster;
 
     if (opponentId === undefined) {
       console.error("opponentId is not found");
+      socket.emit("battle-interrupt");
       return;
     }
 
@@ -134,12 +140,18 @@ io.on("connection", (socket) => {
 
   socket.on("sendHandSelf", (hand: TypeHand) => {
     const userId = socket.id;
+    if (users[userId] === undefined) {
+      console.error("user is not found");
+      socket.emit("battle-interrupt");
+      return;
+    }
     const roomId = users[userId].roomId;
     const opponentId = Array.from(getRoom(roomId)).find((id) => id !== userId);
     users[userId].hand = hand;
 
     if (opponentId === undefined) {
       console.error("opponentId is not found");
+      socket.emit("battle-interrupt");
       return;
     }
 
@@ -168,7 +180,12 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnecting", () => {
-    delete users[socket.id];
+    const userId = socket.id;
+    if (users[userId] !== undefined) {
+      const roomId = users[userId].roomId;
+      io.sockets.in(roomId).emit("battle-interrupt");
+    }
+    delete users[userId];
   });
 
   socket.on("disconnect", () => {
