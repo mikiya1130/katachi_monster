@@ -35,7 +35,7 @@
     "message": "The opponent is selecting a monster"
   },
   "CreateRoom": {
-    "message": "Create the room"
+    "message": "Create a room"
   },
   "EnterRoom": {
     "message": "Enter the room",
@@ -55,7 +55,7 @@
   "PlayerLobby": {
     "title": "Prepare for Battle",
     "createRoom": "Create a Battle Room",
-    "enterRoom": "Enter a Battle Room"
+    "enterRoom": "Enter the Battle Room"
   },
   "BattleAttackSelect": {
     "errorMessage": "Connection error has occurred",
@@ -67,7 +67,7 @@
     "failedMessage": "Attack failed!"
   },
   "TakePicture": {
-    "errorMessage1": "Cannot access the camera",
+    "errorMessage1": "Cannot access to camera",
     "errorMessage2": "Failed to take a picture",
     "infoMessage": "Processing the image...",
     "loadingMessage": "Loading the camera...",
