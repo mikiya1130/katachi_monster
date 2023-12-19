@@ -1,29 +1,15 @@
 "use client";
-import {
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  useMediaQuery,
-} from "@mui/material";
+import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import Centering from "@/components/Centering";
 import { useLocale } from "@/components/LocaleProvider";
 import Text from "@/components/Text";
-import { locales, maxWidth } from "@/consts";
-import theme from "@/theme";
+import { locales } from "@/consts";
 
 const Home = () => {
   const locale = useLocale();
-  const title = locale.Home.title;
-  const titleMessage = locale.Home.titleMessage;
-  const width = useMediaQuery(theme.breakpoints.up(maxWidth))
-    ? `${theme.breakpoints.values[maxWidth]}px`
-    : "100vw";
-  const logoScale = locale.locale === "en" ? 1.5 : 0.9;
-  const messageScale = locale.locale === "en" ? 1.0 : 0.6;
-
   const [selectedLocale, setSelectedLocale] = useState<string>(locale.locale);
 
   useEffect(() => {
@@ -43,20 +29,14 @@ const Home = () => {
       >
         <Centering justifyContent="space-around">
           <Text
-            fontSize={`calc(${width} * ${logoScale} / ${title.length})`}
+            fontSize="3rem"
             fontWeight={700}
             variant="h1"
-            sx={{
-              textShadow: "0 0 5px",
-            }}
+            sx={{ textShadow: "0 0 5px" }}
           >
-            {title}
+            {locale.Home.title}
           </Text>
-          <Text
-            fontSize={`calc(${width} * ${messageScale} / ${titleMessage.length})`}
-          >
-            {titleMessage}
-          </Text>
+          <Text fontSize="1.8rem">{locale.Home.titleMessage}</Text>
         </Centering>
       </Link>
       <Select
