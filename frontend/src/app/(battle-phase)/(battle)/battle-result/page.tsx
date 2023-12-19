@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import Field from "@/app/(battle-phase)/(battle)/battle/Field";
 import { BattleContext } from "@/app/(battle-phase)/(battle)/layout";
@@ -14,10 +14,12 @@ const BattleResult = () => {
   const locale = useLocale();
   const router = useRouter();
 
-  if (!winner) {
-    // リロードで context が消えた時
-    router.push("/mode-select");
-  }
+  useEffect(() => {
+    if (!winner) {
+      // リロードで context が消えた時
+      router.push("/mode-select");
+    }
+  }, [router, winner]);
 
   return (
     <Link
