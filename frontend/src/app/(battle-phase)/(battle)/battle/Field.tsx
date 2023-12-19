@@ -1,4 +1,3 @@
-"use client";
 import { Avatar, Box, Chip, Stack } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 

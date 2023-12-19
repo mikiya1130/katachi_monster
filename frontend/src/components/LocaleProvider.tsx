@@ -1,5 +1,4 @@
 "use client";
-
 import Cookies from "js-cookie";
 import { createContext, useContext, useEffect, useState } from "react";
 

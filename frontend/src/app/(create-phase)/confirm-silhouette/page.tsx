@@ -2,7 +2,6 @@
  * /confirm-silhouette?monsterId=${monsterId}&silhouetteId=${silhouetteId}&pictureId=${pictureId}
  */
 "use client";
-
 import { Box, Stack } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";

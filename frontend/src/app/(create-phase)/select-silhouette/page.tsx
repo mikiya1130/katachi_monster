@@ -2,7 +2,6 @@
  * /select-silhouette?monsterId=${monsterId}
  */
 "use client";
-
 import { Stack } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";

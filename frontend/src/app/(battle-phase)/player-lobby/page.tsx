@@ -1,5 +1,4 @@
 "use client";
-
 import Centering from "@/components/Centering";
 import LinkButton from "@/components/LinkButton";
 import { useLocale } from "@/components/LocaleProvider";
