@@ -3,7 +3,6 @@
  */
 "use client";
 import { Button, TextField } from "@mui/material";
-import Typography from "@mui/material/Typography";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
 
@@ -11,6 +10,7 @@ import { axios } from "@/axios";
 import Centering from "@/components/Centering";
 import Image from "@/components/Image";
 import { useLocale } from "@/components/LocaleProvider";
+import Text from "@/components/Text";
 
 const NamingMonster = () => {
   const searchParams = useSearchParams();
@@ -40,6 +40,8 @@ const NamingMonster = () => {
   };
 
   const handleNextClick = () => {
+    if (invalidInputValue) return;
+
     setIsButtonDisabled(true);
     axios
       .post(`monster/${monsterId}`, { name: inputValue })
@@ -53,7 +55,7 @@ const NamingMonster = () => {
 
   return (
     <Centering p={4} spacing={4}>
-      <Typography fontSize="2rem">{locale.NamingMonster.message}</Typography>
+      <Text fontSize="2rem">{locale.NamingMonster.message}</Text>
       <Image
         src={image}
         alt="monster"
@@ -67,6 +69,12 @@ const NamingMonster = () => {
         value={inputValue}
         sx={{ maxWidth: "13rem" }} // NOTE: Max10文字が入る大きさ
         onChange={handleInputChange}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            // エンターキー押下時の処理
+            handleNextClick();
+          }
+        }}
       />
       <Button
         variant="contained"

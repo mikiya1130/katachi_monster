@@ -5,7 +5,6 @@ import {
   IconButton,
   Modal,
   Stack,
-  Typography,
   useMediaQuery,
 } from "@mui/material";
 
@@ -13,6 +12,7 @@ import { TypeMonster } from "@/app/(battle-phase)/monster-select/types";
 import Image from "@/components/Image";
 import LinkButton from "@/components/LinkButton";
 import { useLocale } from "@/components/LocaleProvider";
+import Text from "@/components/Text";
 import { images, maxWidth } from "@/consts";
 import theme from "@/theme";
 import { TypeImage } from "@/types";
@@ -62,23 +62,9 @@ const ModalContent = ({ monster, handleClose }: Props) => {
           <Close sx={{ width: "100%", height: "100%" }} />
         </IconButton>
 
-        <Typography fontSize={24} textAlign="center">
-          {monster.name}
-        </Typography>
+        <Text fontSize={24}>{monster.name}</Text>
 
         <Stack direction="row" spacing={2}>
-          <Chip
-            avatar={
-              <Avatar sx={{ bgcolor: "black" }} variant="rounded">
-                <Typography color="white" fontWeight={600}>
-                  HP
-                </Typography>
-              </Avatar>
-            }
-            label="100"
-            variant="outlined"
-            sx={{ borderRadius: "8px", bgcolor: "white" }}
-          />
           {images.map(({ url, hand }: TypeImage) => {
             return (
               <Chip
@@ -94,6 +80,7 @@ const ModalContent = ({ monster, handleClose }: Props) => {
                         : "-"
                 }
                 variant="outlined"
+                sx={{ bgcolor: "white", fontSize: "1.5rem" }}
               />
             );
           })}
@@ -103,10 +90,7 @@ const ModalContent = ({ monster, handleClose }: Props) => {
           src={monster.base64image}
           alt={`monster_${monster.id}`}
           width="90%"
-          sx={{
-            border: 2,
-            solid: "#000",
-          }}
+          sx={{ border: 2, solid: "#000" }}
         />
 
         <Stack direction="row" spacing={4}>

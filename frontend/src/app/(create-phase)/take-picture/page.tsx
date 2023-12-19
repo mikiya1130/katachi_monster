@@ -4,13 +4,7 @@
 "use client";
 
 import { Cached } from "@mui/icons-material";
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Typography,
-  useMediaQuery,
-} from "@mui/material";
+import { Box, Button, CircularProgress, useMediaQuery } from "@mui/material";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
@@ -20,6 +14,7 @@ import Centering from "@/components/Centering";
 import Image from "@/components/Image";
 import { useLocale } from "@/components/LocaleProvider";
 import Message, { MessageRef } from "@/components/Message";
+import Text from "@/components/Text";
 import { maxWidth } from "@/consts";
 import theme from "@/theme";
 
@@ -80,7 +75,7 @@ const TakePicture = () => {
       .then((res) => {
         const pictureId: string = res.data.picture_id;
         router.push(
-          ` confirm-silhouette?monsterId=${monsterId}&silhouetteId=${silhouetteId}&pictureId=${pictureId}`,
+          `/confirm-silhouette?monsterId=${monsterId}&silhouetteId=${silhouetteId}&pictureId=${pictureId}`,
         );
       })
       .catch((error) => {
@@ -117,7 +112,7 @@ const TakePicture = () => {
             {cameraState === "loading" && (
               <>
                 <CircularProgress />
-                <Typography>{locale.TakePicture.loadingMessage}</Typography>
+                <Text fontSize="1rem">{locale.TakePicture.loadingMessage}</Text>
               </>
             )}
             {cameraState === "loaded" && (

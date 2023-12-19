@@ -42,10 +42,11 @@
     "confirmButton": "けってい"
   },
   "BattleResult": {
-    "winner": "勝者！",
+    "titleWinner": "あなたのかち！",
+    "titleLoser": "あなたのまけ",
     "messageWinner": "つぎもがんばろう",
     "messageLoser": "つぎはがんばろう",
-    "touchMassage": "タッチしてもういっかいはじめる"
+    "touchMassage": "タッチしてもういちどプレイ"
   },
   "Swiper": {
     "message": "このレベルのモンスターはいません",
@@ -53,14 +54,14 @@
   },
   "PlayerLobby": {
     "title": "たたかうじゅんび",
-    "createRoom": "たいせんするへやをつくる",
-    "enterRoom": "たいせんするへやにはいる"
+    "createRoom": "へやをつくる",
+    "enterRoom": "へやにはいる"
   },
   "BattleAttackSelect": {
     "errorMessage": "つうしんエラーがはっせいしました",
     "startMessage":"たいせんスタート！！",
     "buttonSelectMessage":"ボタンをえらぼう！",
-    "battleCry":"じゃん！\nけん！\nぽん！",
+    "battleCry": "じゃ～んけ～ん",
     "succsessfulMessage": "こうげき せいこう！",
     "drawMessage": "あいこ",
     "failedMessage": "こうげき しっぱい！"

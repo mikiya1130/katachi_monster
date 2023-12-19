@@ -1,23 +1,20 @@
 import { TypeImage } from "@/types";
 
 export const maxWidth = "sm";
+export const initialHP = 100;
 
 export const images: TypeImage[] = [
-  {
-    url: "images/gu.png",
-    hand: "gu",
-  },
-  {
-    url: "images/choki.png",
-    hand: "choki",
-  },
-  {
-    url: "images/pa.png",
-    hand: "pa",
-  },
+  { url: "images/gu.png", hand: "gu" },
+  { url: "images/choki.png", hand: "choki" },
+  { url: "images/pa.png", hand: "pa" },
 ];
 
-export const localeList = ["en", "ja"];
+export const locales = {
+  en: "English",
+  ja: "日本語",
+  ko: "한국어",
+  zh: "中文",
+};
 export const defaultLocale = "en";
 export const defaultLocaleData = {
   locale: defaultLocale,
@@ -64,7 +61,8 @@ export const defaultLocaleData = {
     confirmButton: "",
   },
   BattleResult: {
-    winner: "",
+    titleWinner: "",
+    titleLoser: "",
     messageWinner: "",
     messageLoser: "",
     touchMassage: "",

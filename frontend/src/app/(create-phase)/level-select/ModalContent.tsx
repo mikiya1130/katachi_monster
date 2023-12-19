@@ -1,16 +1,11 @@
 import { Close } from "@mui/icons-material";
-import {
-  IconButton,
-  Modal,
-  Stack,
-  Typography,
-  useMediaQuery,
-} from "@mui/material";
+import { IconButton, Modal, Stack, useMediaQuery } from "@mui/material";
 
 import { TypeMonster } from "@/app/(create-phase)/level-select/types";
 import Image from "@/components/Image";
 import LinkButton from "@/components/LinkButton";
 import { useLocale } from "@/components/LocaleProvider";
+import Text from "@/components/Text";
 import { maxWidth } from "@/consts";
 import theme from "@/theme";
 
@@ -59,18 +54,13 @@ const ModalContent = ({ monster, handleClose }: Props) => {
           <Close sx={{ width: "100%", height: "100%" }} />
         </IconButton>
 
-        <Typography fontSize={24} textAlign="center">
-          {locale.ModalContent.comment}
-        </Typography>
+        <Text fontSize={24}>{locale.ModalContent.comment}</Text>
 
         <Image
           src={monster.base64image}
           alt={`monster_${monster.id}`}
           width="90%"
-          sx={{
-            border: 2,
-            solid: "#000",
-          }}
+          sx={{ border: 2, solid: "#000" }}
         />
 
         <Stack direction="row" spacing={4}>

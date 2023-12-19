@@ -1,5 +1,5 @@
 "use client";
-import { Box, Rating, Stack, Typography } from "@mui/material";
+import { Box, Rating, Stack } from "@mui/material";
 import { isAxiosError } from "axios";
 import { useEffect, useRef, useState } from "react";
 
@@ -7,6 +7,7 @@ import Swiper from "@/app/(create-phase)/level-select/Swiper";
 import { axios } from "@/axios";
 import { useLocale } from "@/components/LocaleProvider";
 import Message, { MessageRef } from "@/components/Message";
+import Text from "@/components/Text";
 
 const LevelSelect = () => {
   const messageRef = useRef<MessageRef>(null);
@@ -50,7 +51,9 @@ const LevelSelect = () => {
   return (
     <>
       <Stack py={5} height="100%">
-        <Typography fontSize="2rem">{locale.LevelSelect.level}</Typography>
+        <Text fontSize="2rem" align="left">
+          {locale.LevelSelect.level}
+        </Text>
         <Stack direction="column" spacing={3} flexGrow={1}>
           {monsterIdsList.map((monsterIds, level) => {
             return (

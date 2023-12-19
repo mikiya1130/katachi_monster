@@ -1,77 +1,63 @@
 "use client";
-import { Box, Stack, Typography } from "@mui/material";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useContext } from "react";
 
 import Field from "@/app/(battle-phase)/(battle)/battle/Field";
 import { BattleContext } from "@/app/(battle-phase)/(battle)/layout";
 import Centering from "@/components/Centering";
 import { useLocale } from "@/components/LocaleProvider";
+import Text from "@/components/Text";
 
 const BattleResult = () => {
   const { winner } = useContext(BattleContext);
   const locale = useLocale();
+  const router = useRouter();
+
+  if (!winner) {
+    // リロードで context が消えた時
+    router.push("/mode-select");
+  }
 
   return (
-    <Link href="/mode-select" style={{ textDecoration: "none" }}>
+    <Link
+      href="/mode-select"
+      style={{ color: "inherit", textDecoration: "none" }}
+    >
       {winner && winner.monster && (
-        <Stack
+        <Centering
           p={4}
-          spacing={0}
           alignItems="center"
-          justifyContent="center"
+          justifyContent="space-evenly"
           height="100%"
         >
-          <Box sx={{ height: "30%", width: "100%" }}>
-            <Centering p={2}>
-              <Typography
-                fontSize="2rem"
-                color={winner.isSelf ? "red" : "blue"}
-                sx={{
-                  fontWeight: 700,
-                }}
-              >
-                {locale.BattleResult.winner}
-              </Typography>
-            </Centering>
-          </Box>
+          <Text
+            fontSize="2rem"
+            fontWeight={700}
+            color={winner.isSelf ? "red" : "blue"}
+          >
+            {winner.isSelf
+              ? locale.BattleResult.titleWinner
+              : locale.BattleResult.titleLoser}
+          </Text>
 
           <Field
             height="30%"
-            color={winner.isSelf ? "red" : "blue"}
+            color="red"
             monster={winner.monster}
-            isSelf={winner.isSelf ?? true}
+            isSelf={true}
           />
 
-          <Box sx={{ height: "30%", width: "100%" }}>
-            <Centering p={2}>
-              <Typography
-                fontSize="2rem"
-                color={"red"}
-                sx={{
-                  fontWeight: 700,
-                }}
-              >
-                {winner.isSelf
-                  ? locale.BattleResult.messageWinner
-                  : locale.BattleResult.messageLoser}
-              </Typography>
-            </Centering>
-          </Box>
+          <Text fontSize="2rem" fontWeight={700}>
+            {winner.isSelf
+              ? locale.BattleResult.messageWinner
+              : locale.BattleResult.messageLoser}
+          </Text>
 
-          <Box sx={{ height: "10%", width: "100%" }}>
-            <Centering p={2}>
-              <Typography
-                fontSize="2rem"
-                sx={{
-                  fontWeight: 700,
-                }}
-              >
-                {locale.BattleResult.touchMassage}
-              </Typography>
-            </Centering>
-          </Box>
-        </Stack>
+          <Text fontSize="1.5rem" fontWeight={700}>
+            {locale.BattleResult.touchMassage}
+          </Text>
+        </Centering>
       )}
     </Link>
   );

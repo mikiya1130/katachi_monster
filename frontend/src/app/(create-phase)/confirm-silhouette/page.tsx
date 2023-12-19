@@ -2,8 +2,7 @@
  * /confirm-silhouette?monsterId=${monsterId}&silhouetteId=${silhouetteId}&pictureId=${pictureId}
  */
 "use client";
-
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -12,6 +11,7 @@ import Centering from "@/components/Centering";
 import Image from "@/components/Image";
 import LinkButton from "@/components/LinkButton";
 import { useLocale } from "@/components/LocaleProvider";
+import Text from "@/components/Text";
 
 const ConfirmSilhouette = () => {
   const searchParams = useSearchParams();
@@ -40,12 +40,8 @@ const ConfirmSilhouette = () => {
     <Centering spacing={4} padding={4}>
       <Image src={image} alt="silhouette" width="100%" />
       <Box>
-        <Typography variant="h5" align="center">
-          {locale.ConfirmSilhouette.message}
-        </Typography>
-        <Typography variant="h3" align="center">
-          {matchRate}%
-        </Typography>
+        <Text fontSize="1.5rem">{locale.ConfirmSilhouette.message}</Text>
+        <Text fontSize="3rem">{matchRate}%</Text>
       </Box>
       <Stack direction="row" spacing={4}>
         <LinkButton

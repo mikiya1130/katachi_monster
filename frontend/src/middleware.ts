@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-import { defaultLocale, localeList } from "@/consts";
+import { defaultLocale, locales } from "@/consts";
 
 export const config = {
   matcher: [
@@ -27,7 +27,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // locale の変更
-  if (localeList.includes(request.nextUrl.pathname.slice(1))) {
+  if (Object.keys(locales).includes(request.nextUrl.pathname.slice(1))) {
     const response = NextResponse.redirect(new URL("/", request.url));
     response.cookies.set("locale", request.nextUrl.pathname.slice(1));
     return response;

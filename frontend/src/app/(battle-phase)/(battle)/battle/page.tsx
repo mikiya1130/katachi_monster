@@ -1,5 +1,5 @@
 "use client";
-import { Box, Stack } from "@mui/material";
+import { Box } from "@mui/material";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useContext, useEffect, useRef, useState } from "react";
 
@@ -19,7 +19,7 @@ import Image from "@/components/Image";
 import { useLocale } from "@/components/LocaleProvider";
 import Message, { MessageRef } from "@/components/Message";
 import { useSocket } from "@/components/SocketProvider";
-import { images } from "@/consts";
+import { images, initialHP } from "@/consts";
 import { TypeHand } from "@/types";
 
 const BattleAttackSelect = () => {
@@ -63,7 +63,7 @@ const BattleAttackSelect = () => {
       setMonsterSelf({
         base64image: res.data.base64image,
         name: res.data.name,
-        hp: 100,
+        hp: initialHP,
         gu: res.data.gu,
         choki: res.data.choki,
         pa: res.data.pa,
@@ -130,7 +130,7 @@ const BattleAttackSelect = () => {
       if (isComplete) {
         setWinner({
           isSelf: selfResult.hp > 0,
-          monster: selfResult.hp > 0 ? monsterSelf : monsterOpponent,
+          monster: monsterSelf,
         });
       }
 
@@ -168,13 +168,7 @@ const BattleAttackSelect = () => {
 
   return (
     <>
-      <Stack
-        p={4}
-        spacing={0}
-        alignItems="center"
-        justifyContent="center"
-        height="100%"
-      >
+      <Centering p={4} spacing={0}>
         <Field
           height="30%"
           color="blue"
@@ -203,16 +197,18 @@ const BattleAttackSelect = () => {
                   top={0}
                   src={`images/${opponentHand}.png`}
                   alt={opponentHand}
+                  height="40%"
                   objectFit="contain"
-                  sx={{ borderRadius: "50%", height: "40%" }}
+                  sx={{ borderRadius: "50%" }}
                 />
                 <Image
                   position="absolute"
                   bottom={0}
                   src={`images/${selfHand}.png`}
                   alt={selfHand}
+                  height="40%"
                   objectFit="contain"
-                  sx={{ borderRadius: "50%", height: "40%" }}
+                  sx={{ borderRadius: "50%" }}
                 />
               </Centering>
             </Box>
@@ -237,14 +233,14 @@ const BattleAttackSelect = () => {
 
         <Field height="30%" color="red" monster={monsterSelf} isSelf={true} />
 
-        <Box ref={gtpRef} sx={{ height: "10%", width: "100%" }} pt="5px">
+        <Box ref={gtpRef} sx={{ height: "10%", width: "100%" }} mt={1}>
           <GtpButton
             gtpHeight={gtpHeight}
             state={state}
             callbackButtonSelected={handleButtonSelected}
           />
         </Box>
-      </Stack>
+      </Centering>
       <Message ref={messageRef} />
     </>
   );

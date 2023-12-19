@@ -1,11 +1,12 @@
 "use client";
-import { Button, CircularProgress, Stack, TextField } from "@mui/material";
-import Typography from "@mui/material/Typography";
+import { Button, CircularProgress, TextField } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import Centering from "@/components/Centering";
 import { useLocale } from "@/components/LocaleProvider";
 import { useSocket } from "@/components/SocketProvider";
+import Text from "@/components/Text";
 
 const EnterRoom = () => {
   const router = useRouter();
@@ -48,16 +49,8 @@ const EnterRoom = () => {
   };
 
   return (
-    <Stack
-      p={4}
-      spacing={10}
-      alignItems="center"
-      justifyContent="center"
-      height="100%"
-    >
-      <Typography fontSize="2rem" align="left">
-        {locale.EnterRoom.message}
-      </Typography>
+    <Centering p={4} spacing={10}>
+      <Text fontSize="2rem">{locale.EnterRoom.message}</Text>
 
       <TextField
         id="room-id"
@@ -87,7 +80,7 @@ const EnterRoom = () => {
           {locale.EnterRoom.confirmButton}
         </Button>
       )}
-    </Stack>
+    </Centering>
   );
 };
 

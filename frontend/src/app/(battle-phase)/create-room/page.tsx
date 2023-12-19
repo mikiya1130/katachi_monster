@@ -1,11 +1,12 @@
 "use client";
-import { CircularProgress, Stack } from "@mui/material";
-import Typography from "@mui/material/Typography";
+import { CircularProgress } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import Centering from "@/components/Centering";
 import { useLocale } from "@/components/LocaleProvider";
 import { useSocket } from "@/components/SocketProvider";
+import Text from "@/components/Text";
 
 const CreateRoom = () => {
   const router = useRouter();
@@ -31,25 +32,15 @@ const CreateRoom = () => {
   }, [socket, roomId, router]);
 
   return (
-    <Stack
-      p={4}
-      spacing={10}
-      alignItems="center"
-      justifyContent="center"
-      height="100%"
-    >
-      <Typography fontSize="2rem" align="left">
-        {locale.CreateRoom.message}
-      </Typography>
+    <Centering p={4} spacing={10}>
+      <Text fontSize="2rem">{locale.CreateRoom.message}</Text>
 
       {roomId ? (
-        <Typography fontSize="2rem" align="left">
-          ID:{roomId}
-        </Typography>
+        <Text fontSize="2rem">ID: {roomId}</Text>
       ) : (
         <CircularProgress />
       )}
-    </Stack>
+    </Centering>
   );
 };
 

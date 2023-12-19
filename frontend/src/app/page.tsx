@@ -3,27 +3,26 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
-  ThemeProvider,
   useMediaQuery,
 } from "@mui/material";
-import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import Centering from "@/components/Centering";
 import { useLocale } from "@/components/LocaleProvider";
-import { localeList, maxWidth } from "@/consts";
-import { titleFont } from "@/theme";
+import Text from "@/components/Text";
+import { locales, maxWidth } from "@/consts";
+import theme from "@/theme";
 
 const Home = () => {
   const locale = useLocale();
   const title = locale.Home.title;
   const titleMessage = locale.Home.titleMessage;
-  const width = useMediaQuery(titleFont.breakpoints.up(maxWidth))
-    ? `${titleFont.breakpoints.values[maxWidth]}px`
+  const width = useMediaQuery(theme.breakpoints.up(maxWidth))
+    ? `${theme.breakpoints.values[maxWidth]}px`
     : "100vw";
-  const logoScale = 0.9;
-  const messageScale = 0.6;
+  const logoScale = locale.locale === "en" ? 1.5 : 0.9;
+  const messageScale = locale.locale === "en" ? 1.0 : 0.6;
 
   const [selectedLocale, setSelectedLocale] = useState<string>(locale.locale);
 
@@ -43,26 +42,21 @@ const Home = () => {
         style={{ color: "inherit", textDecoration: "none" }}
       >
         <Centering justifyContent="space-around">
-          <ThemeProvider theme={titleFont}>
-            <Typography
-              variant="h1"
-              sx={{
-                fontSize: `calc(${width} * ${logoScale} / ${title.length})`,
-                fontWeight: 700,
-                textShadow: "0 0 5px",
-              }}
-            >
-              {title}
-            </Typography>
-          </ThemeProvider>
-          <Typography
-            variant="body1"
+          <Text
+            fontSize={`calc(${width} * ${logoScale} / ${title.length})`}
+            fontWeight={700}
+            variant="h1"
             sx={{
-              fontSize: `calc(${width} * ${messageScale} / ${titleMessage.length})`,
+              textShadow: "0 0 5px",
             }}
           >
+            {title}
+          </Text>
+          <Text
+            fontSize={`calc(${width} * ${messageScale} / ${titleMessage.length})`}
+          >
             {titleMessage}
-          </Typography>
+          </Text>
         </Centering>
       </Link>
       <Select
@@ -70,9 +64,9 @@ const Home = () => {
         onChange={handleLocaleChange}
         sx={{ position: "absolute", top: "1rem", right: "1rem" }}
       >
-        {localeList.map((locale) => (
-          <MenuItem key={locale} value={locale}>
-            {locale}
+        {Object.entries(locales).map(([code, language]) => (
+          <MenuItem key={code} value={code}>
+            {language}
           </MenuItem>
         ))}
       </Select>

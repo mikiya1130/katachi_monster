@@ -12,7 +12,7 @@
     "level": "Level"
   },
   "ModalContent": {
-    "comment": "Yes, is this okay?",
+    "comment": "Is this okay?",
     "viewDetailsButton": "View Details",
     "confirmButton": "Confirm"
   },
@@ -22,12 +22,12 @@
    "message": "Match Rate & Power"
   },
   "NamingMonster": {
-    "message": "Name monster",
+    "message": "Name your monster",
     "monsterName": "Monster's Name",
     "next": "Next"
   },
   "SelectSilhouette": {
-    "message": "Choose a silhouette",
+    "message": "Choose a shape",
     "backButton": "Back",
     "nextButton": "Next"
   },
@@ -35,17 +35,18 @@
     "message": "The opponent is selecting a monster"
   },
   "CreateRoom": {
-    "message": "Create the room"
+    "message": "Create a room"
   },
   "EnterRoom": {
     "message": "Enter the room",
     "confirmButton": "Confirm"
   },
   "BattleResult": {
-    "winner": "Winner!",
-    "messageWinner": "You played exceptionally well!",
+    "titleWinner": "You win!!",
+    "titleLoser": "You lose",
+    "messageWinner": "Keep it up for the next round!",
     "messageLoser": "Your time will come for victory!",
-    "touchMassage": "Touch to Play Again"
+    "touchMassage": "Tap to Play Again"
   },
   "Swiper": {
     "message": "There are no monsters at this level",
@@ -54,7 +55,7 @@
   "PlayerLobby": {
     "title": "Prepare for Battle",
     "createRoom": "Create a Battle Room",
-    "enterRoom": "Enter a Battle Room"
+    "enterRoom": "Enter the Battle Room"
   },
   "BattleAttackSelect": {
     "errorMessage": "Connection error has occurred",

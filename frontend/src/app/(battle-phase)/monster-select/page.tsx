@@ -1,11 +1,12 @@
 "use client";
-import { Box, Rating, Stack, Typography } from "@mui/material";
+import { Box, Rating, Stack } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 
 import Swiper from "@/app/(battle-phase)/monster-select/Swiper";
 import { axios } from "@/axios";
 import { useLocale } from "@/components/LocaleProvider";
 import { useSocket } from "@/components/SocketProvider";
+import Text from "@/components/Text";
 
 const MonsterSelect = () => {
   const socket = useSocket();
@@ -40,7 +41,9 @@ const MonsterSelect = () => {
 
   return (
     <Stack py={5} height="100%">
-      <Typography fontSize="2rem">{locale.LevelSelect.level}</Typography>
+      <Text fontSize="2rem" align="left">
+        {locale.LevelSelect.level}
+      </Text>
       <Stack direction="column" spacing={3} flexGrow={1}>
         {monsterIdsList.map((monsterIds, level) => {
           return (

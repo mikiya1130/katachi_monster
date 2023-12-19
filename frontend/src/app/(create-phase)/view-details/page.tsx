@@ -1,8 +1,6 @@
 /**
  * /view-details?monsterId=${monsterId}
  */
-"use client";
-
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 

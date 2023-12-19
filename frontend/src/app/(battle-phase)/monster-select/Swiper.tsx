@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import { useState } from "react";
 
 import Content from "@/app/(battle-phase)/monster-select/Content";
@@ -7,6 +7,7 @@ import { TypeMonster } from "@/app/(battle-phase)/monster-select/types";
 import Centering from "@/components/Centering";
 import LinkButton from "@/components/LinkButton";
 import { useLocale } from "@/components/LocaleProvider";
+import Text from "@/components/Text";
 type Props = {
   monsterIds: number[];
   height: number | string;
@@ -31,9 +32,7 @@ const Swiper = ({ monsterIds, height }: Props) => {
       direction="row"
       gap={2}
       px={2}
-      sx={{
-        overflowX: "scroll",
-      }}
+      sx={{ overflowX: "scroll" }}
     >
       {monsterIds.length !== 0 ? (
         monsterIds.map((monsterId) => (
@@ -45,7 +44,7 @@ const Swiper = ({ monsterIds, height }: Props) => {
         ))
       ) : (
         <Centering>
-          <Typography>{locale.Swiper.message}</Typography>
+          <Text fontSize="1rem">{locale.Swiper.message}</Text>
           <LinkButton href="/level-select" variant="outlined">
             {locale.Swiper.makeMonster}
           </LinkButton>

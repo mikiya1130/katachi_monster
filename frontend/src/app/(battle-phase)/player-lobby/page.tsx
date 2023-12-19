@@ -1,32 +1,22 @@
 "use client";
-import { Button, Stack } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import Link from "next/link";
-
+import Centering from "@/components/Centering";
+import LinkButton from "@/components/LinkButton";
 import { useLocale } from "@/components/LocaleProvider";
+import Text from "@/components/Text";
 
 const PlayerLobby = () => {
   const locale = useLocale();
 
   return (
-    <Stack
-      p={4}
-      spacing={10}
-      alignItems="center"
-      justifyContent="center"
-      height="100%"
-    >
-      <Typography fontSize="2rem" align="left">
-        {locale.PlayerLobby.title}
-      </Typography>
-      <Link href={`/create-room`}>
-        <Button variant="outlined">{locale.PlayerLobby.createRoom}</Button>
-      </Link>
-
-      <Link href={`/enter-room`}>
-        <Button variant="contained">{locale.PlayerLobby.enterRoom}</Button>
-      </Link>
-    </Stack>
+    <Centering p={4} spacing={10}>
+      <Text fontSize="2rem">{locale.PlayerLobby.title}</Text>
+      <LinkButton href="/create-room" variant="outlined">
+        {locale.PlayerLobby.createRoom}
+      </LinkButton>
+      <LinkButton href="/enter-room" variant="contained">
+        {locale.PlayerLobby.enterRoom}
+      </LinkButton>
+    </Centering>
   );
 };
 

@@ -1,11 +1,11 @@
-"use client";
-import { Avatar, Box, Chip, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Chip, Stack } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 
 import { TypeMonster } from "@/app/(battle-phase)/(battle)/battle/types";
 import Centering from "@/components/Centering";
 import Image from "@/components/Image";
 import { useLocale } from "@/components/LocaleProvider";
+import Text from "@/components/Text";
 import { images } from "@/consts";
 import { TypeImage } from "@/types";
 
@@ -42,14 +42,14 @@ const Field = ({ height, color, monster, isSelf }: Props) => {
         <Chip
           avatar={
             <Avatar sx={{ bgcolor: "black" }} variant="rounded">
-              <Typography color="white" fontWeight={600}>
+              <Text fontSize="1rem" fontWeight={700} color="white">
                 HP
-              </Typography>
+              </Text>
             </Avatar>
           }
           label={monster ? monster.hp : "-"}
           variant="outlined"
-          sx={{ borderRadius: "8px", bgcolor: "white" }}
+          sx={{ borderRadius: "8px", bgcolor: "white", fontSize: "1.5rem" }}
         />
         {images.map(({ url, hand }: TypeImage) => {
           return (
@@ -68,7 +68,7 @@ const Field = ({ height, color, monster, isSelf }: Props) => {
                         : "-"
               }
               variant="outlined"
-              sx={{ bgcolor: "white" }}
+              sx={{ bgcolor: "white", fontSize: "1.5rem" }}
             />
           );
         })}
@@ -84,21 +84,20 @@ const Field = ({ height, color, monster, isSelf }: Props) => {
         }}
         pt="6px"
       >
-        <Box sx={{ height: "10%", width: "100%" }}>
-          {!isSelf && !monster ? (
-            <Typography>{locale.Field.message}</Typography>
-          ) : (
-            <Typography fontSize="1rem" align="center">
-              {monster ? monster.name : ""}
-            </Typography>
-          )}
-        </Box>
+        <Text fontSize="1rem" height="10%">
+          {!isSelf && !monster
+            ? locale.Field.message
+            : monster
+              ? monster.name
+              : ""}
+        </Text>
         <Centering>
           <Image
             src={monster ? monster.base64image : ""}
             alt="silhouette"
+            width="100%"
+            height="90%"
             objectFit="contain"
-            sx={{ height: "90%", width: "100%" }}
           />
         </Centering>
       </Box>
