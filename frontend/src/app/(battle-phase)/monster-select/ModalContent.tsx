@@ -67,18 +67,6 @@ const ModalContent = ({ monster, handleClose }: Props) => {
         </Typography>
 
         <Stack direction="row" spacing={2}>
-          <Chip
-            avatar={
-              <Avatar sx={{ bgcolor: "black" }} variant="rounded">
-                <Typography color="white" fontWeight={600}>
-                  HP
-                </Typography>
-              </Avatar>
-            }
-            label="100"
-            variant="outlined"
-            sx={{ borderRadius: "8px", bgcolor: "white" }}
-          />
           {images.map(({ url, hand }: TypeImage) => {
             return (
               <Chip
@@ -94,6 +82,7 @@ const ModalContent = ({ monster, handleClose }: Props) => {
                         : "-"
                 }
                 variant="outlined"
+                sx={{ bgcolor: "white", fontSize: "1.5rem" }}
               />
             );
           })}
