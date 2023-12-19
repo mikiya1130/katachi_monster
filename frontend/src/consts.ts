@@ -1,6 +1,7 @@
 import { TypeImage } from "@/types";
 
 export const maxWidth = "sm";
+export const initialHP = 100;
 
 export const images: TypeImage[] = [
   { url: "images/gu.png", hand: "gu" },

@@ -19,7 +19,7 @@ import Image from "@/components/Image";
 import { useLocale } from "@/components/LocaleProvider";
 import Message, { MessageRef } from "@/components/Message";
 import { useSocket } from "@/components/SocketProvider";
-import { images } from "@/consts";
+import { images, initialHP } from "@/consts";
 import { TypeHand } from "@/types";
 
 const BattleAttackSelect = () => {
@@ -63,7 +63,7 @@ const BattleAttackSelect = () => {
       setMonsterSelf({
         base64image: res.data.base64image,
         name: res.data.name,
-        hp: 100,
+        hp: initialHP,
         gu: res.data.gu,
         choki: res.data.choki,
         pa: res.data.pa,
