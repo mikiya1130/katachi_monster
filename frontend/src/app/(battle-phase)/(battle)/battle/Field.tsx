@@ -49,7 +49,7 @@ const Field = ({ height, color, monster, isSelf }: Props) => {
           }
           label={monster ? monster.hp : "-"}
           variant="outlined"
-          sx={{ borderRadius: "8px", bgcolor: "white" }}
+          sx={{ borderRadius: "8px", bgcolor: "white", fontSize: "1.5rem" }}
         />
         {images.map(({ url, hand }: TypeImage) => {
           return (
@@ -68,7 +68,7 @@ const Field = ({ height, color, monster, isSelf }: Props) => {
                         : "-"
               }
               variant="outlined"
-              sx={{ bgcolor: "white" }}
+              sx={{ bgcolor: "white", fontSize: "1.5rem" }}
             />
           );
         })}
