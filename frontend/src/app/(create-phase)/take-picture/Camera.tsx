@@ -124,11 +124,9 @@ const Camera = ({
           <Stack
             direction="row"
             justifyContent="center"
-            sx={{
-              position: "absolute",
-              width: "100%",
-              bottom: `calc(${width} * ${scale} / 3)`,
-            }}
+            position="absolute"
+            width="100%"
+            bottom={`calc(${width} * ${scale} / 3)`}
           >
             <IconButton
               onClick={handleClickBack}

@@ -3,19 +3,14 @@ import { Button, Stack } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
 
+import Centering from "@/components/Centering";
 import { useLocale } from "@/components/LocaleProvider";
 
 const ModeSelect = () => {
   const locale = useLocale();
 
   return (
-    <Stack
-      p={4}
-      spacing={10}
-      alignItems="center"
-      justifyContent="center"
-      height="100%"
-    >
+    <Centering p={4} spacing={10}>
       <Typography fontSize="2rem">{locale.ModeSelect.title}</Typography>
       <Stack
         alignItems="center"
@@ -35,7 +30,7 @@ const ModeSelect = () => {
           </Button>
         </Link>
       </Stack>
-    </Stack>
+    </Centering>
   );
 };
 

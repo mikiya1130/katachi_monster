@@ -1,5 +1,5 @@
 "use client";
-import { Box, Stack } from "@mui/material";
+import { Box } from "@mui/material";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useContext, useEffect, useRef, useState } from "react";
 
@@ -168,13 +168,7 @@ const BattleAttackSelect = () => {
 
   return (
     <>
-      <Stack
-        p={4}
-        spacing={0}
-        alignItems="center"
-        justifyContent="center"
-        height="100%"
-      >
+      <Centering p={4} spacing={0}>
         <Field
           height="30%"
           color="blue"
@@ -246,7 +240,7 @@ const BattleAttackSelect = () => {
             callbackButtonSelected={handleButtonSelected}
           />
         </Box>
-      </Stack>
+      </Centering>
       <Message ref={messageRef} />
     </>
   );

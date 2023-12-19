@@ -1,9 +1,10 @@
 "use client";
-import { Button, CircularProgress, Stack, TextField } from "@mui/material";
+import { Button, CircularProgress, TextField } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import Centering from "@/components/Centering";
 import { useLocale } from "@/components/LocaleProvider";
 import { useSocket } from "@/components/SocketProvider";
 
@@ -48,13 +49,7 @@ const EnterRoom = () => {
   };
 
   return (
-    <Stack
-      p={4}
-      spacing={10}
-      alignItems="center"
-      justifyContent="center"
-      height="100%"
-    >
+    <Centering p={4} spacing={10}>
       <Typography fontSize="2rem">{locale.EnterRoom.message}</Typography>
 
       <TextField
@@ -85,7 +80,7 @@ const EnterRoom = () => {
           {locale.EnterRoom.confirmButton}
         </Button>
       )}
-    </Stack>
+    </Centering>
   );
 };
 
