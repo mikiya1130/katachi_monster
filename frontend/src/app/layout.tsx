@@ -19,7 +19,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Shape Monster",
-  description: "",
+  description: "~Let’s search! create! battle!~",
 };
 
 type Props = {

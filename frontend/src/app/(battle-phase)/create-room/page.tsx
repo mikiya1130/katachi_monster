@@ -44,7 +44,7 @@ const CreateRoom = () => {
 
       {roomId ? (
         <Typography fontSize="2rem" align="left">
-          ID:{roomId}
+          ID: {roomId}
         </Typography>
       ) : (
         <CircularProgress />

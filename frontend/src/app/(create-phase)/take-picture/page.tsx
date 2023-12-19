@@ -80,7 +80,7 @@ const TakePicture = () => {
       .then((res) => {
         const pictureId: string = res.data.picture_id;
         router.push(
-          ` confirm-silhouette?monsterId=${monsterId}&silhouetteId=${silhouetteId}&pictureId=${pictureId}`,
+          `/confirm-silhouette?monsterId=${monsterId}&silhouetteId=${silhouetteId}&pictureId=${pictureId}`,
         );
       })
       .catch((error) => {

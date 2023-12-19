@@ -19,11 +19,11 @@ const PlayerLobby = () => {
       <Typography fontSize="2rem" align="left">
         {locale.PlayerLobby.title}
       </Typography>
-      <Link href={`/create-room`}>
+      <Link href="/create-room">
         <Button variant="outlined">{locale.PlayerLobby.createRoom}</Button>
       </Link>
 
-      <Link href={`/enter-room`}>
+      <Link href="/enter-room">
         <Button variant="contained">{locale.PlayerLobby.enterRoom}</Button>
       </Link>
     </Stack>
