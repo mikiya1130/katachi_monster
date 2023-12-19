@@ -65,8 +65,15 @@ const EnterRoom = () => {
         variant="filled"
         value={roomId}
         type="text"
+        inputProps={{ inputMode: "numeric" }}
         onChange={handleInputChange}
         sx={{ maxWidth: "10rem" }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            // エンターキー押下時の処理
+            handleSubmit();
+          }
+        }}
       />
 
       {isButtonRoading ? (
