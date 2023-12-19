@@ -1,12 +1,16 @@
 "use client";
 import { Box, Rating, Stack, Typography } from "@mui/material";
+import { isAxiosError } from "axios";
 import { useEffect, useRef, useState } from "react";
 
 import Swiper from "@/app/(create-phase)/level-select/Swiper";
 import { axios } from "@/axios";
 import { useLocale } from "@/components/LocaleProvider";
+import Message, { MessageRef } from "@/components/Message";
 
 const LevelSelect = () => {
+  const messageRef = useRef<MessageRef>(null);
+
   const [monsterIdsList, setMonsterIdsList] = useState<number[][]>([
     [],
     [],
@@ -27,31 +31,45 @@ const LevelSelect = () => {
   }, [boxRef, ratingRef]);
 
   useEffect(() => {
-    axios.get("monsters").then((res) => {
-      setMonsterIdsList(res.data.monster_ids);
-    });
+    axios
+      .get("monsters")
+      .then((res) => {
+        setMonsterIdsList(res.data.monster_ids);
+      })
+      .catch((err) => {
+        if (isAxiosError(err)) {
+          console.log(err.response?.data.detail);
+          messageRef.current?.call({
+            type: "error",
+            message: err.response?.data.detail,
+          });
+        }
+      });
   }, []);
 
   return (
-    <Stack py={5} height="100%">
-      <Typography fontSize="2rem">{locale.LevelSelect.level}</Typography>
-      <Stack direction="column" spacing={3} flexGrow={1}>
-        {monsterIdsList.map((monsterIds, level) => {
-          return (
-            <Box key={level} flexGrow={1} ref={boxRef}>
-              <Rating
-                value={level + 1}
-                max={monsterIdsList.length}
-                readOnly
-                sx={{ fontSize: "2rem" }}
-                ref={ratingRef}
-              />
-              <Swiper monsterIds={monsterIds} height={swiperHeight} />
-            </Box>
-          );
-        })}
+    <>
+      <Stack py={5} height="100%">
+        <Typography fontSize="2rem">{locale.LevelSelect.level}</Typography>
+        <Stack direction="column" spacing={3} flexGrow={1}>
+          {monsterIdsList.map((monsterIds, level) => {
+            return (
+              <Box key={level} flexGrow={1} ref={boxRef}>
+                <Rating
+                  value={level + 1}
+                  max={monsterIdsList.length}
+                  readOnly
+                  sx={{ fontSize: "2rem" }}
+                  ref={ratingRef}
+                />
+                <Swiper monsterIds={monsterIds} height={swiperHeight} />
+              </Box>
+            );
+          })}
+        </Stack>
       </Stack>
-    </Stack>
+      <Message ref={messageRef} />
+    </>
   );
 };
 
