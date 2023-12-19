@@ -1,5 +1,5 @@
 "use client";
-import { Box, Stack, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
@@ -25,26 +25,21 @@ const BattleResult = () => {
       style={{ color: "inherit", textDecoration: "none" }}
     >
       {winner && winner.monster && (
-        <Stack
+        <Centering
           p={4}
-          spacing={0}
           alignItems="center"
-          justifyContent="center"
+          justifyContent="space-evenly"
           height="100%"
         >
-          <Box sx={{ height: "30%", width: "100%" }}>
-            <Centering p={2}>
-              <Typography
-                fontSize="2rem"
-                color={winner.isSelf ? "red" : "blue"}
-                sx={{ fontWeight: 700 }}
-              >
-                {winner.isSelf
-                  ? locale.BattleResult.titleWinner
-                  : locale.BattleResult.titleLoser}
-              </Typography>
-            </Centering>
-          </Box>
+          <Typography
+            fontSize="2rem"
+            color={winner.isSelf ? "red" : "blue"}
+            sx={{ fontWeight: 700 }}
+          >
+            {winner.isSelf
+              ? locale.BattleResult.titleWinner
+              : locale.BattleResult.titleLoser}
+          </Typography>
 
           <Field
             height="30%"
@@ -53,24 +48,16 @@ const BattleResult = () => {
             isSelf={true}
           />
 
-          <Box sx={{ height: "30%", width: "100%" }}>
-            <Centering p={2}>
-              <Typography fontSize="2rem" sx={{ fontWeight: 700 }}>
-                {winner.isSelf
-                  ? locale.BattleResult.messageWinner
-                  : locale.BattleResult.messageLoser}
-              </Typography>
-            </Centering>
-          </Box>
+          <Typography fontSize="2rem" sx={{ fontWeight: 700 }}>
+            {winner.isSelf
+              ? locale.BattleResult.messageWinner
+              : locale.BattleResult.messageLoser}
+          </Typography>
 
-          <Box sx={{ height: "10%", width: "100%" }}>
-            <Centering p={2}>
-              <Typography fontSize="1.5rem" sx={{ fontWeight: 700 }}>
-                {locale.BattleResult.touchMassage}
-              </Typography>
-            </Centering>
-          </Box>
-        </Stack>
+          <Typography fontSize="1.5rem" sx={{ fontWeight: 700 }}>
+            {locale.BattleResult.touchMassage}
+          </Typography>
+        </Centering>
       )}
     </Link>
   );
