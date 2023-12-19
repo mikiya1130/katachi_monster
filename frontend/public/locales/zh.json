@@ -1,0 +1,76 @@
+{
+  "Home": {
+    "title": "形状怪兽",
+    "titleMessage": "点击开始"
+  },
+  "ModeSelect": {
+    "title": "选择模式",
+    "labelLevelSelect": "创建怪兽",
+    "labelPlayerLobby": "战斗"
+  },
+  "LevelSelect": {
+    "level": "等级"
+  },
+  "ModalContent": {
+    "comment": "这样可以吗？",
+    "viewDetailsButton": "查看详情",
+    "confirmButton": "确认"
+  },
+  "ConfirmSilhouette": {
+    "retakeButton": "重拍",
+    "confirmButton": "确认",
+    "message": "匹配率 & 力量"
+  },
+  "NamingMonster": {
+    "message": "给怪兽起名字",
+    "monsterName": "怪兽的名字",
+    "next": "下一步"
+  },
+  "SelectSilhouette": {
+    "message": "选择一个形状",
+    "backButton": "返回",
+    "nextButton": "下一步"
+  },
+  "Field": {
+    "message": "对手正在选择怪兽"
+  },
+  "CreateRoom": {
+    "message": "创建房间"
+  },
+  "EnterRoom": {
+    "message": "进入房间",
+    "confirmButton": "确认"
+  },
+  "BattleResult": {
+    "titleWinner": "你赢了！！",
+    "titleLoser": "你输了",
+    "messageWinner": "继续加油下一轮！",
+    "messageLoser": "胜利的时刻会来的！",
+    "touchMassage": "点击再玩一次"
+  },
+  "Swiper": {
+    "message": "这个等级没有怪兽",
+    "makeMonster": "创建怪兽"
+  },
+  "PlayerLobby": {
+    "title": "准备战斗",
+    "createRoom": "创建战斗房间",
+    "enterRoom": "进入战斗房间"
+  },
+  "BattleAttackSelect": {
+    "errorMessage": "发生连接错误",
+    "startMessage":"战斗开始！！",
+    "buttonSelectMessage":"选择一个按钮！",
+    "battleCry":"石头！\n剪刀！\n布！",
+    "succsessfulMessage": "攻击成功！",
+    "drawMessage": "平局",
+    "failedMessage": "攻击失败！"
+  },
+  "TakePicture": {
+    "errorMessage1": "无法访问相机",
+    "errorMessage2": "拍照失败",
+    "infoMessage": "正在处理图像……",
+    "loadingMessage": "正在加载相机……",
+    "reloadMessage": "重新加载"
+  }
+}

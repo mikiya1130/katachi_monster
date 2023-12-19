@@ -2,7 +2,7 @@
 import Cookies from "js-cookie";
 import { createContext, useContext, useEffect, useState } from "react";
 
-import { defaultLocale, defaultLocaleData, localeList } from "@/consts";
+import { defaultLocale, defaultLocaleData, locales } from "@/consts";
 
 const LocaleContext = createContext(defaultLocaleData);
 
@@ -15,7 +15,7 @@ const LocaleProvider = ({ children }: Props) => {
 
   useEffect(() => {
     let cookie = Cookies.get("locale") || defaultLocale;
-    if (!localeList.includes(cookie)) {
+    if (!Object.keys(locales).includes(cookie)) {
       cookie = defaultLocale;
     }
     const data = fetch(`locales/${cookie}.json`);

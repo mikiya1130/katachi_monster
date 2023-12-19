@@ -4,6 +4,12 @@ import "@fontsource/noto-sans/700.css"; // NOTE: 700 選んでも Bold になら
 import "@fontsource/noto-sans-jp/400.css";
 import "@fontsource/noto-sans-jp/600.css";
 import "@fontsource/noto-sans-jp/700.css"; // NOTE: 700 選んでも Bold にならない？？
+import "@fontsource/noto-sans-kr/400.css";
+import "@fontsource/noto-sans-kr/600.css";
+import "@fontsource/noto-sans-kr/700.css"; // NOTE: 700 選んでも Bold にならない？？
+import "@fontsource/noto-sans-sc/400.css";
+import "@fontsource/noto-sans-sc/600.css";
+import "@fontsource/noto-sans-sc/700.css"; // NOTE: 700 選んでも Bold にならない？？
 
 import { CssBaseline } from "@mui/material";
 import Container from "@mui/material/Container";

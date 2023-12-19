@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import Centering from "@/components/Centering";
 import { useLocale } from "@/components/LocaleProvider";
 import Text from "@/components/Text";
-import { localeList, maxWidth } from "@/consts";
+import { locales, maxWidth } from "@/consts";
 import theme from "@/theme";
 
 const Home = () => {
@@ -64,9 +64,9 @@ const Home = () => {
         onChange={handleLocaleChange}
         sx={{ position: "absolute", top: "1rem", right: "1rem" }}
       >
-        {localeList.map((locale) => (
-          <MenuItem key={locale} value={locale}>
-            {locale}
+        {Object.entries(locales).map(([code, language]) => (
+          <MenuItem key={code} value={code}>
+            {language}
           </MenuItem>
         ))}
       </Select>

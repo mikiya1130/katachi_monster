@@ -13,7 +13,13 @@ const theme = createTheme({
     button: {
       textTransform: "none",
     },
-    fontFamily: ["Noto Sans", "Noto Sans JP", "sans-serif"].join(","),
+    fontFamily: [
+      "Noto Sans",
+      "Noto Sans JP",
+      "Noto Sans KR",
+      "Noto Sans SC",
+      "sans-serif",
+    ].join(","),
   },
 });
 

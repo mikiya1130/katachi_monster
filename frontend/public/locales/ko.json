@@ -1,0 +1,76 @@
+{
+  "Home": {
+    "title": "모양 몬스터",
+    "titleMessage": "터치하여 시작"
+  },
+  "ModeSelect": {
+    "title": "모드 선택",
+    "labelLevelSelect": "몬스터 만들기",
+    "labelPlayerLobby": "전투"
+  },
+  "LevelSelect": {
+    "level": "레벨"
+  },
+  "ModalContent": {
+    "comment": "이대로 괜찮나요?",
+    "viewDetailsButton": "자세히 보기",
+    "confirmButton": "확인"
+  },
+  "ConfirmSilhouette": {
+    "retakeButton": "다시 찍기",
+    "confirmButton": "확인",
+    "message": "매치율 & 파워"
+  },
+  "NamingMonster": {
+    "message": "몬스터에 이름 붙이기",
+    "monsterName": "몬스터의 이름",
+    "next": "다음"
+  },
+  "SelectSilhouette": {
+    "message": "실루엣 선택하기",
+    "backButton": "뒤로",
+    "nextButton": "다음"
+  },
+  "Field": {
+    "message": "상대방이 몬스터 선택 중"
+  },
+  "CreateRoom": {
+    "message": "방 만들기"
+  },
+  "EnterRoom": {
+    "message": "방에 들어가기",
+    "confirmButton": "확인"
+  },
+  "BattleResult": {
+    "titleWinner": "승리했습니다!!",
+    "titleLoser": "패배했습니다",
+    "messageWinner": "다음 라운드도 화이팅!",
+    "messageLoser": "승리의 순간이 올 거예요!",
+    "touchMassage": "터치하여 다시 플레이"
+  },
+  "Swiper": {
+    "message": "이 레벨에는 몬스터가 없습니다",
+    "makeMonster": "몬스터 만들기"
+  },
+  "PlayerLobby": {
+    "title": "전투 준비",
+    "createRoom": "전투방 만들기",
+    "enterRoom": "전투방에 들어가기"
+  },
+  "BattleAttackSelect": {
+    "errorMessage": "연결 오류가 발생했습니다",
+    "startMessage":"전투 시작!!",
+    "buttonSelectMessage":"버튼을 선택하세요!",
+    "battleCry":"가위!\n바위!\n보!",
+    "succsessfulMessage": "공격 성공!",
+    "drawMessage": "무승부",
+    "failedMessage": "공격 실패!"
+  },
+  "TakePicture": {
+    "errorMessage1": "카메라에 접근할 수 없습니다",
+    "errorMessage2": "사진 촬영 실패",
+    "infoMessage": "이미지 처리 중...",
+    "loadingMessage": "카메라 로딩 중...",
+    "reloadMessage": "재로딩"
+  }
+}

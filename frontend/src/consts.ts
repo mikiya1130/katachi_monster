@@ -9,7 +9,12 @@ export const images: TypeImage[] = [
   { url: "images/pa.png", hand: "pa" },
 ];
 
-export const localeList = ["en", "ja"];
+export const locales = {
+  en: "English",
+  ja: "日本語",
+  ko: "한국어",
+  zh: "中文",
+};
 export const defaultLocale = "en";
 export const defaultLocaleData = {
   locale: defaultLocale,
