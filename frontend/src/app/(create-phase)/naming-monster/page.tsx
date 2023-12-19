@@ -40,6 +40,8 @@ const NamingMonster = () => {
   };
 
   const handleNextClick = () => {
+    if (invalidInputValue) return;
+
     setIsButtonDisabled(true);
     axios
       .post(`monster/${monsterId}`, { name: inputValue })
@@ -67,6 +69,12 @@ const NamingMonster = () => {
         value={inputValue}
         sx={{ maxWidth: "13rem" }} // NOTE: Max10文字が入る大きさ
         onChange={handleInputChange}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            // エンターキー押下時の処理
+            handleNextClick();
+          }
+        }}
       />
       <Button
         variant="contained"
