@@ -31,9 +31,7 @@ const Swiper = ({ monsterIds, height }: Props) => {
       direction="row"
       gap={2}
       px={2}
-      sx={{
-        overflowX: "scroll",
-      }}
+      sx={{ overflowX: "scroll" }}
     >
       {monsterIds.length !== 0 ? (
         monsterIds.map((monsterId) => (

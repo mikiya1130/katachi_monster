@@ -4,6 +4,7 @@ import { useState } from "react";
 import Content from "@/app/(create-phase)/level-select/Content";
 import ModalContent from "@/app/(create-phase)/level-select/ModalContent";
 import { TypeMonster } from "@/app/(create-phase)/level-select/types";
+
 type Props = {
   monsterIds: number[];
   height: number | string;

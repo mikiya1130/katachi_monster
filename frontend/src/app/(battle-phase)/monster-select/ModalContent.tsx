@@ -92,10 +92,7 @@ const ModalContent = ({ monster, handleClose }: Props) => {
           src={monster.base64image}
           alt={`monster_${monster.id}`}
           width="90%"
-          sx={{
-            border: 2,
-            solid: "#000",
-          }}
+          sx={{ border: 2, solid: "#000" }}
         />
 
         <Stack direction="row" spacing={4}>
