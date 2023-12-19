@@ -1,8 +1,8 @@
 "use client";
-import { Button, Stack } from "@mui/material";
-import Link from "next/link";
+import { Stack } from "@mui/material";
 
 import Centering from "@/components/Centering";
+import LinkButton from "@/components/LinkButton";
 import { useLocale } from "@/components/LocaleProvider";
 import Text from "@/components/Text";
 
@@ -18,17 +18,13 @@ const ModeSelect = () => {
         spacing={10}
         width="50%"
       >
-        <Link href="/level-select">
-          <Button variant="outlined">
-            {locale.ModeSelect.labelLevelSelect}
-          </Button>
-        </Link>
+        <LinkButton href="/level-select" variant="outlined">
+          {locale.ModeSelect.labelLevelSelect}
+        </LinkButton>
 
-        <Link href="/player-lobby">
-          <Button variant="contained">
-            {locale.ModeSelect.labelPlayerLobby}
-          </Button>
-        </Link>
+        <LinkButton href="/player-lobby" variant="contained">
+          {locale.ModeSelect.labelPlayerLobby}
+        </LinkButton>
       </Stack>
     </Centering>
   );
