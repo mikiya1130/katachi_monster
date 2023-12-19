@@ -46,7 +46,7 @@
     "titleLoser": "You lose",
     "messageWinner": "You played exceptionally well!",
     "messageLoser": "Your time will come for victory!",
-    "touchMassage": "Touch to Play Again"
+    "touchMassage": "Tap to Play Again"
   },
   "Swiper": {
     "message": "There are no monsters at this level",

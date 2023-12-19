@@ -46,7 +46,7 @@
     "titleLoser": "あなたのまけ",
     "messageWinner": "つぎもがんばろう",
     "messageLoser": "つぎはがんばろう",
-    "touchMassage": "タッチしてもういっかいはじめる"
+    "touchMassage": "タッチしてもういちどプレイ"
   },
   "Swiper": {
     "message": "このレベルのモンスターはいません",
