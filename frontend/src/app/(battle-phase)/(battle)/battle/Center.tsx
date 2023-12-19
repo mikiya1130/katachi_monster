@@ -1,8 +1,8 @@
 "use client";
-import { Typography } from "@mui/material";
 import { CSSProperties } from "react";
 
 import Centering from "@/components/Centering";
+import Text from "@/components/Text";
 
 type Props = {
   children: React.ReactNode;
@@ -13,18 +13,9 @@ type Props = {
 const Center = ({ color = "black", style = {}, children }: Props) => {
   return (
     <Centering p={2}>
-      <Typography
-        fontSize="2rem"
-        width="100%"
-        align="center"
-        sx={{
-          fontWeight: 700,
-          color: color,
-        }}
-        style={style}
-      >
+      <Text fontSize="2rem" fontWeight={700} color={color} style={style}>
         {children}
-      </Typography>
+      </Text>
     </Centering>
   );
 };

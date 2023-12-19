@@ -1,12 +1,12 @@
 "use client";
 import { CircularProgress } from "@mui/material";
-import Typography from "@mui/material/Typography";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import Centering from "@/components/Centering";
 import { useLocale } from "@/components/LocaleProvider";
 import { useSocket } from "@/components/SocketProvider";
+import Text from "@/components/Text";
 
 const CreateRoom = () => {
   const router = useRouter();
@@ -33,10 +33,10 @@ const CreateRoom = () => {
 
   return (
     <Centering p={4} spacing={10}>
-      <Typography fontSize="2rem">{locale.CreateRoom.message}</Typography>
+      <Text fontSize="2rem">{locale.CreateRoom.message}</Text>
 
       {roomId ? (
-        <Typography fontSize="2rem">ID: {roomId}</Typography>
+        <Text fontSize="2rem">ID: {roomId}</Text>
       ) : (
         <CircularProgress />
       )}

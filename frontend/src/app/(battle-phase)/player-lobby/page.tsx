@@ -1,17 +1,17 @@
 "use client";
 import { Button } from "@mui/material";
-import Typography from "@mui/material/Typography";
 import Link from "next/link";
 
 import Centering from "@/components/Centering";
 import { useLocale } from "@/components/LocaleProvider";
+import Text from "@/components/Text";
 
 const PlayerLobby = () => {
   const locale = useLocale();
 
   return (
     <Centering p={4} spacing={10}>
-      <Typography fontSize="2rem">{locale.PlayerLobby.title}</Typography>
+      <Text fontSize="2rem">{locale.PlayerLobby.title}</Text>
       <Link href="/create-room">
         <Button variant="outlined">{locale.PlayerLobby.createRoom}</Button>
       </Link>

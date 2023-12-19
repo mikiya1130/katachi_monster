@@ -1,12 +1,12 @@
 "use client";
 import { Button, CircularProgress, TextField } from "@mui/material";
-import Typography from "@mui/material/Typography";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import Centering from "@/components/Centering";
 import { useLocale } from "@/components/LocaleProvider";
 import { useSocket } from "@/components/SocketProvider";
+import Text from "@/components/Text";
 
 const EnterRoom = () => {
   const router = useRouter();
@@ -50,7 +50,7 @@ const EnterRoom = () => {
 
   return (
     <Centering p={4} spacing={10}>
-      <Typography fontSize="2rem">{locale.EnterRoom.message}</Typography>
+      <Text fontSize="2rem">{locale.EnterRoom.message}</Text>
 
       <TextField
         id="room-id"

@@ -5,7 +5,6 @@ import {
   IconButton,
   Modal,
   Stack,
-  Typography,
   useMediaQuery,
 } from "@mui/material";
 
@@ -13,6 +12,7 @@ import { TypeMonster } from "@/app/(battle-phase)/monster-select/types";
 import Image from "@/components/Image";
 import LinkButton from "@/components/LinkButton";
 import { useLocale } from "@/components/LocaleProvider";
+import Text from "@/components/Text";
 import { images, maxWidth } from "@/consts";
 import theme from "@/theme";
 import { TypeImage } from "@/types";
@@ -62,9 +62,7 @@ const ModalContent = ({ monster, handleClose }: Props) => {
           <Close sx={{ width: "100%", height: "100%" }} />
         </IconButton>
 
-        <Typography fontSize={24} textAlign="center">
-          {monster.name}
-        </Typography>
+        <Text fontSize={24}>{monster.name}</Text>
 
         <Stack direction="row" spacing={2}>
           {images.map(({ url, hand }: TypeImage) => {

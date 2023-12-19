@@ -1,17 +1,17 @@
 "use client";
 import { Button, Stack } from "@mui/material";
-import Typography from "@mui/material/Typography";
 import Link from "next/link";
 
 import Centering from "@/components/Centering";
 import { useLocale } from "@/components/LocaleProvider";
+import Text from "@/components/Text";
 
 const ModeSelect = () => {
   const locale = useLocale();
 
   return (
     <Centering p={4} spacing={10}>
-      <Typography fontSize="2rem">{locale.ModeSelect.title}</Typography>
+      <Text fontSize="2rem">{locale.ModeSelect.title}</Text>
       <Stack
         alignItems="center"
         justifyContent="center"

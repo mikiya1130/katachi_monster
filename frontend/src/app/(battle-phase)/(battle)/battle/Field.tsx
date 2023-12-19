@@ -1,11 +1,12 @@
 "use client";
-import { Avatar, Box, Chip, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Chip, Stack } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 
 import { TypeMonster } from "@/app/(battle-phase)/(battle)/battle/types";
 import Centering from "@/components/Centering";
 import Image from "@/components/Image";
 import { useLocale } from "@/components/LocaleProvider";
+import Text from "@/components/Text";
 import { images } from "@/consts";
 import { TypeImage } from "@/types";
 
@@ -42,9 +43,9 @@ const Field = ({ height, color, monster, isSelf }: Props) => {
         <Chip
           avatar={
             <Avatar sx={{ bgcolor: "black" }} variant="rounded">
-              <Typography color="white" fontWeight={600}>
+              <Text fontSize="1rem" fontWeight={700} color="white">
                 HP
-              </Typography>
+              </Text>
             </Avatar>
           }
           label={monster ? monster.hp : "-"}
@@ -84,13 +85,13 @@ const Field = ({ height, color, monster, isSelf }: Props) => {
         }}
         pt="6px"
       >
-        <Typography height="10%" fontSize="1rem" align="center">
+        <Text fontSize="1rem" height="10%">
           {!isSelf && !monster
             ? locale.Field.message
             : monster
               ? monster.name
               : ""}
-        </Typography>
+        </Text>
         <Centering>
           <Image
             src={monster ? monster.base64image : ""}

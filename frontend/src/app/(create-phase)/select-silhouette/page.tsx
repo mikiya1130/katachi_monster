@@ -3,7 +3,7 @@
  */
 "use client";
 
-import { Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -14,6 +14,7 @@ import Centering from "@/components/Centering";
 import Image from "@/components/Image";
 import LinkButton from "@/components/LinkButton";
 import { useLocale } from "@/components/LocaleProvider";
+import Text from "@/components/Text";
 
 const SelectSilhouette = () => {
   const searchParams = useSearchParams();
@@ -85,7 +86,7 @@ const SelectSilhouette = () => {
   return (
     <Centering height="inherit" spacing={4} padding={4}>
       {image !== "" && includeSilhouettesNotReplacedPicture && (
-        <Typography variant="h5">{locale.SelectSilhouette.message}</Typography>
+        <Text fontSize="1.5rem">{locale.SelectSilhouette.message}</Text>
       )}
       <Image
         src={image}

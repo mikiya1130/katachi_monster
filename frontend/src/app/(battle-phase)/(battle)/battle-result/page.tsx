@@ -1,5 +1,4 @@
 "use client";
-import { Typography } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
@@ -8,6 +7,7 @@ import Field from "@/app/(battle-phase)/(battle)/battle/Field";
 import { BattleContext } from "@/app/(battle-phase)/(battle)/layout";
 import Centering from "@/components/Centering";
 import { useLocale } from "@/components/LocaleProvider";
+import Text from "@/components/Text";
 
 const BattleResult = () => {
   const { winner } = useContext(BattleContext);
@@ -31,15 +31,15 @@ const BattleResult = () => {
           justifyContent="space-evenly"
           height="100%"
         >
-          <Typography
+          <Text
             fontSize="2rem"
+            fontWeight={700}
             color={winner.isSelf ? "red" : "blue"}
-            sx={{ fontWeight: 700 }}
           >
             {winner.isSelf
               ? locale.BattleResult.titleWinner
               : locale.BattleResult.titleLoser}
-          </Typography>
+          </Text>
 
           <Field
             height="30%"
@@ -48,15 +48,15 @@ const BattleResult = () => {
             isSelf={true}
           />
 
-          <Typography fontSize="2rem" sx={{ fontWeight: 700 }}>
+          <Text fontSize="2rem" fontWeight={700}>
             {winner.isSelf
               ? locale.BattleResult.messageWinner
               : locale.BattleResult.messageLoser}
-          </Typography>
+          </Text>
 
-          <Typography fontSize="1.5rem" sx={{ fontWeight: 700 }}>
+          <Text fontSize="1.5rem" fontWeight={700}>
             {locale.BattleResult.touchMassage}
-          </Typography>
+          </Text>
         </Centering>
       )}
     </Link>

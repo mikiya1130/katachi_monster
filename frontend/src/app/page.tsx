@@ -5,12 +5,12 @@ import {
   SelectChangeEvent,
   useMediaQuery,
 } from "@mui/material";
-import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import Centering from "@/components/Centering";
 import { useLocale } from "@/components/LocaleProvider";
+import Text from "@/components/Text";
 import { localeList, maxWidth } from "@/consts";
 import theme from "@/theme";
 
@@ -42,24 +42,21 @@ const Home = () => {
         style={{ color: "inherit", textDecoration: "none" }}
       >
         <Centering justifyContent="space-around">
-          <Typography
+          <Text
+            fontSize={`calc(${width} * ${logoScale} / ${title.length})`}
+            fontWeight={700}
             variant="h1"
             sx={{
-              fontSize: `calc(${width} * ${logoScale} / ${title.length})`,
-              fontWeight: 700,
               textShadow: "0 0 5px",
             }}
           >
             {title}
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              fontSize: `calc(${width} * ${messageScale} / ${titleMessage.length})`,
-            }}
+          </Text>
+          <Text
+            fontSize={`calc(${width} * ${messageScale} / ${titleMessage.length})`}
           >
             {titleMessage}
-          </Typography>
+          </Text>
         </Centering>
       </Link>
       <Select
