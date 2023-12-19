@@ -20,7 +20,10 @@ const BattleResult = () => {
   }
 
   return (
-    <Link href="/mode-select" style={{ textDecoration: "none" }}>
+    <Link
+      href="/mode-select"
+      style={{ color: "inherit", textDecoration: "none" }}
+    >
       {winner && winner.monster && (
         <Stack
           p={4}
@@ -52,13 +55,7 @@ const BattleResult = () => {
 
           <Box sx={{ height: "30%", width: "100%" }}>
             <Centering p={2}>
-              <Typography
-                fontSize="2rem"
-                color={"red"}
-                sx={{
-                  fontWeight: 700,
-                }}
-              >
+              <Typography fontSize="2rem" sx={{ fontWeight: 700 }}>
                 {winner.isSelf
                   ? locale.BattleResult.messageWinner
                   : locale.BattleResult.messageLoser}
@@ -68,12 +65,7 @@ const BattleResult = () => {
 
           <Box sx={{ height: "10%", width: "100%" }}>
             <Centering p={2}>
-              <Typography
-                fontSize="2rem"
-                sx={{
-                  fontWeight: 700,
-                }}
-              >
+              <Typography fontSize="1.5rem" sx={{ fontWeight: 700 }}>
                 {locale.BattleResult.touchMassage}
               </Typography>
             </Centering>
