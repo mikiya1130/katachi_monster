@@ -15,6 +15,7 @@ const BattleResult = () => {
   const router = useRouter();
 
   if (!winner) {
+    // リロードで context が消えた時
     router.push("/mode-select");
   }
 
