@@ -15,6 +15,8 @@ const Center = ({ color = "black", style = {}, children }: Props) => {
     <Centering p={2}>
       <Typography
         fontSize="2rem"
+        width="100%"
+        align="center"
         sx={{
           fontWeight: 700,
           color: color,
