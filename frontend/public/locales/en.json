@@ -12,7 +12,7 @@
     "level": "Level"
   },
   "ModalContent": {
-    "comment": "Yes, is this okay?",
+    "comment": "Is this okay?",
     "viewDetailsButton": "View Details",
     "confirmButton": "Confirm"
   },
@@ -22,7 +22,7 @@
    "message": "Match Rate & Power"
   },
   "NamingMonster": {
-    "message": "Name monster",
+    "message": "Name your monster",
     "monsterName": "Monster's Name",
     "next": "Next"
   },
@@ -44,7 +44,7 @@
   "BattleResult": {
     "titleWinner": "You win!!",
     "titleLoser": "You lose",
-    "messageWinner": "You played exceptionally well!",
+    "messageWinner": "Keep it up for the next round!",
     "messageLoser": "Your time will come for victory!",
     "touchMassage": "Tap to Play Again"
   },
@@ -67,7 +67,7 @@
     "failedMessage": "Attack failed!"
   },
   "TakePicture": {
-    "errorMessage1": "Cannot access to camera",
+    "errorMessage1": "Cannot access the camera",
     "errorMessage2": "Failed to take a picture",
     "infoMessage": "Processing the image...",
     "loadingMessage": "Loading the camera...",
