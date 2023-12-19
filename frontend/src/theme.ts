@@ -13,12 +13,7 @@ const theme = createTheme({
     button: {
       textTransform: "none",
     },
-  },
-});
-
-export const titleFont = createTheme({
-  typography: {
-    fontFamily: ["Noto Sans JP", "sans-serif"].join(","),
+    fontFamily: ["Noto Sans", "Noto Sans JP", "sans-serif"].join(","),
   },
 });
 

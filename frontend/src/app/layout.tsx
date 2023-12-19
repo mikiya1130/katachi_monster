@@ -1,8 +1,10 @@
-import "@fontsource/noto-sans-jp/700.css";
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
+import "@fontsource/noto-sans/400.css";
+import "@fontsource/noto-sans/600.css"; // NOTE: 700 選んでも Bold にならない？？600 で代用
+// import "@fontsource/noto-sans/700.css";
+import "@fontsource/noto-sans-jp/400.css";
+import "@fontsource/noto-sans-jp/600.css";
+// import "@fontsource/noto-sans-jp/700.css";
+
 import { CssBaseline } from "@mui/material";
 import Container from "@mui/material/Container";
 import { ThemeProvider } from "@mui/material/styles";
