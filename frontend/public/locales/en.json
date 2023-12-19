@@ -42,7 +42,8 @@
     "confirmButton": "Confirm"
   },
   "BattleResult": {
-    "winner": "Winner!",
+    "titleWinner": "You win!!",
+    "titleLoser": "You lose",
     "messageWinner": "You played exceptionally well!",
     "messageLoser": "Your time will come for victory!",
     "touchMassage": "Touch to Play Again"

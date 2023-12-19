@@ -130,7 +130,7 @@ const BattleAttackSelect = () => {
       if (isComplete) {
         setWinner({
           isSelf: selfResult.hp > 0,
-          monster: selfResult.hp > 0 ? monsterSelf : monsterOpponent,
+          monster: monsterSelf,
         });
       }
 

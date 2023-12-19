@@ -64,7 +64,8 @@ export const defaultLocaleData = {
     confirmButton: "",
   },
   BattleResult: {
-    winner: "",
+    titleWinner: "",
+    titleLoser: "",
     messageWinner: "",
     messageLoser: "",
     touchMassage: "",

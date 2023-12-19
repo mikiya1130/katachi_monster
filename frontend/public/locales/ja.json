@@ -42,7 +42,8 @@
     "confirmButton": "けってい"
   },
   "BattleResult": {
-    "winner": "勝者！",
+    "titleWinner": "あなたのかち！",
+    "titleLoser": "あなたのまけ",
     "messageWinner": "つぎもがんばろう",
     "messageLoser": "つぎはがんばろう",
     "touchMassage": "タッチしてもういっかいはじめる"

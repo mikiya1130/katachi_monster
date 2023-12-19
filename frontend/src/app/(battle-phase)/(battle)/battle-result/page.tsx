@@ -1,6 +1,7 @@
 "use client";
 import { Box, Stack, Typography } from "@mui/material";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useContext } from "react";
 
 import Field from "@/app/(battle-phase)/(battle)/battle/Field";
@@ -11,6 +12,11 @@ import { useLocale } from "@/components/LocaleProvider";
 const BattleResult = () => {
   const { winner } = useContext(BattleContext);
   const locale = useLocale();
+  const router = useRouter();
+
+  if (!winner) {
+    router.push("/mode-select");
+  }
 
   return (
     <Link href="/mode-select" style={{ textDecoration: "none" }}>
@@ -27,20 +33,20 @@ const BattleResult = () => {
               <Typography
                 fontSize="2rem"
                 color={winner.isSelf ? "red" : "blue"}
-                sx={{
-                  fontWeight: 700,
-                }}
+                sx={{ fontWeight: 700 }}
               >
-                {locale.BattleResult.winner}
+                {winner.isSelf
+                  ? locale.BattleResult.titleWinner
+                  : locale.BattleResult.titleLoser}
               </Typography>
             </Centering>
           </Box>
 
           <Field
             height="30%"
-            color={winner.isSelf ? "red" : "blue"}
+            color="red"
             monster={winner.monster}
-            isSelf={winner.isSelf ?? true}
+            isSelf={true}
           />
 
           <Box sx={{ height: "30%", width: "100%" }}>
