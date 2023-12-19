@@ -16,10 +16,8 @@ def check_user(db: Session, user_token: str | None) -> int:
         int: user id
     """
     if user_token is None:
-        raise HTTPException(status_code=500, detail="Invalid user token")
+        raise HTTPException(status_code=500, detail="User not found")
 
     db_user = read_user(db=db, user_token=user_token)
-    if db_user is None:
-        raise HTTPException(status_code=500, detail="Invalid user token")
 
     return db_user.id
