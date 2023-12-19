@@ -16,9 +16,7 @@ const PlayerLobby = () => {
       justifyContent="center"
       height="100%"
     >
-      <Typography fontSize="2rem" align="left">
-        {locale.PlayerLobby.title}
-      </Typography>
+      <Typography fontSize="2rem">{locale.PlayerLobby.title}</Typography>
       <Link href="/create-room">
         <Button variant="outlined">{locale.PlayerLobby.createRoom}</Button>
       </Link>

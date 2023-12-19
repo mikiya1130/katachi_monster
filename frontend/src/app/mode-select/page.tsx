@@ -16,22 +16,20 @@ const ModeSelect = () => {
       justifyContent="center"
       height="100%"
     >
-      <Typography fontSize="2rem" align="left">
-        {locale.ModeSelect.title}
-      </Typography>
+      <Typography fontSize="2rem">{locale.ModeSelect.title}</Typography>
       <Stack
         alignItems="center"
         justifyContent="center"
         spacing={10}
-        width={"50%"}
+        width="50%"
       >
-        <Link href={`/level-select`}>
+        <Link href="/level-select">
           <Button variant="outlined">
             {locale.ModeSelect.labelLevelSelect}
           </Button>
         </Link>
 
-        <Link href={`/player-lobby`}>
+        <Link href="/player-lobby">
           <Button variant="contained">
             {locale.ModeSelect.labelPlayerLobby}
           </Button>

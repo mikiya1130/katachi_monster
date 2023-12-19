@@ -38,14 +38,10 @@ const CreateRoom = () => {
       justifyContent="center"
       height="100%"
     >
-      <Typography fontSize="2rem" align="left">
-        {locale.CreateRoom.message}
-      </Typography>
+      <Typography fontSize="2rem">{locale.CreateRoom.message}</Typography>
 
       {roomId ? (
-        <Typography fontSize="2rem" align="left">
-          ID: {roomId}
-        </Typography>
+        <Typography fontSize="2rem">ID: {roomId}</Typography>
       ) : (
         <CircularProgress />
       )}

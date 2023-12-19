@@ -203,16 +203,18 @@ const BattleAttackSelect = () => {
                   top={0}
                   src={`images/${opponentHand}.png`}
                   alt={opponentHand}
+                  height="40%"
                   objectFit="contain"
-                  sx={{ borderRadius: "50%", height: "40%" }}
+                  sx={{ borderRadius: "50%" }}
                 />
                 <Image
                   position="absolute"
                   bottom={0}
                   src={`images/${selfHand}.png`}
                   alt={selfHand}
+                  height="40%"
                   objectFit="contain"
-                  sx={{ borderRadius: "50%", height: "40%" }}
+                  sx={{ borderRadius: "50%" }}
                 />
               </Centering>
             </Box>

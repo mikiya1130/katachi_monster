@@ -84,21 +84,20 @@ const Field = ({ height, color, monster, isSelf }: Props) => {
         }}
         pt="6px"
       >
-        <Box sx={{ height: "10%", width: "100%" }}>
-          {!isSelf && !monster ? (
-            <Typography>{locale.Field.message}</Typography>
-          ) : (
-            <Typography fontSize="1rem" align="center">
-              {monster ? monster.name : ""}
-            </Typography>
-          )}
-        </Box>
+        <Typography height="10%" fontSize="1rem" align="center">
+          {!isSelf && !monster
+            ? locale.Field.message
+            : monster
+              ? monster.name
+              : ""}
+        </Typography>
         <Centering>
           <Image
             src={monster ? monster.base64image : ""}
             alt="silhouette"
+            width="100%"
+            height="90%"
             objectFit="contain"
-            sx={{ height: "90%", width: "100%" }}
           />
         </Centering>
       </Box>

@@ -55,9 +55,7 @@ const EnterRoom = () => {
       justifyContent="center"
       height="100%"
     >
-      <Typography fontSize="2rem" align="left">
-        {locale.EnterRoom.message}
-      </Typography>
+      <Typography fontSize="2rem">{locale.EnterRoom.message}</Typography>
 
       <TextField
         id="room-id"
