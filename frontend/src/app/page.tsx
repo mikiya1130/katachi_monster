@@ -21,8 +21,8 @@ const Home = () => {
   const width = useMediaQuery(theme.breakpoints.up(maxWidth))
     ? `${theme.breakpoints.values[maxWidth]}px`
     : "100vw";
-  const logoScale = 0.9;
-  const messageScale = 0.6;
+  const logoScale = locale.locale === "en" ? 1.5 : 0.9;
+  const messageScale = locale.locale === "en" ? 1.0 : 0.6;
 
   const [selectedLocale, setSelectedLocale] = useState<string>(locale.locale);
 
