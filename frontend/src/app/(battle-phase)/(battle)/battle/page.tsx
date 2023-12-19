@@ -237,7 +237,7 @@ const BattleAttackSelect = () => {
 
         <Field height="30%" color="red" monster={monsterSelf} isSelf={true} />
 
-        <Box ref={gtpRef} sx={{ height: "10%", width: "100%" }} pt="5px">
+        <Box ref={gtpRef} sx={{ height: "10%", width: "100%" }} mt={1}>
           <GtpButton
             gtpHeight={gtpHeight}
             state={state}

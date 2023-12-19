@@ -24,7 +24,7 @@ const GtpButton = ({ gtpHeight, state, callbackButtonSelected }: Props) => {
   };
 
   return (
-    <Stack direction="row" justifyContent="space-around" pt={1}>
+    <Stack direction="row" justifyContent="space-around">
       {images.map(({ url, hand }: TypeImage) => (
         <Button
           key={hand}
