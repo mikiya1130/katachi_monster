@@ -32,30 +32,34 @@ const EnterRoom = () => {
     }
   };
 
+  useEffect(() => {
+    if (!socket) return;
+
+    socket.on("matching", () => {
+      router.push("/monster-select");
+    });
+
+    return () => {
+      socket.off("matching");
+    };
+  }, [router, socket]);
+
   const handleSubmit = () => {
-    if (socket) {
-      setIsButtonRoading(true);
-      socket.emit("enterRoom", roomId, (status: string) => {
-        if (status === "success") {
-          console.log("enterRoom");
-        } else {
-          console.error("enterRoom");
-          messageRef.current?.call({
-            type: "error",
-            message: locale.EnterRoom.errorMessage,
-          });
-          setIsButtonRoading(false);
-        }
-      });
+    if (!socket) return;
 
-      socket.on("matching", () => {
-        router.push("/monster-select");
-      });
-
-      return () => {
-        socket.off("matching");
-      };
-    }
+    setIsButtonRoading(true);
+    socket.emit("enterRoom", roomId, (status: string) => {
+      if (status === "success") {
+        console.log("enterRoom");
+      } else {
+        console.error("enterRoom");
+        messageRef.current?.call({
+          type: "error",
+          message: locale.EnterRoom.errorMessage,
+        });
+        setIsButtonRoading(false);
+      }
+    });
   };
 
   return (
