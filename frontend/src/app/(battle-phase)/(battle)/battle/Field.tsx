@@ -9,6 +9,7 @@ import {
 } from "react";
 
 import { TypeMonster } from "@/app/(battle-phase)/(battle)/battle/types";
+import Animation, { AnimationRef } from "@/components/Animation";
 import Centering from "@/components/Centering";
 import Image from "@/components/Image";
 import { useLocale } from "@/components/LocaleProvider";
@@ -35,10 +36,50 @@ const Field = (
   const removeBorder = isSelf ? { borderTop: 0 } : { borderBottom: 0 };
 
   const filedInfoRef = useRef<HTMLDivElement>(null);
+  const animationRef = useRef<AnimationRef>(null);
   const [fieldInfoHeight, setFieldInfoHeight] = useState<number>(0);
   const locale = useLocale();
 
   const [hp, setHp] = useState<string>("-");
+
+  const damageAnimation = () => {
+    if (!animationRef.current) return;
+
+    const MovePositionX = {
+      0.0: 0,
+      0.16: -20,
+      0.33: 20,
+      0.5: 0,
+      0.66: -20,
+      0.83: 20,
+      1.0: 0,
+    };
+    const MovePositionY = {
+      0.0: 0,
+      0.16: 10,
+      0.33: 10,
+      0.5: 0,
+      0.66: -10,
+      0.83: -10,
+      1.0: 0,
+    };
+    const MoveOpacity = {
+      0.0: 1,
+      0.2: 0,
+      0.4: 1,
+      0.6: 0,
+      0.8: 1,
+      1.0: 1,
+    };
+    const duration = 250;
+
+    animationRef.current.exec(
+      MovePositionX,
+      MovePositionY,
+      MoveOpacity,
+      duration,
+    );
+  };
 
   useImperativeHandle(ref, () => ({
     updateHp: (updateHp: number) => {
@@ -49,6 +90,7 @@ const Field = (
       const interval = duration / Math.abs(updateHp - monster.hp);
       let newHp = parseInt(hp);
 
+      damageAnimation();
       const intervalId = setInterval(() => {
         newHp = newHp + (updateHp > monster.hp ? 1 : -1);
         setHp(newHp.toString());
@@ -130,15 +172,17 @@ const Field = (
               ? monster.name
               : ""}
         </Text>
-        <Centering>
-          <Image
-            src={monster ? monster.base64image : ""}
-            alt="silhouette"
-            width="100%"
-            height="90%"
-            objectFit="contain"
-          />
-        </Centering>
+        <Animation width="100%" height="90%" ref={animationRef}>
+          <Centering>
+            <Image
+              src={monster ? monster.base64image : ""}
+              alt="silhouette"
+              width="100%"
+              height="100%"
+              objectFit="contain"
+            />
+          </Centering>
+        </Animation>
       </Box>
     </Stack>
   );
