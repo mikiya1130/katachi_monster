@@ -15,20 +15,29 @@ const CreateRoom = () => {
   const [roomId, setRoomId] = useState<string>("");
 
   useEffect(() => {
-    if (socket && !roomId) {
-      socket.emit("createRoom", (status: string, roomId: string) => {
-        if (status === "success") {
-          setRoomId(roomId);
-        } else {
-          // TODO: エラー処理実装
-          console.error("createRoom");
-        }
-      });
+    if (!socket) return;
 
-      socket.on("matching", () => {
-        router.push("/monster-select");
-      });
-    }
+    socket.on("matching", () => {
+      router.push("/monster-select");
+    });
+
+    return () => {
+      socket.off("matching");
+    };
+  }, [router, socket]);
+
+  useEffect(() => {
+    if (!socket) return;
+    if (roomId) return;
+
+    socket.emit("createRoom", (status: string, roomId: string) => {
+      if (status === "success") {
+        setRoomId(roomId);
+      } else {
+        // TODO: エラー処理実装
+        console.error("createRoom");
+      }
+    });
   }, [socket, roomId, router]);
 
   return (
