@@ -59,6 +59,7 @@ export const defaultLocaleData = {
   EnterRoom: {
     message: "",
     confirmButton: "",
+    errorMessage: "",
   },
   BattleResult: {
     titleWinner: "",

@@ -39,7 +39,8 @@
   },
   "EnterRoom": {
     "message": "へやにはいる",
-    "confirmButton": "けってい"
+    "confirmButton": "けってい",
+    "errorMessage": "IDが正しくありません"
   },
   "BattleResult": {
     "titleWinner": "あなたのかち！",
