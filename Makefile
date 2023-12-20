@@ -14,7 +14,7 @@ down:
 	docker compose down
 
 down-rm:
-	docker compose down --volumes --remove-orphans
+	docker compose down --remove-orphans
 
 start:
 	docker compose start

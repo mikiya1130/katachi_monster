@@ -1,16 +1,17 @@
 import { Close } from "@mui/icons-material";
 import {
   Avatar,
+  Button,
   Chip,
   IconButton,
   Modal,
   Stack,
   useMediaQuery,
 } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 import { TypeMonster } from "@/app/(battle-phase)/monster-select/types";
 import Image from "@/components/Image";
-import LinkButton from "@/components/LinkButton";
 import { useLocale } from "@/components/LocaleProvider";
 import Text from "@/components/Text";
 import { images, maxWidth } from "@/consts";
@@ -23,6 +24,8 @@ type Props = {
 };
 
 const ModalContent = ({ monster, handleClose }: Props) => {
+  const router = useRouter();
+
   const width = useMediaQuery(theme.breakpoints.up(maxWidth))
     ? `${theme.breakpoints.values[maxWidth]}px`
     : "100vw";
@@ -101,12 +104,12 @@ const ModalContent = ({ monster, handleClose }: Props) => {
             {locale.ModalContent.viewDetailsButton}
           </LinkButton> */}
 
-          <LinkButton
-            href={`/battle?monsterId=${monster.id}`}
+          <Button
             variant="contained"
+            onClick={() => router.replace(`/battle?monsterId=${monster.id}`)}
           >
             {locale.ModalContent.confirmButton}
-          </LinkButton>
+          </Button>
         </Stack>
       </Stack>
     </Modal>
