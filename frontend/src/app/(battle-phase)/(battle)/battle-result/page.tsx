@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect } from "react";
 
@@ -17,22 +16,20 @@ const BattleResult = () => {
   useEffect(() => {
     if (!winner) {
       // リロードで context が消えた時
-      router.push("/mode-select");
+      router.replace("/mode-select");
     }
   }, [router, winner]);
 
   return (
-    <Link
-      href="/mode-select"
-      style={{ color: "inherit", textDecoration: "none" }}
+    <Centering
+      p={4}
+      alignItems="center"
+      justifyContent="space-evenly"
+      height="100%"
+      onClick={() => router.replace("/mode-select")}
     >
       {winner && winner.monster && (
-        <Centering
-          p={4}
-          alignItems="center"
-          justifyContent="space-evenly"
-          height="100%"
-        >
+        <>
           <Text
             fontSize="2rem"
             fontWeight={700}
@@ -59,9 +56,9 @@ const BattleResult = () => {
           <Text fontSize="1.5rem" fontWeight={700}>
             {locale.BattleResult.touchMassage}
           </Text>
-        </Centering>
+        </>
       )}
-    </Link>
+    </Centering>
   );
 };
 

@@ -84,7 +84,7 @@ const BattleAttackSelect = () => {
       socket.on("battle-interrupt", () => {
         if (!isComplete) {
           error().then(() => {
-            router.push("/mode-select");
+            router.replace("/mode-select");
           });
         }
       });
@@ -158,7 +158,7 @@ const BattleAttackSelect = () => {
 
       if (isComplete) {
         socket?.disconnect();
-        router.push("/battle-result");
+        router.replace("/battle-result");
       } else {
         setState("buttonSelect");
       }
