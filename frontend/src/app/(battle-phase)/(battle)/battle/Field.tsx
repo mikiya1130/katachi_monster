@@ -41,13 +41,21 @@ const Field = (
   const [hp, setHp] = useState<string>("-");
 
   useImperativeHandle(ref, () => ({
-    updateHp: (newHp: number) => {
-      console.log(hp, newHp.toString(), hp === newHp.toString());
-
+    updateHp: (updateHp: number) => {
       if (!monster) return;
-      if (hp === newHp.toString()) return;
+      if (hp === updateHp.toString()) return;
 
-      setHp(newHp.toString());
+      const duration = 500;
+      const interval = duration / Math.abs(updateHp - monster.hp);
+      let newHp = parseInt(hp);
+
+      const intervalId = setInterval(() => {
+        newHp = newHp + (updateHp > monster.hp ? 1 : -1);
+        setHp(newHp.toString());
+        if (newHp === updateHp) {
+          clearInterval(intervalId);
+        }
+      }, interval);
     },
   }));
 
