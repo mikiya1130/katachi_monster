@@ -39,7 +39,9 @@
   },
   "EnterRoom": {
     "message": "방에 들어가기",
-    "confirmButton": "확인"
+    "confirmButton": "확인",
+    "errorMessage": "ID가 올바르지 않습니다."
+
   },
   "BattleResult": {
     "titleWinner": "승리했습니다!!",

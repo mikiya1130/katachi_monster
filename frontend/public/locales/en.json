@@ -39,7 +39,8 @@
   },
   "EnterRoom": {
     "message": "Enter the room",
-    "confirmButton": "Confirm"
+    "confirmButton": "Confirm",
+    "errorMessage": "The ID is incorrect."
   },
   "BattleResult": {
     "titleWinner": "You win!!",

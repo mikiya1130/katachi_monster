@@ -39,7 +39,8 @@
   },
   "EnterRoom": {
     "message": "进入房间",
-    "confirmButton": "确认"
+    "confirmButton": "确认",
+    "errorMessage": "ID不正确。"
   },
   "BattleResult": {
     "titleWinner": "你赢了！！",
