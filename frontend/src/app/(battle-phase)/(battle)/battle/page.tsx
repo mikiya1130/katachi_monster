@@ -1,10 +1,10 @@
 "use client";
 import { Box } from "@mui/material";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 
 import Center from "@/app/(battle-phase)/(battle)/battle/Center";
-import Field from "@/app/(battle-phase)/(battle)/battle/Field";
+import Field, { FieldRef } from "@/app/(battle-phase)/(battle)/battle/Field";
 import GtpButton from "@/app/(battle-phase)/(battle)/battle/GtpButton";
 import { State } from "@/app/(battle-phase)/(battle)/battle/State";
 import sleep from "@/app/(battle-phase)/(battle)/battle/sleep";
@@ -35,6 +35,8 @@ const BattleAttackSelect = () => {
   const [monsterOpponent, setMonsterOpponent] = useState<TypeMonster | null>(
     null,
   );
+  const fieldSelfRef = useRef<FieldRef>(null);
+  const fieldOpponentRef = useRef<FieldRef>(null);
 
   const gtpRef = useRef<HTMLDivElement>(null);
   const [gtpHeight, setGtpHeight] = useState<number>(0);
@@ -71,56 +73,23 @@ const BattleAttackSelect = () => {
     });
   }, [searchParams]);
 
-  useEffect(() => {
-    const error = async () => {
-      console.error("battle-interrupt");
-      messageRef.current?.call({
-        type: "error",
-        message: locale.BattleAttackSelect.errorMessage,
-      });
-      await sleep(3000);
-    };
-    if (socket) {
-      socket.on("battle-interrupt", () => {
-        if (!isComplete) {
-          error().then(() => {
-            router.replace("/mode-select");
-          });
-        }
-      });
-    }
-  }, [isComplete, locale.BattleAttackSelect.errorMessage, router, socket]);
+  const error = useCallback(async () => {
+    console.error("battle-interrupt");
+    messageRef.current?.call({
+      type: "error",
+      message: locale.BattleAttackSelect.errorMessage,
+    });
+    await sleep(3000);
+  }, [locale.BattleAttackSelect.errorMessage]);
 
   useEffect(() => {
-    if (state === "matching") {
-      if (monsterSelf && socket) {
-        console.log("monsterSelf", monsterSelf);
-        socket.on("receiveMonsterOpponent", (monsterOpponent: TypeMonster) => {
-          setMonsterOpponent(monsterOpponent);
-        });
+    if (!socket) return;
 
-        socket.emit("sendMonsterSelf", monsterSelf);
-      }
-    }
-  }, [monsterSelf, socket, state]);
+    socket.on("receiveMonsterOpponent", (monsterOpponent: TypeMonster) => {
+      setMonsterOpponent(monsterOpponent);
+    });
 
-  useEffect(() => {
-    if (state === "matching") {
-      (async () => {
-        if (monsterOpponent) {
-          setState("start");
-          await sleep(2000);
-          setState("buttonSelect");
-        }
-      })();
-    }
-  }, [monsterOpponent, state]);
-
-  const handleButtonSelected = async (hand: TypeHand) => {
-    setState("hpCalculate");
-    await sleep(1000);
-
-    socket?.on("updateHp", async (results) => {
+    socket.on("updateHp", async (results) => {
       const selfResult = results[socket.id];
       const opponentResult =
         results[Object.keys(results).find((id) => id !== socket.id) ?? ""];
@@ -142,29 +111,62 @@ const BattleAttackSelect = () => {
 
       setOutcome(selfResult.outcome);
       setState("attack/viewText");
-      setMonsterSelf((prev) => {
-        if (prev) {
-          return { ...prev, hp: selfResult.hp };
-        }
-        return null;
-      });
-      setMonsterOpponent((prev) => {
-        if (prev) {
-          return { ...prev, hp: opponentResult.hp };
-        }
-        return null;
-      });
+      fieldSelfRef.current?.updateHp(selfResult.hp);
+      fieldOpponentRef.current?.updateHp(opponentResult.hp);
       await sleep(3000);
 
       if (isComplete) {
-        socket?.disconnect();
+        socket.disconnect();
         router.replace("/battle-result");
       } else {
         setState("buttonSelect");
       }
     });
 
-    socket?.emit("sendHandSelf", hand);
+    socket.on("battle-interrupt", () => {
+      if (!isComplete) {
+        error().then(() => {
+          router.replace("/mode-select");
+        });
+      }
+    });
+
+    return () => {
+      socket.off("receiveMonsterOpponent");
+      socket.off("updateHp");
+      socket.off("battle-interrupt");
+    };
+  }, [error, isComplete, monsterSelf, router, setWinner, socket]);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    if (state === "matching") {
+      if (monsterSelf) {
+        console.log("monsterSelf", monsterSelf);
+        socket.emit("sendMonsterSelf", monsterSelf);
+      }
+    }
+  }, [monsterSelf, socket, state]);
+
+  useEffect(() => {
+    if (state === "matching") {
+      if (monsterOpponent) {
+        (async () => {
+          setState("start");
+          await sleep(2000);
+          setState("buttonSelect");
+        })();
+      }
+    }
+  }, [monsterOpponent, state]);
+
+  const handleButtonSelected = async (hand: TypeHand) => {
+    if (!socket) return;
+
+    setState("hpCalculate");
+    await sleep(1000);
+    socket.emit("sendHandSelf", hand);
   };
 
   return (
@@ -175,6 +177,7 @@ const BattleAttackSelect = () => {
           color="blue"
           monster={monsterOpponent}
           isSelf={false}
+          ref={fieldOpponentRef}
         />
 
         <Box sx={{ height: "30%", width: "100%" }}>
@@ -232,7 +235,13 @@ const BattleAttackSelect = () => {
             ))}
         </Box>
 
-        <Field height="30%" color="red" monster={monsterSelf} isSelf={true} />
+        <Field
+          height="30%"
+          color="red"
+          monster={monsterSelf}
+          isSelf={true}
+          ref={fieldSelfRef}
+        />
 
         <Box ref={gtpRef} sx={{ height: "10%", width: "100%" }} mt={1}>
           <GtpButton

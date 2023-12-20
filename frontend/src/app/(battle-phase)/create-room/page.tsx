@@ -28,6 +28,10 @@ const CreateRoom = () => {
       socket.on("matching", () => {
         router.push("/monster-select");
       });
+
+      return () => {
+        socket.off("matching");
+      };
     }
   }, [socket, roomId, router]);
 

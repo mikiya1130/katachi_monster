@@ -51,6 +51,10 @@ const EnterRoom = () => {
       socket.on("matching", () => {
         router.push("/monster-select");
       });
+
+      return () => {
+        socket.off("matching");
+      };
     }
   };
 

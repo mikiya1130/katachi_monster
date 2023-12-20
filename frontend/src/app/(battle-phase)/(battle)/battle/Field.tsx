@@ -1,5 +1,12 @@
 import { Avatar, Box, Chip, Stack } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import {
+  ForwardedRef,
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 
 import { TypeMonster } from "@/app/(battle-phase)/(battle)/battle/types";
 import Centering from "@/components/Centering";
@@ -16,13 +23,37 @@ type Props = {
   isSelf: boolean;
 };
 
-const Field = ({ height, color, monster, isSelf }: Props) => {
+export type FieldRef = {
+  updateHp: (hp: number) => void;
+};
+
+const Field = (
+  { height, color, monster, isSelf }: Props,
+  ref: ForwardedRef<FieldRef>,
+) => {
   const direction = isSelf ? "column" : "column-reverse";
   const removeBorder = isSelf ? { borderTop: 0 } : { borderBottom: 0 };
 
   const filedInfoRef = useRef<HTMLDivElement>(null);
   const [fieldInfoHeight, setFieldInfoHeight] = useState<number>(0);
   const locale = useLocale();
+
+  const [hp, setHp] = useState<string>("-");
+
+  useImperativeHandle(ref, () => ({
+    updateHp: (newHp: number) => {
+      console.log(hp, newHp.toString(), hp === newHp.toString());
+
+      if (!monster) return;
+      if (hp === newHp.toString()) return;
+
+      setHp(newHp.toString());
+    },
+  }));
+
+  useEffect(() => {
+    setHp(monster ? monster.hp.toString() : "-");
+  }, [monster]);
 
   useEffect(() => {
     if (filedInfoRef.current) {
@@ -47,7 +78,7 @@ const Field = ({ height, color, monster, isSelf }: Props) => {
               </Text>
             </Avatar>
           }
-          label={monster ? monster.hp : "-"}
+          label={hp}
           variant="outlined"
           sx={{ borderRadius: "8px", bgcolor: "white", fontSize: "1.5rem" }}
         />
@@ -105,4 +136,4 @@ const Field = ({ height, color, monster, isSelf }: Props) => {
   );
 };
 
-export default Field;
+export default forwardRef(Field);
