@@ -1,4 +1,5 @@
 "use client";
+import confetti from "canvas-confetti";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect } from "react";
 
@@ -12,6 +13,25 @@ const BattleResult = () => {
   const { winner } = useContext(BattleContext);
   const locale = useLocale();
   const router = useRouter();
+
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout;
+
+    if (winner && winner.isSelf) {
+      intervalId = setInterval(() => {
+        confetti({
+          spread: 1000,
+          startVelocity: 15,
+          origin: { x: 0.5, y: 0.1 },
+        });
+      }, 2000);
+    }
+
+    return () => {
+      confetti.reset();
+      clearInterval(intervalId);
+    };
+  }, [winner]);
 
   useEffect(() => {
     if (!winner) {
