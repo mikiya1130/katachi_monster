@@ -11,6 +11,7 @@ from .utils import (
     get_truth_size,
     png_to_base64image,
     pooling_2d,
+    randint,
     resize_to_contain,
     set_alpha,
     smoothing,
@@ -33,4 +34,5 @@ __all__ = [
     "pooling_2d",
     "calc_iou",
     "encode_2d_list",
+    "randint",
 ]
