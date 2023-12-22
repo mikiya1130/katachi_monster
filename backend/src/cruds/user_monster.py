@@ -110,3 +110,30 @@ def create_user_monster(
 
     db.commit()
     return db_user_monster
+
+
+def create_sample_monster(
+    db: Session,
+    user_id: int,
+    monster_id: int,
+    name: str,
+) -> UserMonster:
+    """user_monsters テーブルにレコードを追加する"""
+    gu = randint(10, 91)  # 10 ~ 90 の間でランダムに決定
+    choki = randint(10, 91)  # 10 ~ 90 の間でランダムに決定
+    pa = randint(10, 91)  # 10 ~ 90 の間でランダムに決定
+
+    # UserMonster の作成
+    db_user_monster = UserMonster(
+        monster_id=monster_id,
+        user_id=user_id,
+        name=name,
+        gu=gu,
+        choki=choki,
+        pa=pa,
+    )
+    db.add(db_user_monster)
+    db.flush()
+
+    db.commit()
+    return db_user_monster

@@ -61,7 +61,7 @@ const BattleAttackSelect = () => {
 
   useEffect(() => {
     const monsterId = searchParams.get("monsterId") ?? "1"; // TODO: パラメータない時の処理を実装する
-    axios.get(`monster/${monsterId}/user_monster`).then((res) => {
+    axios.get(`monster/${monsterId}/fallback`).then((res) => {
       setMonsterSelf({
         base64image: res.data.base64image,
         name: res.data.name,
