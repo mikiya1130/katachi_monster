@@ -20,7 +20,7 @@ const Content = ({ monsterId, handleOpen }: Props) => {
   });
 
   useEffect(() => {
-    axios.get(`monster/${monsterId}/user_monster`).then((res) => {
+    axios.get(`monster/${monsterId}/fallback`).then((res) => {
       setMonster({
         id: monsterId,
         base64image: res.data.base64image,
