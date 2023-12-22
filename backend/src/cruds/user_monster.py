@@ -1,6 +1,5 @@
 """user_monsters テーブルの CRUD 関数"""
 import logging
-import random
 
 from fastapi import HTTPException
 from sqlalchemy import desc
@@ -10,6 +9,7 @@ from src.cruds.monster import read_monster, read_monster_ids
 from src.cruds.picture import delete_tmp_pictures, read_picture
 from src.models import UserMonster
 from src.types.monster import TypeMonsterIds
+from src.utils import randint
 
 logging.basicConfig()
 logging.getLogger("sqlalchemy.engine").setLevel(logging.INFO)
@@ -67,7 +67,7 @@ def create_user_monster(
     if len(picture_list) == 2:
         gu = picture_list[0].match_rate
         choki = picture_list[1].match_rate
-        pa = random.randint(10, 91)  # 10 ~ 90 の間でランダムに決定
+        pa = randint(10, 91)  # 10 ~ 90 の間でランダムに決定
     elif len(picture_list) == 3:
         gu = picture_list[0].match_rate
         choki = picture_list[1].match_rate

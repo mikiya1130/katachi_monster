@@ -1,6 +1,7 @@
 """ユーティリティ関数"""
 import base64
 import io
+import secrets
 from collections.abc import Callable
 from dataclasses import dataclass
 from typing import TypeVar
@@ -303,3 +304,8 @@ def encode_2d_list(
         str: _description_
     """
     return col_sep.join([row_sep.join(row) for row in list_2d])
+
+
+def randint(start: int, end: int) -> int:
+    """start 以上 end 未満の整数をランダムに返す"""
+    return secrets.randbelow(end - start + 1) + start
